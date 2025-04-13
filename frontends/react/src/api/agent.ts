@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const agent = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: `${import.meta.env.VITE_API_URL}/api`,
 });
 
 agent.interceptors.response.use(async (response) => {

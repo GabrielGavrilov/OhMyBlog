@@ -24,5 +24,18 @@
         @apply text-white bg-blue-700;
       }
     }
+    &.btn-primary-filled {
+      @apply bg-blue-700 text-white;
+      &:hover {
+        @apply bg-blue-900;
+      }
+    }
+  }
+}
+
+.title-input {
+  @apply w-full h-14 text-3xl font-bold;
+  &:focus {
+    @apply outline-none;
   }
 }
