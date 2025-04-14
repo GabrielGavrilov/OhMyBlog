@@ -1,5 +1,5 @@
-import { Link, useNavigate, useParams } from "react-router";
-import useBlogs from "../hooks/useBlogs";
+import { Link, useNavigate, useParams } from 'react-router';
+import useBlogs from '../hooks/useBlogs';
 
 export default function BlogPage() {
   const { id } = useParams();
@@ -8,17 +8,38 @@ export default function BlogPage() {
 
   function handleDelete() {
     deleteBlog.mutate();
-    navigate("/");
+    navigate('/');
   }
 
   return (
     <>
-      <p>{blog?.title}</p>
-      <p>{blog?.body}</p>
-      <button onClick={handleDelete}>Delete</button>
-      <Link to={`/blog/update/${id}`}>
-        <button>Update</button>
-      </Link>
+      <div className="flex justify-center">
+        <div className="w-1/2">
+          <div className="pt-8 pb-8 pl-12 pr-12 w-full bg-white rounded">
+            <div className="font-light text-sm mb-4">
+              {'Posted on ' + blog?.createdAt?.toString().split('T')[0]}
+            </div>
+            <div>
+              <p className="text-3xl font-bold">{blog?.title}</p>
+            </div>
+            <div className="mt-4">
+              <p>{blog?.body}</p>
+            </div>
+          </div>
+          <div className="flex justify-end mt-4">
+            <div className="mr-2">
+              <button className="btn btn-warning" onClick={handleDelete}>
+                Delete
+              </button>
+            </div>
+            <div>
+              <Link to={`/blog/update/${id}`}>
+                <button className="btn btn-primary">Update</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -24,6 +24,12 @@
         @apply text-white bg-blue-700;
       }
     }
+    &.btn-warning {
+      @apply border border-red-700 text-red-700;
+      &:hover {
+        @apply text-white bg-red-700;
+      }
+    }
     &.btn-primary-filled {
       @apply bg-blue-700 text-white;
       &:hover {

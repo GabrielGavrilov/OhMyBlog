@@ -72,7 +72,7 @@ export default function BlogForm() {
           <div className="w-full flex justify-end mt-4">
             <button
               type="button"
-              className="btn mr-2"
+              className="btn btn-warning mr-2"
               onClick={() => {
                 setTitle(blog?.title || '');
                 setBody(blog?.body || '');
@@ -80,7 +80,7 @@ export default function BlogForm() {
             >
               Reset
             </button>
-            <button type="submit" className="btn btn-primary-filled">
+            <button type="submit" className="btn btn-primary">
               {id ? 'Update' : 'Publish'}
             </button>
           </div>
