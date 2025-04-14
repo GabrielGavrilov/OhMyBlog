@@ -9,9 +9,13 @@ export default function BlogList() {
 
   return (
     <>
-      {blogs.map((blog: Blog) => (
-        <BlogCard blog={blog} />
-      ))}
+      <div className="w-1/2">
+        {blogs.map((blog: Blog) => (
+          <div className="mb-2">
+            <BlogCard blog={blog} />
+          </div>
+        ))}
+      </div>
     </>
   );
 }

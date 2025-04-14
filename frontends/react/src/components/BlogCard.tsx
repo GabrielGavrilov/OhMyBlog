@@ -8,7 +8,11 @@ export default function BlogCard({ blog }: Props) {
   return (
     <>
       <div className="bg-white rounded border pt-6 pb-6 pr-8 pl-8">
-        <p className="text-3xl font-bold">{blog.title}</p>
+        {/* <p className="mb-1">John Doe</p> */}
+        <p className="text-xs mb-3 text-gray-600">
+          {String(blog.createdAt).split("T")[0]}
+        </p>
+        <p className="text-2xl font-bold mb-3">{blog.title}</p>
       </div>
     </>
   );

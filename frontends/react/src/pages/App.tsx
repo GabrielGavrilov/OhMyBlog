@@ -8,7 +8,13 @@ export default function App() {
   return (
     <>
       <Navbar />
-      {location.pathname === "/" ? <BlogList /> : <Outlet />}
+      {location.pathname === "/" ? (
+        <div className="flex justify-center">
+          <BlogList />
+        </div>
+      ) : (
+        <Outlet />
+      )}
     </>
   );
 }
