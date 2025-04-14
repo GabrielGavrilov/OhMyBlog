@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router";
 import App from "./pages/App";
 import NewBlogPage from "./pages/NewBlogPage";
 import BlogPage from "./pages/BlogPage";
+import UpdateBlogPage from "./pages/UpdateBlogPage";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: "/blog/:id",
         element: <BlogPage />,
+      },
+      {
+        path: "/blog/update/:id",
+        element: <UpdateBlogPage />,
       },
     ],
   },

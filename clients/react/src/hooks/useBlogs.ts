@@ -11,6 +11,7 @@ export default function useBlogs(id?: string) {
       const response = await agent.get<Blog[]>("blogs");
       return response.data;
     },
+    enabled: !id,
   });
 
   const { data: blog, isLoading: isLoadingActivity } = useQuery({
@@ -19,6 +20,7 @@ export default function useBlogs(id?: string) {
       const response = await agent.get<Blog>(`blogs/${id}`);
       return response.data;
     },
+    enabled: !!id,
   });
 
   const createBlog = useMutation({

@@ -1,4 +1,4 @@
-const Blog = require("../models/BlogModel");
+const Blog = require('../models/BlogModel');
 
 async function getAllBlogs(req, res) {
   const blogs = await Blog.find({}).sort({ createdAt: -1 });
@@ -25,7 +25,7 @@ async function createBlog(req, res) {
   await blog
     .save()
     .then(function () {
-      console.log("Blog has been created.");
+      console.log('Blog has been created.');
       return res.status(200).json(blog);
     })
     .catch(function (err) {
@@ -48,7 +48,7 @@ async function updateBlog(req, res) {
 
   await Blog.findOneAndUpdate(findBlog, updateBlog)
     .then(async function () {
-      console.log("Blog has been updated.");
+      console.log('Blog has been updated.');
       const blog = await Blog.findById(id);
       return res.status(200).json(blog);
     })
@@ -61,7 +61,7 @@ async function updateBlog(req, res) {
 async function deleteBlog(req, res) {
   const id = req.params.id;
   await Blog.deleteOne({ _id: id });
-  console.log("Blog has been deleted.");
+  console.log('Blog has been deleted.');
   return res.sendStatus(204);
 }
 

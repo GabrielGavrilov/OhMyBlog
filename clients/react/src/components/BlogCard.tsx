@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import Blog from "../models/Blog";
 
 interface Props {
@@ -12,7 +13,9 @@ export default function BlogCard({ blog }: Props) {
         <p className="text-xs mb-3 text-gray-600">
           {String(blog.createdAt).split("T")[0]}
         </p>
-        <p className="text-2xl font-bold mb-3">{blog.title}</p>
+        <Link to={`/blog/${blog._id}`}>
+          <p className="text-2xl font-bold mb-3">{blog.title}</p>
+        </Link>
       </div>
     </>
   );
