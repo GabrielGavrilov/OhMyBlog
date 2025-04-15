@@ -9,7 +9,9 @@ async function findBlogById(req, res) {
   const id = req.params.id;
   const blog = await Blog.findById(id);
 
-  if (!blog) return res.sendStatus(404);
+  if (!blog) {
+    return res.sendStatus(404);
+  }
 
   return res.status(200).json(blog);
 }
@@ -30,7 +32,7 @@ async function createBlog(req, res) {
     })
     .catch(function (err) {
       console.log(err);
-      return res.sendStatus(400);
+      return res.sendStatus(500);
     });
 }
 
@@ -44,7 +46,9 @@ async function updateBlog(req, res) {
     body: body,
   };
 
-  if (!foundBlog) return res.sendStatus(404);
+  if (!foundBlog) {
+    return res.sendStatus(404);
+  }
 
   await Blog.findOneAndUpdate(findBlog, updateBlog)
     .then(async function () {
@@ -54,7 +58,7 @@ async function updateBlog(req, res) {
     })
     .catch(function (err) {
       console.log(err);
-      return res.sendStatus(400);
+      return res.sendStatus(500);
     });
 }
 

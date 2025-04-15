@@ -15,7 +15,7 @@ export default function BlogPage() {
     <>
       <div className="flex justify-center">
         <div className="w-1/2">
-          <div className="pt-8 pb-8 pl-12 pr-12 w-full bg-white rounded">
+          <div className="pt-8 pb-8 pl-12 pr-12 w-full bg-white rounded border">
             <div className="font-light text-sm mb-4">
               {'Posted on ' + blog?.createdAt?.toString().split('T')[0]}
             </div>

@@ -1,6 +1,6 @@
-import BlogCard from "./BlogCard";
-import Blog from "../models/Blog";
-import useBlogs from "../hooks/useBlogs";
+import BlogCard from './BlogCard';
+import Blog from '../models/Blog';
+import useBlogs from '../hooks/useBlogs';
 
 export default function BlogList() {
   const { blogs, isPending } = useBlogs();
