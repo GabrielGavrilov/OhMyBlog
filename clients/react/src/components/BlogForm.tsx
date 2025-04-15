@@ -46,7 +46,7 @@ export default function BlogForm() {
 
   return (
     <>
-      <div className="w-1/2">
+      <div className="w-10/12 lg:w-2/3 md:w-10/12 sm:w-10/12">
         <div className="mb-4">
           <p className="font-mono text-2xl">
             {id ? 'Update blog' : 'New blog'}

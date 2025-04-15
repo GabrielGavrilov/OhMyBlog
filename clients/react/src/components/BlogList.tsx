@@ -9,7 +9,7 @@ export default function BlogList() {
 
   return (
     <>
-      <div className="w-1/2">
+      <div className="w-10/12 lg:w-2/3 md:10/12 sm:10/12">
         {blogs.map((blog: Blog) => (
           <div className="mb-2">
             <BlogCard blog={blog} />
