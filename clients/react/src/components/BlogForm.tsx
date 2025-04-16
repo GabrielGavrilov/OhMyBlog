@@ -1,42 +1,39 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useBlogs from '../hooks/useBlogs';
 import Blog from '../models/Blog';
 import { useNavigate, useParams } from 'react-router';
+import { useForm } from 'react-hook-form';
 
 export default function BlogForm() {
   const { id } = useParams();
-
   const { blog, createBlog, updateBlog, isLoadingActivity } = useBlogs(id);
-  const [title, setTitle] = useState<string>('');
-  const [body, setBody] = useState<string>('');
+  const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
 
   useEffect(
     function () {
       if (blog) {
-        setTitle(blog?.title);
-        setBody(blog?.body);
+        reset({
+          ...blog,
+        });
       }
     },
-    [blog]
+    [blog, reset]
   );
 
   if (id && isLoadingActivity) {
     return <p>Loading...</p>;
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const submittedBlog: Blog = { title, body };
-
+  async function onSubmit(data: Blog) {
     if (blog) {
-      await updateBlog.mutateAsync(submittedBlog, {
+      await updateBlog.mutateAsync(data, {
         onSuccess: function () {
           navigate(`/blog/${id}`);
         },
       });
     } else {
-      await createBlog.mutate(submittedBlog, {
+      await createBlog.mutate(data, {
         onSuccess: function (createdBlog) {
           navigate(`/blog/${createdBlog._id}`);
         },
@@ -52,31 +49,26 @@ export default function BlogForm() {
             {id ? 'Update blog' : 'New blog'}
           </p>
         </div>
-        <form className="w-full" onSubmit={handleSubmit}>
+        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
           <div className="pt-6 pb-6 pr-8 pl-8 border bg-white rounded">
             <input
               placeholder="New post title here..."
               className="title-input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              {...register('title')}
             />
           </div>
           <div className="pt-6 pb-6 pr-8 pl-8 mt-1 border bg-white rounded">
             <textarea
               placeholder="Write your post content here..."
               className="w-full h-96 focus:outline-none text-xl"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
+              {...register('body')}
             ></textarea>
           </div>
           <div className="w-full flex justify-end mt-4">
             <button
               type="button"
               className="btn btn-warning mr-2"
-              onClick={() => {
-                setTitle(blog?.title || '');
-                setBody(blog?.body || '');
-              }}
+              onClick={() => reset({ ...blog })}
             >
               Reset
             </button>
