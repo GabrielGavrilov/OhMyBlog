@@ -3,29 +3,12 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 async function getUserInformation(req, res) {
-  try {
-    const cookie = req.cookies['jwt'];
-
-    if (!cookie) {
-      return res.sendStatus(401);
-    }
-
-    const auth = jwt.verify(cookie, process.env.JWT_SECRET_KEY);
-
-    if (!auth) {
-      return res.sendStatus(401);
-    }
-
-    const user = await User.findById(auth._id);
-    return res.status(200).json({
-      _id: user._id,
-      email: user.email,
-      displayName: user.displayName,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(401);
-  }
+  const user = res.locals.user;
+  return res.status(200).json({
+    _id: user._id,
+    email: user.email,
+    displayName: user.displayName,
+  });
 }
 
 async function loginUser(req, res) {
