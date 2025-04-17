@@ -3,19 +3,22 @@ module.exports = function blogValidator(blog) {
 
   if (blog.title === '') {
     errors.push({
-      title: 'Blog must contain a title.',
+      field: 'title',
+      message: 'Blog must contain a title.',
     });
   }
 
   if (blog.title.length > 120) {
     errors.push({
-      title: 'Blog title cannot exceed 120 characters.',
+      field: 'title',
+      message: 'Blog title cannot exceed 120 characters.',
     });
   }
 
   if (blog.body === '') {
     errors.push({
-      body: 'Blog must contain a body.',
+      field: 'body',
+      message: 'Blog must contain a body.',
     });
   }
 

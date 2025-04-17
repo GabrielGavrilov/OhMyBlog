@@ -11,18 +11,19 @@ agent.interceptors.response.use(
   },
   async function (error) {
     const { status, data } = error.response;
-
     switch (status) {
       case 400:
-        if (data.errors) {
-          const modalStateErrors = Object.values(data.errors).flatMap(
-            (errObj) => Object.values(errObj)
-          );
-          console.log(modalStateErrors);
-          throw modalStateErrors;
-        } else {
-          toast.error('Server error');
-        }
+        console.log(data);
+        throw data;
+        // if (data.errors) {
+        //   const modalStateErrors = Object.values(data.errors).flatMap(
+        //     (errObj) => Object.values(errObj)
+        //   );
+        //   console.log(modalStateErrors);
+        //   throw modalStateErrors;
+        // } else {
+        //   toast.error('Server error');
+        // }
         break;
       case 404:
         toast.error('Not found');

@@ -22,9 +22,7 @@ async function createBlog(req, res, next) {
   const errors = blogValidator(blogPayload);
 
   if (errors.length > 0) {
-    return res.status(400).json({
-      errors: errors,
-    });
+    return res.status(400).json(errors);
   }
 
   const blog = new Blog({
@@ -45,7 +43,13 @@ async function createBlog(req, res, next) {
 }
 
 async function updateBlog(req, res) {
-  const { title, body } = req.body;
+  const blogPayload = ({ title, body } = req.body);
+  const errors = blogValidator(blogPayload);
+
+  if (errors.length > 0) {
+    return res.status(400).json(errors);
+  }
+
   const id = req.params.id;
   const findBlog = { _id: id };
   const foundBlog = await Blog.findById(id);
