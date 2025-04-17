@@ -17,7 +17,7 @@ async function findBlogById(req, res) {
   return res.status(200).json(blog);
 }
 
-async function createBlog(req, res, next) {
+async function createBlog(req, res) {
   const blogPayload = ({ title, body } = req.body);
   const errors = blogValidator(blogPayload);
 

@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const path = require('path');
-const blogValidator = require('./validation/BlogValidator');
 
 const blogRouter = require('./router/BlogRouter');
+const authRouter = require('./router/AuthRouter');
 
 const app = express();
 dotenv.config({ path: path.resolve(__dirname, '.env.development') });
@@ -28,8 +29,10 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/blogs', blogRouter);
+app.use('/api/auth', authRouter);
 
 app.listen(process.env.SERVER_PORT, process.env.SERVER_DOMAIN, function () {
   console.log(
