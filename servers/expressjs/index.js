@@ -1,18 +1,19 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const path = require("path");
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const path = require('path');
+const blogValidator = require('./validation/BlogValidator');
 
-const blogRouter = require("./router/BlogRouter");
+const blogRouter = require('./router/BlogRouter');
 
 const app = express();
-dotenv.config({ path: path.resolve(__dirname, ".env.development") });
+dotenv.config({ path: path.resolve(__dirname, '.env.development') });
 
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(function () {
-    console.log("Express.JS server successfully connected to MongoDB");
+    console.log('Express.JS server successfully connected to MongoDB');
   })
   .catch(function (err) {
     console.log(err);
@@ -28,7 +29,7 @@ app.use(
 );
 app.use(express.json());
 
-app.use("/api/blogs", blogRouter);
+app.use('/api/blogs', blogRouter);
 
 app.listen(process.env.SERVER_PORT, process.env.SERVER_DOMAIN, function () {
   console.log(

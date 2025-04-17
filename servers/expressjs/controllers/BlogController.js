@@ -1,4 +1,5 @@
 const Blog = require('../models/BlogModel');
+const blogValidator = require('../validation/BlogValidator');
 
 async function getAllBlogs(req, res) {
   const blogs = await Blog.find({}).sort({ createdAt: -1 });
@@ -16,8 +17,15 @@ async function findBlogById(req, res) {
   return res.status(200).json(blog);
 }
 
-async function createBlog(req, res) {
-  const { title, body } = req.body;
+async function createBlog(req, res, next) {
+  const blogPayload = ({ title, body } = req.body);
+  const errors = blogValidator(blogPayload);
+
+  if (errors.length > 0) {
+    return res.status(400).json({
+      errors: errors,
+    });
+  }
 
   const blog = new Blog({
     title: title,

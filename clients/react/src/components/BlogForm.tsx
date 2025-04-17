@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useBlogs from '../hooks/useBlogs';
 import Blog from '../models/Blog';
 import { useNavigate, useParams } from 'react-router';
@@ -8,6 +8,7 @@ export default function BlogForm() {
   const { id } = useParams();
   const { blog, createBlog, updateBlog, isLoadingActivity } = useBlogs(id);
   const { register, handleSubmit, reset } = useForm();
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const navigate = useNavigate();
 
   useEffect(
@@ -37,6 +38,14 @@ export default function BlogForm() {
         onSuccess: function (createdBlog) {
           navigate(`/blog/${createdBlog._id}`);
         },
+        onError: function (error) {
+          if (Array.isArray(error)) {
+            setValidationErrors(error);
+          } else {
+            setValidationErrors([]);
+          }
+          console.log(validationErrors);
+        },
       });
     }
   }
@@ -50,10 +59,14 @@ export default function BlogForm() {
           </p>
         </div>
         <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-          <div className="pt-6 pb-6 pr-8 pl-8 border bg-white rounded">
+          <div
+            className={`pt-6 pb-6 pr-8 pl-8 border bg-white rounded ${
+              validationErrors.length > 0 ? 'border-red-500' : 'border'
+            }`}
+          >
             <input
               placeholder="New post title here..."
-              className="title-input"
+              className={`title-input`}
               {...register('title')}
             />
           </div>
@@ -77,6 +90,9 @@ export default function BlogForm() {
             </button>
           </div>
         </form>
+        {validationErrors.map((err, i) => (
+          <p key={i}>{err}</p>
+        ))}
       </div>
     </>
   );

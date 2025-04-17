@@ -10,9 +10,20 @@ agent.interceptors.response.use(
     return response;
   },
   async function (error) {
-    const { status } = error.response;
+    const { status, data } = error.response;
 
     switch (status) {
+      case 400:
+        if (data.errors) {
+          const modalStateErrors = Object.values(data.errors).flatMap(
+            (errObj) => Object.values(errObj)
+          );
+          console.log(modalStateErrors);
+          throw modalStateErrors;
+        } else {
+          toast.error('Server error');
+        }
+        break;
       case 404:
         toast.error('Not found');
         break;

@@ -1,21 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Blog from "../models/Blog";
-import agent from "../api/agent";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Blog from '../models/Blog';
+import agent from '../api/agent';
 
 export default function useBlogs(id?: string) {
   const queryClient = useQueryClient();
 
   const { data: blogs, isPending } = useQuery({
-    queryKey: ["blogs"],
+    queryKey: ['blogs'],
     queryFn: async () => {
-      const response = await agent.get<Blog[]>("blogs");
+      const response = await agent.get<Blog[]>('blogs');
       return response.data;
     },
     enabled: !id,
   });
 
   const { data: blog, isLoading: isLoadingActivity } = useQuery({
-    queryKey: ["blogs", id],
+    queryKey: ['blogs', id],
     queryFn: async () => {
       const response = await agent.get<Blog>(`blogs/${id}`);
       return response.data;
@@ -25,12 +25,12 @@ export default function useBlogs(id?: string) {
 
   const createBlog = useMutation({
     mutationFn: async (blog: Blog) => {
-      const response = await agent.post("blogs", blog);
+      const response = await agent.post('blogs', blog);
       return response.data;
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["blogs"],
+        queryKey: ['blogs'],
       });
     },
   });
@@ -42,7 +42,7 @@ export default function useBlogs(id?: string) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["blogs"],
+        queryKey: ['blogs'],
       });
     },
   });
@@ -53,7 +53,7 @@ export default function useBlogs(id?: string) {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["blogs"],
+        queryKey: ['blogs'],
       });
     },
   });
