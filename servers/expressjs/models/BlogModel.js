@@ -1,11 +1,12 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const blogModel = mongoose.model(
-  "Blog",
+  'Blog',
   new mongoose.Schema(
     {
       title: String,
       body: String,
+      author: String,
     },
     { timestamps: true }
   )

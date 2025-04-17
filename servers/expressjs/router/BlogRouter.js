@@ -6,10 +6,10 @@ const auth = require('../middleware/Auth');
 router.get('/', controller.getAllBlogs);
 router.get('/:id', controller.findBlogById);
 
-router.post('/', controller.createBlog);
+router.post('/', auth, controller.createBlog);
 
-router.put('/:id', controller.updateBlog);
+router.put('/:id', auth, controller.updateBlog);
 
-router.delete('/:id', controller.deleteBlog);
+router.delete('/:id', auth, controller.deleteBlog);
 
 module.exports = router;

@@ -18,6 +18,7 @@ async function findBlogById(req, res) {
 }
 
 async function createBlog(req, res) {
+  const user = res.locals.user;
   const blogPayload = ({ title, body } = req.body);
   const errors = blogValidator(blogPayload);
 
@@ -28,6 +29,7 @@ async function createBlog(req, res) {
   const blog = new Blog({
     title: title,
     body: body,
+    author: user.displayName,
   });
 
   await blog
@@ -43,6 +45,7 @@ async function createBlog(req, res) {
 }
 
 async function updateBlog(req, res) {
+  const user = res.locals.user;
   const blogPayload = ({ title, body } = req.body);
   const errors = blogValidator(blogPayload);
 
@@ -62,6 +65,10 @@ async function updateBlog(req, res) {
     return res.sendStatus(404);
   }
 
+  if (foundBlog.author !== user.displayName) {
+    return res.sendStatus(401);
+  }
+
   await Blog.findOneAndUpdate(findBlog, updateBlog)
     .then(async function () {
       console.log('Blog has been updated.');
@@ -75,7 +82,14 @@ async function updateBlog(req, res) {
 }
 
 async function deleteBlog(req, res) {
+  const user = res.locals.user;
   const id = req.params.id;
+  const blog = await Blog.findById(id);
+
+  if (blog.author !== user.displayName) {
+    return res.sendStatus(401);
+  }
+
   await Blog.deleteOne({ _id: id });
   console.log('Blog has been deleted.');
   return res.sendStatus(204);
