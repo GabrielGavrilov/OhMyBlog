@@ -15,15 +15,15 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        path: '/blog/:id',
+        element: <BlogPage />,
+      },
+      {
         element: <RequireAuth />,
         children: [
           {
             path: '/blog/new',
             element: <NewBlogPage />,
-          },
-          {
-            path: '/blog/:id',
-            element: <BlogPage />,
           },
           {
             path: '/blog/update/:id',

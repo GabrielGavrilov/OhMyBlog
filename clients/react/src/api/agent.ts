@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 const agent = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  withCredentials: true,
 });
 
 agent.interceptors.response.use(
