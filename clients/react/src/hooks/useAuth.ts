@@ -20,6 +20,14 @@ export default function useAuth() {
       location.pathname !== '/register',
   });
 
+  const { data: isAuthorized } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const response = await agent.get<User>(`/auth`);
+      return response.status === 401 ? false : true;
+    },
+  });
+
   const loginUser = useMutation({
     mutationFn: async (user: User) => {
       await agent.post(`/auth`, user);
@@ -50,6 +58,7 @@ export default function useAuth() {
   });
 
   return {
+    isAuthorized,
     userInfo,
     loadingUserInfo,
     loginUser,

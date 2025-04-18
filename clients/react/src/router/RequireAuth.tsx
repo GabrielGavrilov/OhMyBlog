@@ -2,14 +2,10 @@ import { Navigate, Outlet, useLocation } from 'react-router';
 import useAuth from '../hooks/useAuth';
 
 export default function RequireAuth() {
-  const { userInfo, loadingUserInfo } = useAuth();
+  const { isAuthorized } = useAuth();
   const location = useLocation();
 
-  if (loadingUserInfo) {
-    return <p>Loading...</p>;
-  }
-
-  if (userInfo === undefined || !userInfo) {
+  if (!isAuthorized) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 

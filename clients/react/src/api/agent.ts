@@ -14,19 +14,10 @@ agent.interceptors.response.use(
     switch (status) {
       case 400:
         throw data;
-        // if (data.errors) {
-        //   const modalStateErrors = Object.values(data.errors).flatMap(
-        //     (errObj) => Object.values(errObj)
-        //   );
-        //   console.log(modalStateErrors);
-        //   throw modalStateErrors;
-        // } else {
-        //   toast.error('Server error');
-        // }
         break;
       case 401: {
-        // const controller = new AbortController();
-        // controller.abort();
+        const controller = new AbortController();
+        controller.abort();
         // toast.error('Unauthorized');
         break;
       }
