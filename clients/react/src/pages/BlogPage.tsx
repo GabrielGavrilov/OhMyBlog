@@ -1,25 +1,14 @@
 import { Link, useNavigate, useParams } from 'react-router';
 import useBlogs from '../hooks/useBlogs';
 import useAuth from '../hooks/useAuth';
-import { useEffect, useState } from 'react';
 
 export default function BlogPage() {
   const { id } = useParams();
   const { blog, deleteBlog } = useBlogs(id);
   const { isAuthorized, userInfo } = useAuth();
-  const [isAuthor, setAuthor] = useState<boolean>(false);
+  const isAuthor = isAuthorized && userInfo?.displayName == blog?.author;
 
   const navigate = useNavigate();
-
-  useEffect(
-    function () {
-      if (isAuthorized && userInfo?.displayName == blog?.author) {
-        console.log(userInfo);
-        setAuthor(true);
-      }
-    },
-    [isAuthorized, userInfo, blog]
-  );
 
   function handleDelete() {
     deleteBlog.mutate();

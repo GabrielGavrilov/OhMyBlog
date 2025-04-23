@@ -8,24 +8,25 @@ export default function useAuth() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { data: userInfo, isLoading: loadingUserInfo } = useQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const response = await agent.get<User>(`/auth`);
-      return response.data;
-    },
-    enabled:
-      !queryClient.getQueryData(['user']) &&
-      location.pathname !== '/login' &&
-      location.pathname !== '/register',
-  });
-
   const { data: isAuthorized } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
       const response = await agent.get<User>(`/auth`);
       return response.status === 401 ? false : true;
     },
+  });
+
+  const { data: userInfo, isLoading: loadingUserInfo } = useQuery({
+    queryKey: ['user'],
+    queryFn: async ({ signal }) => {
+      const response = await agent.get<User>(`/auth`, { signal });
+      return response.data;
+    },
+    enabled:
+      !queryClient.getQueryData(['user']) &&
+      location.pathname !== '/login' &&
+      location.pathname !== '/register' &&
+      !isAuthorized,
   });
 
   const loginUser = useMutation({
