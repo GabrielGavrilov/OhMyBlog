@@ -16,8 +16,22 @@ public class BlogAssembler
         };
     }
 
+    public List<BlogDto> Assemble(List<Blog> entities)
+    {
+        return entities
+            .Select(entity => Assemble(entity))
+            .ToList();
+    }
+
     public Blog Disassemble(BlogDto blogDto) 
     {
         return Blog.NewInstance(blogDto.Title, blogDto.Body);
+    }
+
+    public Blog DisassembleInto(BlogDto blogDto, Blog entity)
+    {
+        entity.Title = blogDto.Title;
+        entity.Body = blogDto.Body;
+        return entity;
     }
 }
