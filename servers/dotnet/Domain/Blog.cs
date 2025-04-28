@@ -4,7 +4,18 @@ namespace Domain;
 
 public class Blog
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public required string Id { get; set; }
     public required string Title { get; set; }
     public required string Body { get; set; }
+
+    public static Blog NewInstance(string blogTitle, string blogBody)
+    {
+        return new Blog
+        {
+            Id = Guid.NewGuid().ToString(),
+            Title = blogTitle,
+            Body = blogBody
+        };
+    }
+
 }

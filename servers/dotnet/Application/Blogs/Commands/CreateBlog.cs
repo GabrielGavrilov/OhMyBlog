@@ -1,4 +1,6 @@
 using System;
+using Application.Blogs.Assemblers;
+using Application.Blogs.DTOs;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Query;
@@ -8,20 +10,22 @@ namespace Application.Blogs.Commands;
 
 public class CreateBlog
 {
-    public class Command : IRequest<Blog>
+    public class Command : IRequest<BlogDto>
     {
-        public required Blog Blog  { get; set; }
+        public required BlogDto BlogDto  { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Command, Blog>
+    public class Handler(AppDbContext context) : IRequestHandler<Command, BlogDto>
     {
-        public async Task<Blog> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<BlogDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            context.Blogs.Add(request.Blog);
+            BlogAssembler blogAssembler = new BlogAssembler();
+            Blog blog = blogAssembler.Disassemble(request.BlogDto);
             
+            context.Blogs.Add(blog);
+
             await context.SaveChangesAsync();
-            
-            return request.Blog;
+            return blogAssembler.Assemble(blog);
         }
     }
 }
