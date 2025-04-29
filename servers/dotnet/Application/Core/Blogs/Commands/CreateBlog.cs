@@ -20,7 +20,7 @@ public class CreateBlog
     public class Handler(AppDbContext context) : IRequestHandler<Command, Result<BlogDto>>
     {
 
-        private BlogAssembler blogAssembler = new BlogAssembler();
+        private readonly BlogAssembler _blogAssembler = new BlogAssembler();
 
         public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
@@ -30,12 +30,12 @@ public class CreateBlog
                 return Result<BlogDto>.Failure("Blog title too small", 400);
             }
 
-            Blog blog = blogAssembler.Disassemble(request.BlogDto);
+            Blog blog = _blogAssembler.Disassemble(request.BlogDto);
 
             context.Blogs.Add(blog);
             await context.SaveChangesAsync();
             
-            return Result<BlogDto>.Success(blogAssembler.Assemble(blog));
+            return Result<BlogDto>.Success(_blogAssembler.Assemble(blog));
         }
     }
 }

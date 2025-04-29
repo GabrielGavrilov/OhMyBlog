@@ -1,4 +1,5 @@
 using System;
+using Application;
 using Application.User.DTOs;
 using Domain;
 
@@ -6,7 +7,7 @@ namespace Application.User.Assemblers;
 
 public class UserAssembler
 {
-    public UserDto Assemble(Domain.User entity)
+    public UserDto Assemble(User entity)
     {
         return new UserDto
         {

@@ -17,17 +17,17 @@ public class UpdateBlog
 
     public class Handler(AppDbContext context) : IRequestHandler<Command, BlogDto>
     {
-        private BlogAssembler blogAssembler = new BlogAssembler();
+        private BlogAssembler _blogAssembler = new BlogAssembler();
 
         public async Task<BlogDto> Handle(Command request, CancellationToken cancellationToken)
         {
             Blog foundBlog = await context.Blogs.FindAsync([request.Id], cancellationToken)
                 ?? throw new Exception("Blog does not exist.");
             
-            Blog updatedBlog = blogAssembler.DisassembleInto(request.BlogDto, foundBlog);
+            Blog updatedBlog = _blogAssembler.DisassembleInto(request.BlogDto, foundBlog);
             await context.SaveChangesAsync(cancellationToken);
 
-            return blogAssembler.Assemble(updatedBlog);
+            return _blogAssembler.Assemble(updatedBlog);
 
         }
     }

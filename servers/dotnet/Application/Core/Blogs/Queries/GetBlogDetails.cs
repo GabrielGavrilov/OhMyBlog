@@ -17,11 +17,11 @@ public class GetBlogDetails
 
     public class Handler(AppDbContext context) : IRequestHandler<Query, BlogDto>
     {
-        private BlogAssembler blogAssembler = new BlogAssembler();
+        private BlogAssembler _blogAssembler = new BlogAssembler();
 
         public async Task<BlogDto> Handle(Query request, CancellationToken cancellationToken)
         {
-            return blogAssembler.Assemble(
+            return _blogAssembler.Assemble(
                 await context.Blogs.FindAsync([request.Id], cancellationToken)
                     ?? throw new Exception("Blog does not exist.")
             );
