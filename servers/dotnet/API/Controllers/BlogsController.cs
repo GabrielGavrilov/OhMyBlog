@@ -2,6 +2,7 @@ using Application.Blogs.Commands;
 using Application.Blogs.DTOs;
 using Application.Blogs.Queries;
 using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,5 +37,11 @@ namespace API.Controllers
                 BlogDto = blogDto
             });
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> DeleteBlog(string id)
+        {
+            return await Mediator.Send(new DeleteBlog.Command{Id = id});
+        } 
     }
 }

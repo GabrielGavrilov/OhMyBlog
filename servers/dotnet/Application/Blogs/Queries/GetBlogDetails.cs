@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Metadata.Ecma335;
 using Application.Blogs.Assemblers;
 using Application.Blogs.DTOs;
 using Domain;
@@ -20,7 +21,10 @@ public class GetBlogDetails
 
         public async Task<BlogDto> Handle(Query request, CancellationToken cancellationToken)
         {
-            return blogAssembler.Assemble(await context.Blogs.FindAsync([request.Id], cancellationToken));
+            return blogAssembler.Assemble(
+                await context.Blogs.FindAsync([request.Id], cancellationToken)
+                    ?? throw new Exception("Blog does not exist.")
+            );
         }
     }
 }

@@ -22,9 +22,9 @@ public class UpdateBlog
         public async Task<BlogDto> Handle(Command request, CancellationToken cancellationToken)
         {
             Blog foundBlog = await context.Blogs.FindAsync([request.Id], cancellationToken)
-                ?? throw new Exception("Not found.");
+                ?? throw new Exception("Blog does not exist.");
+            
             Blog updatedBlog = blogAssembler.DisassembleInto(request.BlogDto, foundBlog);
-
             await context.SaveChangesAsync(cancellationToken);
 
             return blogAssembler.Assemble(updatedBlog);
