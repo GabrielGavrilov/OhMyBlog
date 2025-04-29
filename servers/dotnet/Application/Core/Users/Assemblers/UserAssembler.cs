@@ -1,9 +1,8 @@
 using System;
-using Application;
-using Application.User.DTOs;
+using Application.Users.DTOs;
 using Domain;
 
-namespace Application.User.Assemblers;
+namespace Application.Users.Assemblers;
 
 public class UserAssembler
 {

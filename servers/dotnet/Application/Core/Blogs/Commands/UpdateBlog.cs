@@ -17,7 +17,7 @@ public class UpdateBlog
 
     public class Handler(AppDbContext context) : IRequestHandler<Command, BlogDto>
     {
-        private BlogAssembler _blogAssembler = new BlogAssembler();
+        private readonly BlogAssembler _blogAssembler = new BlogAssembler();
 
         public async Task<BlogDto> Handle(Command request, CancellationToken cancellationToken)
         {

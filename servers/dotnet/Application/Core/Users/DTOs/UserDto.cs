@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.User.DTOs;
+namespace Application.Users.DTOs;
 
 public class UserDto
 {

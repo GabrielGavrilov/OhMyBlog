@@ -1,18 +1,22 @@
 using System;
 using Application.Blogs.DTOs;
+using Application.Users.Assemblers;
 using Domain;
 
 namespace Application.Blogs.Assemblers;
 
 public class BlogAssembler
 {
+    private readonly UserAssembler _userAssembler = new UserAssembler();
+
     public BlogDto Assemble(Blog entity) 
     {
         return new BlogDto 
         {
             Id = entity.Id,
             Title = entity.Title,
-            Body = entity.Body
+            Body = entity.Body,
+            User = _userAssembler.Assemble(entity.User)
         };
     }
 

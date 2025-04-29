@@ -14,7 +14,7 @@ public class GetBlogList
 
     public class Handler(AppDbContext context) : IRequestHandler<Query, List<BlogDto>>
     {
-        private BlogAssembler _blogAssembler = new BlogAssembler();
+        private readonly BlogAssembler _blogAssembler = new BlogAssembler();
 
         public async Task<List<BlogDto>> Handle(Query request, CancellationToken cancellationToken)
         {

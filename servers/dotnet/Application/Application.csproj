@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Blogs\Queries\Commands\" />
     <Folder Include="Core\Blogs\Validation\" />
   </ItemGroup>
 

@@ -1,12 +1,13 @@
 using System;
 using System.ComponentModel;
-using Application.User.Assemblers;
-using Application.User.DTOs;
+using Application.Users.Assemblers;
+using Application.Users.DTOs;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Persistence;
 
-namespace Application.User.Commands;
+namespace Application.Users.Commands;
 
 public class CreateUser
 {
@@ -15,13 +16,13 @@ public class CreateUser
         public required RegisterUserDto RegisterUserDto { get; set; }
     }
 
-    public class Handler(UserManager<Domain.User> userManager) : IRequestHandler<Command, UserDto>
+    public class Handler(UserManager<User> userManager) : IRequestHandler<Command, UserDto>
     {
         private readonly UserAssembler userAssembler = new UserAssembler();
 
         public async Task<UserDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            var user = new Domain.User
+            var user = new User
             {
                 UserName = request.RegisterUserDto.Email,
                 Email = request.RegisterUserDto.Email,
