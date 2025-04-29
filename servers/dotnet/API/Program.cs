@@ -1,4 +1,8 @@
 using Application.Blogs.Queries;
+using Application.Interfaces;
+using Domain;
+using Infrastructure.Security;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -19,6 +23,17 @@ builder.Services.AddMediatR(x =>
     x.RegisterServicesFromAssemblyContaining<GetBlogList.Handler>();
 });
 
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+
+// Identity for authentication
+builder.Services.AddIdentityApiEndpoints<User>(opt =>
+{
+    opt.User.RequireUniqueEmail = true;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<AppDbContext>();
+
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -35,11 +50,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// authentication will come before authorization here.
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGroup("api");
+app.MapGroup("api").MapIdentityApi<User>();
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

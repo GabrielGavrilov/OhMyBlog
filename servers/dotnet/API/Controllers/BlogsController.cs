@@ -25,7 +25,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<BlogDto>> CreateBlog(BlogDto blogDto)
         {
-            return await Mediator.Send(new CreateBlog.Command{BlogDto = blogDto});
+            return HandleResult(await Mediator.Send(new CreateBlog.Command{BlogDto = blogDto}));
         }
 
         [HttpPut("{id}")]
