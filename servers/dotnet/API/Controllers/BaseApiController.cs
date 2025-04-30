@@ -1,7 +1,10 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 
 namespace API.Controllers
 {
@@ -20,7 +23,7 @@ namespace API.Controllers
                 return Ok(result.Value);
             }
             
-            return BadRequest(result.Error);
+            return BadRequest(JsonSerializer.Serialize(result.Errors));
         }
     }
 }
