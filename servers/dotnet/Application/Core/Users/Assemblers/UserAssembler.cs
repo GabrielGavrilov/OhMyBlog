@@ -7,7 +7,7 @@ namespace Application.Users.Assemblers;
 
 public class UserAssembler
 {
-    private readonly BlogAssembler BlogAssembler = new BlogAssembler();
+    private readonly BlogAssembler _blogAssembler = new BlogAssembler();
 
     public UserDto Assemble(User entity)
     {
@@ -17,7 +17,7 @@ public class UserAssembler
             DisplayName = entity.DisplayName,
             Email = entity.Email,
             Blogs = entity.Blogs
-                .Select(blog => BlogAssembler.Assemble(blog))
+                .Select(blog => _blogAssembler.Assemble(blog))
                 .ToList()
         };
     }

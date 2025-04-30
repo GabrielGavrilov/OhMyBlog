@@ -7,8 +7,6 @@ namespace Application.Blogs.Assemblers;
 
 public class BlogAssembler
 {
-    // private readonly UserAssembler UserAssembler = new UserAssembler();
-
     public BlogDto Assemble(Blog entity) 
     {
         return new BlogDto 
@@ -29,7 +27,7 @@ public class BlogAssembler
 
     public Blog Disassemble(BlogDto blogDto) 
     {
-        return Blog.NewInstance(blogDto.Title, blogDto.Body);
+        return Blog.NewInstance(blogDto.Title, blogDto.Body, blogDto.UserId);
     }
 
     public Blog DisassembleInto(BlogDto blogDto, Blog entity)

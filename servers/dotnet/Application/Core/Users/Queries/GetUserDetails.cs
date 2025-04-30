@@ -16,11 +16,11 @@ public class GetUserDetails
 
     public class Handler(IUserAccessor userAccessor, AppDbContext context) : IRequestHandler<Query, UserDto>
     {
-        private readonly UserAssembler UserAssembler = new UserAssembler();
+        private readonly UserAssembler _userAssembler = new UserAssembler();
 
         public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
         {
-            return UserAssembler.Assemble(
+            return _userAssembler.Assemble(
                 await context.Users
                     .Include(x => x.Blogs)
                     .FirstOrDefaultAsync(x => userAccessor.GetUserId() == x.Id, cancellationToken)

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Application.Core.Users.Assemblers;
 using Application.Users.Assemblers;
 using Application.Users.DTOs;
 using Domain;
@@ -18,17 +19,12 @@ public class CreateUser
 
     public class Handler(UserManager<User> userManager) : IRequestHandler<Command, UserDto>
     {
-        private readonly UserAssembler userAssembler = new UserAssembler();
+        private readonly UserAssembler _userAssembler = new UserAssembler();
+        private readonly RegisterUserAssembler _registerUserAssembler = new RegisterUserAssembler();
 
         public async Task<UserDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            var user = new User
-            {
-                UserName = request.RegisterUserDto.Email,
-                Email = request.RegisterUserDto.Email,
-                DisplayName = request.RegisterUserDto.DisplayName
-            };
-
+            User user = _registerUserAssembler.Disassemble(request.RegisterUserDto);
             var result = await userManager.CreateAsync(user, request.RegisterUserDto.Password);
 
             if (!result.Succeeded)
@@ -36,7 +32,7 @@ public class CreateUser
                 throw new Exception("Error creating user.");
             }
 
-            return userAssembler.Assemble(user);
+            return _userAssembler.Assemble(user);
         }
     }
 }

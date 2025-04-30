@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.CompilerServices;
 using Application.Blogs.Assemblers;
 using Application.Blogs.DTOs;
 using Application.Core;
+using Application.Core.Blogs.Validators;
 using Application.Interfaces;
 using Domain;
 using MediatR;
@@ -21,22 +23,25 @@ public class CreateBlog
     {
 
         private readonly BlogAssembler _blogAssembler = new BlogAssembler();
+        private readonly BlogValidator _blogValidator = new BlogValidator();
 
         public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            if (request.BlogDto.Title.Length < 4)
+            Dictionary<string, string> errors = _blogValidator.Validate(request.BlogDto);
+
+            if (errors.Count > 0)
             {
-                return Result<BlogDto>.Failure("Blog title too small", 400);
+                return Result<BlogDto>.Failure(errors, 400);
             }
 
             User user = await userAccessor.GetUserAsync();
+            request.BlogDto.UserId = user.Id;
+            
             Blog blog = _blogAssembler.Disassemble(request.BlogDto);
-
-            blog.UserId = user.Id;
 
             context.Blogs.Add(blog);
             await context.SaveChangesAsync();
-            
+
             return Result<BlogDto>.Success(_blogAssembler.Assemble(blog));
         }
     }

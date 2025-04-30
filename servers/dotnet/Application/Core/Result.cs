@@ -7,7 +7,7 @@ public class Result<T>
 
     public bool IsSuccess { get; set; }
     public T? Value { get; set; }
-    public string? Error { get; set; }
+    public Dictionary<string, string>? Errors { get; set; }
     // could be an enum
     public int Code { get; set; }
 
@@ -17,10 +17,10 @@ public class Result<T>
         Value = value
     };
 
-    public static Result<T> Failure(string error, int code) => new ()
+    public static Result<T> Failure(Dictionary<string, string> errors, int code) => new ()
     {
-        IsSuccess = true,
-        Error = error,
+        IsSuccess = false,
+        Errors = errors,
         Code = code
     };
 
