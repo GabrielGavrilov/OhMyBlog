@@ -3,6 +3,7 @@ using Application.Blogs.DTOs;
 using Application.Blogs.Queries;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,12 +24,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<BlogDto>> CreateBlog(BlogDto blogDto)
         {
             return HandleResult(await Mediator.Send(new CreateBlog.Command{BlogDto = blogDto}));
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "BlogAuthor")]
         public async Task<ActionResult<BlogDto>> UpdateBlog(string id, BlogDto blogDto)
         {
             return await Mediator.Send(new UpdateBlog.Command
@@ -39,6 +42,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "BlogAuthor")]
         public async Task<ActionResult<Unit>> DeleteBlog(string id)
         {
             return await Mediator.Send(new DeleteBlog.Command{Id = id});

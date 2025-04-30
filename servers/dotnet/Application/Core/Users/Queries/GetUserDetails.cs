@@ -5,21 +5,27 @@ using Application.Users.DTOs;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace Application.Users.Queries;
 
 public class GetUserDetails
 {
-    public class Query : IRequest<User> {}
+    public class Query : IRequest<UserDto> {}
 
-    public class Handler(IUserAccessor userAccessor) : IRequestHandler<Query, User>
+    public class Handler(IUserAccessor userAccessor, AppDbContext context) : IRequestHandler<Query, UserDto>
     {
-        private readonly UserAssembler _userAssembler = new UserAssembler();
+        private readonly UserAssembler UserAssembler = new UserAssembler();
 
-        public async Task<User> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
         {
-            // return _userAssembler.Assemble(await userAccessor.GetUserAsync());
-            return await userAccessor.GetUserAsync();
+            return UserAssembler.Assemble(
+                await context.Users
+                    .Include(x => x.Blogs)
+                    .FirstOrDefaultAsync(x => userAccessor.GetUserId() == x.Id, cancellationToken)
+                        ?? throw new Exception("No user found.")
+            );
         }
     }
 }

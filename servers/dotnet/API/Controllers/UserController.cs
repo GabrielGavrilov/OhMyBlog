@@ -12,7 +12,7 @@ namespace API.Controllers
     public class UserController(SignInManager<User> signInManager) : BaseApiController
     {
         [HttpGet]
-        public async Task<User> GetUserInfo()
+        public async Task<UserDto> GetUserInfo()
         {
             return await Mediator.Send(new GetUserDetails.Query{});
         }

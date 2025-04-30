@@ -1,0 +1,47 @@
+using System;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
+
+namespace Infrastructure.Security;
+
+public class BlogAuthorRequirement : IAuthorizationRequirement
+{
+
+}
+
+public class BlogAuthorRequirementHandler(AppDbContext dbContext, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<BlogAuthorRequirement>
+{
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, BlogAuthorRequirement requirement)
+    {
+        var httpContext = httpContextAccessor.HttpContext;
+        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
+        {
+            return;
+        }
+
+        if (httpContext?.GetRouteValue("id") is not string blogId)
+        {
+            return;
+        }
+
+        var blog = await dbContext.Blogs.SingleOrDefaultAsync(x => x.Id == blogId);
+
+        if (blog == null)
+        {
+            return;
+        }
+
+        if (blog.UserId != userId)
+        {
+            return;
+        }
+
+        context.Succeed(requirement);
+    }
+}

@@ -7,16 +7,16 @@ namespace Application.Blogs.Assemblers;
 
 public class BlogAssembler
 {
-    private readonly UserAssembler _userAssembler = new UserAssembler();
+    // private readonly UserAssembler UserAssembler = new UserAssembler();
 
     public BlogDto Assemble(Blog entity) 
     {
         return new BlogDto 
         {
             Id = entity.Id,
+            UserId = entity.UserId,
             Title = entity.Title,
-            Body = entity.Body,
-            User = _userAssembler.Assemble(entity.User)
+            Body = entity.Body
         };
     }
 

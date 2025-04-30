@@ -22,12 +22,10 @@ public class GetBlogDetails
 
         public async Task<BlogDto> Handle(Query request, CancellationToken cancellationToken)
         {
-            // return _blogAssembler.Assemble(
-            //     await context.Blogs.FindAsync([request.Id], cancellationToken)
-            //         ?? throw new Exception("Blog does not exist.")
-            // );
             return _blogAssembler.Assemble(
-                await context.Blogs.Include(x => x.User).FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken)
+                await context.Blogs
+                    .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken)
+                        ?? throw new Exception("Blog not found.")
             );
         }
     }

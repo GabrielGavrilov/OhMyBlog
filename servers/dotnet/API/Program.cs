@@ -2,6 +2,7 @@ using Application.Blogs.Queries;
 using Application.Interfaces;
 using Domain;
 using Infrastructure.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -33,7 +34,15 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>();
 
-
+// authorization
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("BlogAuthor", policy =>
+    {
+        policy.Requirements.Add(new BlogAuthorRequirement());
+    });
+});
+builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorRequirementHandler>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
