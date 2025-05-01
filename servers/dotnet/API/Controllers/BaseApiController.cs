@@ -23,7 +23,7 @@ namespace API.Controllers
                 return Ok(result.Value);
             }
             
-            return BadRequest(JsonSerializer.Serialize(result.Errors));
+            return BadRequest(result.Errors);
         }
     }
 }
