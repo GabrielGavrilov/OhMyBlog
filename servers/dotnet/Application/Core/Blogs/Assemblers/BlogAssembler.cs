@@ -14,7 +14,8 @@ public class BlogAssembler
             Id = entity.Id,
             UserId = entity.UserId,
             Title = entity.Title,
-            Body = entity.Body
+            Body = entity.Body,
+            CreatedAt = entity.CreatedAt
         };
     }
 

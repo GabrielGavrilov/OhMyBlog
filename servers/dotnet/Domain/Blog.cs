@@ -8,6 +8,7 @@ public class Blog
     public required string Id { get; set; }
     public required string Title { get; set; }
     public required string Body { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public required string UserId { get; set; }
     public User User { get; set; } = null!;
@@ -19,7 +20,8 @@ public class Blog
             Id = Guid.NewGuid().ToString(),
             Title = title,
             Body = body,
-            UserId = userId
+            UserId = userId,
+            CreatedAt = DateTime.Now
         };
     }
 
