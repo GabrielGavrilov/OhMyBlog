@@ -1,5 +1,7 @@
+using Application.Blogs.Assemblers;
 using Application.Blogs.Queries;
 using Application.Interfaces;
+using Application.Users.Assemblers;
 using Domain;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
@@ -43,6 +45,9 @@ builder.Services.AddAuthorization(opt =>
     });
 });
 builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorRequirementHandler>();
+
+builder.Services.AddSingleton<UserAssembler>();
+builder.Services.AddSingleton<BlogAssembler>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

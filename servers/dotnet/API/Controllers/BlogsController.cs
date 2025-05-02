@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class BlogController : BaseApiController
+    public class BlogsController : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<List<BlogDto>>> GetBlogs()

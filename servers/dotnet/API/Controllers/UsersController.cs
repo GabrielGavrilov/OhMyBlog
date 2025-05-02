@@ -1,20 +1,29 @@
+using Application.Core.Users.Queries;
 using Application.Users.Commands;
 using Application.Users.DTOs;
 using Application.Users.Queries;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class UserController(SignInManager<User> signInManager) : BaseApiController
+    public class UsersController(SignInManager<User> signInManager) : BaseApiController
     {
         [HttpGet]
-        public async Task<UserDto> GetUserInfo()
+        [Authorize]
+        public async Task<UserDto> GetCurrentUserDetails()
         {
-            return await Mediator.Send(new GetUserDetails.Query{});
+            return await Mediator.Send(new GetCurrentUserDetails.Query{});
+        }
+
+        [HttpGet("{id}")]
+        public async Task<UserDto> GetUserInfo(string id)
+        {
+            return await Mediator.Send(new GetUserDetails.Query{Id = id});
         }
 
         [HttpPost]
@@ -24,6 +33,7 @@ namespace API.Controllers
         }
 
         [HttpPost("logout")]
+        [Authorize]
         public async Task<ActionResult> LogoutUser()
         {
             await signInManager.SignOutAsync();

@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Blog from '../models/Blog';
 import agent from '../api/agent';
+import useAuth from './useAuth';
 
 export default function useBlogs(id?: string) {
   const queryClient = useQueryClient();
+  const { userDetails } = useAuth();
 
   const { data: blogs, isPending } = useQuery({
     queryKey: ['blogs'],
@@ -12,6 +14,13 @@ export default function useBlogs(id?: string) {
       return response.data;
     },
     enabled: !id,
+    select: (data) => {
+      return data.map((blog) => {
+        return {
+          ...blog,
+        };
+      });
+    },
   });
 
   const { data: blog, isLoading: isLoadingActivity } = useQuery({

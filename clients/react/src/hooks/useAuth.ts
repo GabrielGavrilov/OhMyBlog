@@ -29,6 +29,14 @@ export default function useAuth() {
       !isAuthorized,
   });
 
+  const { data: userDetails, isLoading: loadingUserDetails } = useQuery({
+    queryKey: ['user'],
+    queryFn: async (id: string) => {
+      const response = await agent.get<User>(`/users/${id}`);
+      return response.data;
+    },
+  });
+
   const loginUser = useMutation({
     mutationFn: async (user: User) => {
       await agent.post(`/auth`, user);
@@ -62,6 +70,8 @@ export default function useAuth() {
     isAuthorized,
     userInfo,
     loadingUserInfo,
+    userDetails,
+    loadingUserDetails,
     loginUser,
     registerUser,
     logoutUser,

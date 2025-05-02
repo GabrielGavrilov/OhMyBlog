@@ -1,7 +1,7 @@
 export default interface Blog {
-  _id?: string;
+  id?: string;
+  author?: string;
   title: string;
   body: string;
-  author: string;
   createdAt?: Date;
 }
