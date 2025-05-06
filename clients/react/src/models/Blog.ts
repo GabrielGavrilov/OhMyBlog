@@ -1,6 +1,6 @@
 export default interface Blog {
   id?: string;
-  author?: string;
+  userId?: string;
   title: string;
   body: string;
   createdAt?: Date;

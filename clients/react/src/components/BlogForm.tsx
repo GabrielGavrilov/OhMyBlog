@@ -46,7 +46,7 @@ export default function BlogForm() {
     } else {
       await createBlog.mutate(data, {
         onSuccess: function (createdBlog) {
-          navigate(`/blog/${createdBlog._id}`);
+          navigate(`/blog/${createdBlog.id}`);
         },
         onError: function (error) {
           if (Array.isArray(error)) {

@@ -11,15 +11,15 @@ export default function useAuth() {
   const { data: isAuthorized } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const response = await agent.get<User>(`/auth`);
+      const response = await agent.get<User>(`/users`);
       return response.status === 401 ? false : true;
     },
   });
 
   const { data: userInfo, isLoading: loadingUserInfo } = useQuery({
     queryKey: ['user'],
-    queryFn: async ({ signal }) => {
-      const response = await agent.get<User>(`/auth`, { signal });
+    queryFn: async () => {
+      const response = await agent.get<User>(`/users`);
       return response.data;
     },
     enabled:
@@ -27,19 +27,12 @@ export default function useAuth() {
       location.pathname !== '/login' &&
       location.pathname !== '/register' &&
       !isAuthorized,
-  });
-
-  const { data: userDetails, isLoading: loadingUserDetails } = useQuery({
-    queryKey: ['user'],
-    queryFn: async (id: string) => {
-      const response = await agent.get<User>(`/users/${id}`);
-      return response.data;
-    },
+    retry: false,
   });
 
   const loginUser = useMutation({
     mutationFn: async (user: User) => {
-      await agent.post(`/auth`, user);
+      await agent.post(`/login?useCookies=true`, user);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
@@ -50,13 +43,13 @@ export default function useAuth() {
 
   const registerUser = useMutation({
     mutationFn: async (user: User) => {
-      await agent.post(`/auth/register`, user);
+      await agent.post(`/users`, user);
     },
   });
 
   const logoutUser = useMutation({
     mutationFn: async () => {
-      await agent.delete(`/auth`);
+      await agent.post(`/users/logout`);
     },
     onSuccess: () => {
       queryClient.removeQueries({
@@ -70,8 +63,6 @@ export default function useAuth() {
     isAuthorized,
     userInfo,
     loadingUserInfo,
-    userDetails,
-    loadingUserDetails,
     loginUser,
     registerUser,
     logoutUser,
