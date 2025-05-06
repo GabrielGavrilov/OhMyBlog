@@ -3,7 +3,6 @@ import useAuth from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import User from '../models/User';
-import RegisterUser from '../models/RegisterUser';
 
 export default function AuthForm() {
   const navigate = useNavigate();
