@@ -3,6 +3,7 @@ using Application.Blogs.Assemblers;
 using Application.Blogs.DTOs;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Blogs.Commands;
@@ -27,7 +28,9 @@ public class UpdateBlog
             Blog updatedBlog = _blogAssembler.DisassembleInto(request.BlogDto, foundBlog);
             await context.SaveChangesAsync(cancellationToken);
 
-            return _blogAssembler.Assemble(updatedBlog);
+            return _blogAssembler.Assemble(await context.Blogs.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == request.BlogDto.Id)
+                ?? throw new Exception("There has been an issue.")
+            );
 
         }
     }

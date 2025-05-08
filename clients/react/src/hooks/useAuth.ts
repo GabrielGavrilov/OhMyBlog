@@ -17,7 +17,7 @@ export default function useAuth() {
   });
 
   const { data: userInfo, isLoading: loadingUserInfo } = useQuery({
-    queryKey: ['user'],
+    queryKey: ['userInformation'],
     queryFn: async () => {
       const response = await agent.get<User>(`/users`);
       return response.data;
@@ -28,6 +28,8 @@ export default function useAuth() {
       location.pathname !== '/register' &&
       !isAuthorized,
     retry: false,
+    staleTime: 0,
+    gcTime: 0,
   });
 
   const loginUser = useMutation({

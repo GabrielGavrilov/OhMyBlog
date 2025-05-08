@@ -4,13 +4,9 @@ import useAuth from '../hooks/useAuth';
 
 export default function BlogPage() {
   const { id } = useParams();
-  const { blog, deleteBlog } = useBlogs(id);
-  const { isAuthorized, userInfo } = useAuth();
-  const isAuthor = isAuthorized && userInfo?.id === blog?.userId;
-
-  console.log(userInfo?.displayName);
-
-  // alert(userInfo?.id);
+  const { blog, deleteBlog, isLoadingBlog } = useBlogs(id);
+  const { isAuthorized, userInfo, loadingUserInfo } = useAuth();
+  const isAuthor = isAuthorized && userInfo?.id === blog?.user.id;
 
   const navigate = useNavigate();
 
@@ -19,15 +15,17 @@ export default function BlogPage() {
     navigate('/');
   }
 
+  if (isLoadingBlog || loadingUserInfo) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <div className="flex justify-center">
-        {/* {userInfo?.id} */}
-        {blog?.userId}
         <div className="w-10/12 lg:w-2/3 md:w-10/12 sm:w-10/12">
           <div className="pt-8 pb-8 pl-12 pr-12 w-full bg-white rounded border">
             <div>
-              <p className="font-semibold">{'{author}'}</p>
+              <p className="font-semibold">{blog?.user.displayName}</p>
             </div>
             <div className="font-light text-sm mb-4">
               {'Posted on ' + blog?.createdAt?.toString().split('T')[0]}

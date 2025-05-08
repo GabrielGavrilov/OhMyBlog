@@ -24,6 +24,7 @@ public class GetBlogDetails
         {
             return _blogAssembler.Assemble(
                 await context.Blogs
+                    .Include(x => x.User)
                     .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken)
                         ?? throw new Exception("Blog not found.")
             );

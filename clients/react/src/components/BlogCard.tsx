@@ -9,7 +9,7 @@ export default function BlogCard({ blog }: Props) {
   return (
     <>
       <div className="bg-white rounded border pt-6 pb-6 pl-8 pr-8 ">
-        <p className="font-semibold">{'{author}'}</p>
+        <p className="font-semibold">{blog.user.displayName}</p>
         <p className="text-sm font-light mb-4">
           {'Posted on ' + String(blog.createdAt).split('T')[0]}
         </p>

@@ -21,7 +21,7 @@ export default function useBlogs(id?: string) {
     },
   });
 
-  const { data: blog, isLoading: isLoadingActivity } = useQuery({
+  const { data: blog, isLoading: isLoadingBlog } = useQuery({
     queryKey: ['blogs', id],
     queryFn: async () => {
       const response = await agent.get<Blog>(`blogs/${id}`);
@@ -69,7 +69,7 @@ export default function useBlogs(id?: string) {
     blogs,
     blog,
     isPending,
-    isLoadingActivity,
+    isLoadingBlog,
     createBlog,
     updateBlog,
     deleteBlog,

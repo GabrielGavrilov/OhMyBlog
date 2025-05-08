@@ -18,7 +18,7 @@ public class GetBlogList
 
         public async Task<List<BlogDto>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return _blogAssembler.Assemble(await context.Blogs.ToListAsync(cancellationToken));
+            return _blogAssembler.Assemble(await context.Blogs.Include(blog => blog.User).ToListAsync(cancellationToken));
         }
     }
 
