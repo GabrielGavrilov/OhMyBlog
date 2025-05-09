@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Application.Core;
 using Application.Core.Users.Assemblers;
 using Application.Users.Assemblers;
 using Application.Users.DTOs;
@@ -12,19 +13,20 @@ namespace Application.Users.Commands;
 
 public class CreateUser
 {
-    public class Command : IRequest<UserDto>
+    public class Command : IRequest<Result<UserDto>>
     {
         public required RegisterUserDto RegisterUserDto { get; set; }
     }
 
-    public class Handler(UserManager<User> userManager) : IRequestHandler<Command, UserDto>
+    public class Handler(
+        UserManager<User> userManager,
+        UserAssembler userAssembler,
+        RegisterUserAssembler registerUserAssembler
+    ) : IRequestHandler<Command, Result<UserDto>>
     {
-        private readonly UserAssembler _userAssembler = new UserAssembler();
-        private readonly RegisterUserAssembler _registerUserAssembler = new RegisterUserAssembler();
-
-        public async Task<UserDto> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<UserDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            User user = _registerUserAssembler.Disassemble(request.RegisterUserDto);
+            User user = registerUserAssembler.Disassemble(request.RegisterUserDto);
             var result = await userManager.CreateAsync(user, request.RegisterUserDto.Password);
 
             if (!result.Succeeded)
@@ -32,7 +34,7 @@ public class CreateUser
                 throw new Exception("Error creating user.");
             }
 
-            return _userAssembler.Assemble(user);
+            return Result<UserDto>.Success(userAssembler.Assemble(user));
         }
     }
 }
