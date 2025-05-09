@@ -15,21 +15,21 @@ namespace API.Controllers
     {
         [HttpGet]
         [Authorize]
-        public async Task<UserDto> GetCurrentUserDetails()
+        public async Task<ActionResult<UserDto>> GetCurrentUserDetails()
         {
-            return await Mediator.Send(new GetCurrentUserDetails.Query{});
+            return HandleResult(await Mediator.Send(new GetCurrentUserDetails.Query{}));
         }
 
         [HttpGet("{id}")]
-        public async Task<UserDto> GetUserInfo(string id)
+        public async Task<ActionResult<UserDto>> GetUserInfo(string id)
         {
-            return await Mediator.Send(new GetUserDetails.Query{Id = id});
+            return HandleResult(await Mediator.Send(new GetUserDetails.Query{Id = id}));
         }
 
         [HttpPost]
-        public async Task<UserDto> RegisterUser(RegisterUserDto registerUserDto)
+        public async Task<ActionResult<UserDto>> RegisterUser(RegisterUserDto registerUserDto)
         {
-            return await Mediator.Send(new CreateUser.Command{RegisterUserDto = registerUserDto});
+            return HandleResult(await Mediator.Send(new CreateUser.Command{RegisterUserDto = registerUserDto}));
         }
 
         [HttpPost("logout")]

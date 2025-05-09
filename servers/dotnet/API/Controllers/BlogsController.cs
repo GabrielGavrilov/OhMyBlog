@@ -14,13 +14,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BlogDto>>> GetBlogs()
         {
-            return await Mediator.Send(new GetBlogList.Query());
+            return HandleResult(await Mediator.Send(new GetBlogList.Query()));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<BlogDto>> GetBlogDetails(string id)
         {
-            return await Mediator.Send(new GetBlogDetails.Query{Id = id});
+            return HandleResult(await Mediator.Send(new GetBlogDetails.Query{Id = id}));
         }
 
         [HttpPost]
@@ -34,18 +34,14 @@ namespace API.Controllers
         [Authorize(Policy = "BlogAuthor")]
         public async Task<ActionResult<BlogDto>> UpdateBlog(string id, BlogDto blogDto)
         {
-            return await Mediator.Send(new UpdateBlog.Command
-            {
-                Id = id,
-                BlogDto = blogDto
-            });
+            return HandleResult(await Mediator.Send(new UpdateBlog.Command{Id = id, BlogDto = blogDto}));
         }
 
         [HttpDelete("{id}")]
         [Authorize(Policy = "BlogAuthor")]
         public async Task<ActionResult<Unit>> DeleteBlog(string id)
         {
-            return await Mediator.Send(new DeleteBlog.Command{Id = id});
+            return HandleResult(await Mediator.Send(new DeleteBlog.Command{Id = id}));
         } 
     }
 }

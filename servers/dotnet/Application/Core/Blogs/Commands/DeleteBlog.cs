@@ -1,4 +1,6 @@
 using System;
+using Application.Blogs.DTOs;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,14 +10,14 @@ namespace Application.Blogs.Commands;
 
 public class DeleteBlog
 {
-    public class Command : IRequest<Unit>
+    public class Command : IRequest<Result<Unit>>
     {
         public required string Id { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Command, Unit>
+    public class Handler(AppDbContext context) : IRequestHandler<Command, Result<Unit>>
     {
-        public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             Blog? blog = await context.Blogs.FindAsync([request.Id], cancellationToken);
             
@@ -25,7 +27,7 @@ public class DeleteBlog
                 await context.SaveChangesAsync(cancellationToken);
             }
 
-            return Unit.Value;
+            return Result<Unit>.Success(Unit.Value);
         }
     }
 }
