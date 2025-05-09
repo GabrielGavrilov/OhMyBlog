@@ -17,14 +17,15 @@ public class DeleteBlog
     {
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            Blog blog = await context.Blogs.FindAsync([request.Id], cancellationToken)
-                ?? throw new Exception("Blog does not exist.");
+            Blog? blog = await context.Blogs.FindAsync([request.Id], cancellationToken);
             
-            context.Remove(blog);
-            await context.SaveChangesAsync(cancellationToken);
+            if (blog != null)
+            {
+                context.Remove(blog);
+                await context.SaveChangesAsync(cancellationToken);
+            }
 
             return Unit.Value;
         }
     }
-
 }

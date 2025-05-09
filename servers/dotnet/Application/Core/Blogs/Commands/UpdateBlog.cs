@@ -1,6 +1,8 @@
 using System;
 using Application.Blogs.Assemblers;
 using Application.Blogs.DTOs;
+using Application.Core;
+using Application.Core.Blogs.Validators;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,28 +12,34 @@ namespace Application.Blogs.Commands;
 
 public class UpdateBlog
 {
-    public class Command : IRequest<BlogDto>
+    public class Command : IRequest<Result<BlogDto>>
     {
         public required string Id { get; set; }
         public required BlogDto BlogDto { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Command, BlogDto>
+    public class Handler(AppDbContext context, BlogAssembler blogAssembler, BlogValidator blogValidator) : IRequestHandler<Command, Result<BlogDto>>
     {
-        private readonly BlogAssembler _blogAssembler = new BlogAssembler();
-
-        public async Task<BlogDto> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            Blog foundBlog = await context.Blogs.FindAsync([request.Id], cancellationToken)
-                ?? throw new Exception("Blog does not exist.");
+            Dictionary<string, string> errors = blogValidator.Validate(request.BlogDto);
+
+            if (errors.Count > 0) 
+            {
+                return Result<BlogDto>.Failure(errors, 400);
+            }
+
+            Blog? foundBlog = await context.Blogs.FindAsync([request.Id], cancellationToken);
+
+            if (foundBlog == null)
+            {
+                return Result<BlogDto>.Failure(404);
+            }
             
-            Blog updatedBlog = _blogAssembler.DisassembleInto(request.BlogDto, foundBlog);
+            Blog updatedBlog = blogAssembler.DisassembleInto(request.BlogDto, foundBlog);
             await context.SaveChangesAsync(cancellationToken);
 
-            return _blogAssembler.Assemble(await context.Blogs.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == request.BlogDto.Id)
-                ?? throw new Exception("There has been an issue.")
-            );
-
+            return Result<BlogDto>.Success(blogAssembler.Assemble(updatedBlog));
         }
     }
 

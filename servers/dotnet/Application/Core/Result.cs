@@ -17,6 +17,12 @@ public class Result<T>
         Value = value
     };
 
+    public static Result<T> Failure(int code) => new ()
+    {
+        IsSuccess = false,
+        Code = code
+    };
+
     public static Result<T> Failure(Dictionary<string, string> errors, int code) => new ()
     {
         IsSuccess = false,

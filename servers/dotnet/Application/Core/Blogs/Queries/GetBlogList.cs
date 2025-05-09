@@ -1,6 +1,7 @@
 using System;
 using Application.Blogs.Assemblers;
 using Application.Blogs.DTOs;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +11,13 @@ namespace Application.Blogs.Queries;
 
 public class GetBlogList
 {
-    public class Query : IRequest<List<BlogDto>> {}
+    public class Query : IRequest<Result<List<BlogDto>>> {}
 
-    public class Handler(AppDbContext context) : IRequestHandler<Query, List<BlogDto>>
+    public class Handler(AppDbContext context, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<List<BlogDto>>>
     {
-        private readonly BlogAssembler _blogAssembler = new BlogAssembler();
-
-        public async Task<List<BlogDto>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<List<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return _blogAssembler.Assemble(await context.Blogs.Include(blog => blog.User).ToListAsync(cancellationToken));
+            return Result<List<BlogDto>>.Success(blogAssembler.Assemble(await context.Blogs.Include(blog => blog.User).ToListAsync(cancellationToken)));
         }
     }
 

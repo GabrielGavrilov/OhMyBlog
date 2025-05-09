@@ -2,6 +2,7 @@ using System;
 using System.Reflection.Metadata.Ecma335;
 using Application.Blogs.Assemblers;
 using Application.Blogs.DTOs;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +12,19 @@ namespace Application.Blogs.Queries;
 
 public class GetBlogDetails
 {
-    public class Query : IRequest<BlogDto> 
+    public class Query : IRequest<Result<BlogDto>> 
     {
         public required string Id { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Query, BlogDto>
+    public class Handler(AppDbContext context, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<BlogDto>>
     {
-        private readonly BlogAssembler _blogAssembler = new BlogAssembler();
-
-        public async Task<BlogDto> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<BlogDto>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return _blogAssembler.Assemble(
-                await context.Blogs
+            Blog? blog = await context.Blogs
                     .Include(x => x.User)
-                    .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken)
-                        ?? throw new Exception("Blog not found.")
-            );
+                    .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken);
+            return (blog != null) ? Result<BlogDto>.Success(blogAssembler.Assemble(blog)) : Result<BlogDto>.Failure(404); 
         }
     }
 }

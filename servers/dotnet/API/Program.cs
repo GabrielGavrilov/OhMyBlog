@@ -1,5 +1,6 @@
 using Application.Blogs.Assemblers;
 using Application.Blogs.Queries;
+using Application.Core.Blogs.Validators;
 using Application.Interfaces;
 using Application.Users.Assemblers;
 using Domain;
@@ -48,6 +49,7 @@ builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorRequirementHandle
 
 builder.Services.AddSingleton<UserAssembler>();
 builder.Services.AddSingleton<BlogAssembler>();
+builder.Services.AddSingleton<BlogValidator>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
