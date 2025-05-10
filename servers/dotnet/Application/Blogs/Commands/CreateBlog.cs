@@ -1,11 +1,13 @@
 using System;
 using System.Runtime.CompilerServices;
-using Application.Blogs.Assemblers;
-using Application.Blogs.DTOs;
 using Application.Core;
-using Application.Core.Blogs.Validators;
 using Application.Interfaces;
 using Domain;
+using Domain.Blogs.Assemblers;
+using Domain.Blogs.DTOs;
+using Domain.Blogs.Entities;
+using Domain.Blogs.Validators;
+using Domain.Users.Entities;
 using MediatR;
 using Persistence;
 

@@ -1,9 +1,10 @@
 using System;
-using Application.Blogs.Assemblers;
-using Application.Blogs.DTOs;
 using Application.Core;
-using Application.Core.Blogs.Validators;
 using Domain;
+using Domain.Blogs.Assemblers;
+using Domain.Blogs.DTOs;
+using Domain.Blogs.Entities;
+using Domain.Blogs.Validators;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;

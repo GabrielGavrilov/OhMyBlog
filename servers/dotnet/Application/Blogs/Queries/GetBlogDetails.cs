@@ -1,9 +1,9 @@
 using System;
-using System.Reflection.Metadata.Ecma335;
-using Application.Blogs.Assemblers;
-using Application.Blogs.DTOs;
 using Application.Core;
 using Domain;
+using Domain.Blogs.Assemblers;
+using Domain.Blogs.DTOs;
+using Domain.Blogs.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;

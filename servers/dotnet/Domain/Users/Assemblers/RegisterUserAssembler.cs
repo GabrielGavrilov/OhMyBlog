@@ -1,6 +1,5 @@
-using System;
-using Application.Users.DTOs;
-using Domain;
+using Domain.Users.DTOs;
+using Domain.Users.Entities;
 
 namespace Domain.Users.Assemblers;
 

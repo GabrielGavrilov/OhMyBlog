@@ -1,5 +1,5 @@
 using System;
-using Application.Blogs.DTOs;
+using Domain.Blogs.DTOs;
 
 namespace Domain.Users.DTOs;
 

@@ -1,10 +1,10 @@
 using System;
 using System.ComponentModel;
 using Application.Core;
-using Application.Core.Users.Assemblers;
-using Application.Users.Assemblers;
-using Application.Users.DTOs;
 using Domain;
+using Domain.Users.Assemblers;
+using Domain.Users.DTOs;
+using Domain.Users.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Persistence;

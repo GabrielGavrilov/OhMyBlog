@@ -1,8 +1,8 @@
 using System;
-using Application.Blogs.Assemblers;
-using Application.Blogs.DTOs;
 using Application.Core;
 using Domain;
+using Domain.Blogs.Assemblers;
+using Domain.Blogs.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;

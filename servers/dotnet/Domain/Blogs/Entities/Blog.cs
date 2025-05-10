@@ -1,7 +1,6 @@
-using System;
-using System.ComponentModel.DataAnnotations;
+using Domain.Users.Entities;
 
-namespace Domain.Blogs;
+namespace Domain.Blogs.Entities;
 
 public class Blog
 {

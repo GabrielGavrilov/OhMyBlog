@@ -1,8 +1,6 @@
-using System;
-using Application.Blogs.DTOs;
-using Application.Core.Users.Assemblers;
-using Application.Users.Assemblers;
-using Domain;
+using Domain.Blogs.DTOs;
+using Domain.Blogs.Entities;
+using Domain.Users.Assemblers;
 
 namespace Domain.Blogs.Assemblers;
 

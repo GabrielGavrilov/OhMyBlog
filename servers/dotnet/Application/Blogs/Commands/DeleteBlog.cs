@@ -1,7 +1,7 @@
 using System;
-using Application.Blogs.DTOs;
 using Application.Core;
 using Domain;
+using Domain.Blogs.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;

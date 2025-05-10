@@ -1,5 +1,7 @@
 using System;
 using Domain;
+using Domain.Blogs.Entities;
+using Domain.Users.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

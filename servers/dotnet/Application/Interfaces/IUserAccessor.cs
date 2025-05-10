@@ -1,10 +1,10 @@
 using System;
-using Domain;
+using Domain.Users.Entities;
 
 namespace Application.Interfaces;
 
 public interface IUserAccessor
 {
     string GetUserId();
-    Task<Domain.User> GetUserAsync();
+    Task<User> GetUserAsync();
 }

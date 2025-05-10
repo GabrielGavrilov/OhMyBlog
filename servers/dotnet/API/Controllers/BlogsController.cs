@@ -1,7 +1,7 @@
 using Application.Blogs.Commands;
-using Application.Blogs.DTOs;
 using Application.Blogs.Queries;
 using Domain;
+using Domain.Blogs.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

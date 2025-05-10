@@ -1,7 +1,8 @@
 using System;
+using Domain.Blogs.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Domain.Users;
+namespace Domain.Users.Entities;
 
 public class User : IdentityUser
 {

@@ -1,9 +1,10 @@
-using Application.Blogs.Assemblers;
 using Application.Blogs.Queries;
-using Application.Core.Blogs.Validators;
 using Application.Interfaces;
-using Application.Users.Assemblers;
 using Domain;
+using Domain.Blogs.Assemblers;
+using Domain.Blogs.Validators;
+using Domain.Users.Assemblers;
+using Domain.Users.Entities;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

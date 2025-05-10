@@ -1,8 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using Application.Core.Users.DTOs;
-using Application.Users.DTOs;
-using Domain;
+using Domain.Users.DTOs;
 
 namespace Domain.Blogs.DTOs;
 
