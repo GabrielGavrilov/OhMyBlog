@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace Domain;
+namespace Domain.Users;
 
 public class User : IdentityUser
 {

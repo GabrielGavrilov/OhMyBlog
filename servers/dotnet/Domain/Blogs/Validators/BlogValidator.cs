@@ -1,7 +1,7 @@
 using System;
 using Application.Blogs.DTOs;
 
-namespace Application.Core.Blogs.Validators;
+namespace Domain.Blogs.Validators;
 
 public class BlogValidator
 {

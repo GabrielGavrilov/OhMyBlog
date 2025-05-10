@@ -4,7 +4,7 @@ using Application.Core.Users.DTOs;
 using Application.Users.DTOs;
 using Domain;
 
-namespace Application.Blogs.DTOs;
+namespace Domain.Blogs.DTOs;
 
 public class BlogDto
 {

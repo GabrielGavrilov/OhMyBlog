@@ -3,9 +3,8 @@ using Application.Blogs.DTOs;
 using Application.Core.Users.Assemblers;
 using Application.Users.Assemblers;
 using Domain;
-using Persistence;
 
-namespace Application.Blogs.Assemblers;
+namespace Domain.Blogs.Assemblers;
 
 public class BlogAssembler
 {

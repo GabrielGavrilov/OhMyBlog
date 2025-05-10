@@ -3,7 +3,7 @@ using Application.Blogs.Assemblers;
 using Application.Users.DTOs;
 using Domain;
 
-namespace Application.Users.Assemblers;
+namespace Domain.Assemblers;
 
 public class UserAssembler
 {

@@ -2,7 +2,7 @@ using System;
 using Application.Users.DTOs;
 using Domain;
 
-namespace Application.Core.Users.Assemblers;
+namespace Domain.Users.Assemblers;
 
 public class RegisterUserAssembler
 {

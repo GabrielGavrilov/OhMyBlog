@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.Users.DTOs;
+namespace Domain.Users.DTOs;
 
 public class RegisterUserDto
 {
