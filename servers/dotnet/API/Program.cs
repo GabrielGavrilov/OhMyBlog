@@ -17,10 +17,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
 builder.Services.AddMediatR(x =>
@@ -49,6 +48,7 @@ builder.Services.AddAuthorization(opt =>
 builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorRequirementHandler>();
 
 builder.Services.AddSingleton<UserAssembler>();
+builder.Services.AddSingleton<RegisterUserAssembler>();
 builder.Services.AddSingleton<BlogAssembler>();
 builder.Services.AddSingleton<BlogValidator>();
 

@@ -20,7 +20,7 @@ public class Blog
             Title = title,
             Body = body,
             UserId = userId,
-            CreatedAt = DateTime.Now
+            CreatedAt = DateTime.UtcNow
         };
     }
 
