@@ -17,7 +17,15 @@ public class GetBlogList
     {
         public async Task<Result<List<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return Result<List<BlogDto>>.Success(blogAssembler.Assemble(await context.Blogs.Include(blog => blog.User).ToListAsync(cancellationToken)));
+            return Result<List<BlogDto>>.Success(
+                blogAssembler.Assemble(
+                    context.Blogs
+                        .Include(blog => blog.User)
+                        .AsEnumerable()
+                        .OrderByDescending(x => x.CreatedAt)
+                        .ToList()
+                )
+            );
         }
     }
 
