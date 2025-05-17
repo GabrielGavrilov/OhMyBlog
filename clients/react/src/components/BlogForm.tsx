@@ -7,7 +7,7 @@ import ValidationError from '../models/ValidationError';
 
 export default function BlogForm() {
   const { id } = useParams();
-  const { blog, createBlog, updateBlog, isLoadingActivity } = useBlogs(id);
+  const { blog, createBlog, updateBlog, isLoadingBlog } = useBlogs(id);
   const { register, handleSubmit, reset } = useForm();
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
     []
@@ -25,7 +25,7 @@ export default function BlogForm() {
     [blog, reset]
   );
 
-  if (id && isLoadingActivity) {
+  if (id && isLoadingBlog) {
     return <p>Loading...</p>;
   }
 

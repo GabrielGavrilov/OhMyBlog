@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import User from '../models/User';
+import ValidationError from '../models/ValidationError';
 
 export default function AuthForm() {
   const navigate = useNavigate();
@@ -10,6 +11,9 @@ export default function AuthForm() {
   const { loginUser, registerUser } = useAuth();
   const [isRegistering, setRegistering] = useState<boolean>(true);
   const { register, handleSubmit } = useForm();
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
+    []
+  );
 
   useEffect(
     function () {
@@ -26,6 +30,14 @@ export default function AuthForm() {
         await registerUser.mutate(data, {
           onSuccess: function () {
             navigate('/login');
+          },
+          onError: function (error) {
+            console.log(error);
+            if (Array.isArray(error)) {
+              setValidationErrors(error);
+            } else {
+              setValidationErrors([]);
+            }
           },
         });
       }
@@ -65,6 +77,11 @@ export default function AuthForm() {
           </div>
           <div>
             <input className="auth-form-input" {...register('email')} />
+            {validationErrors.map((err: ValidationError) =>
+              err.field.includes('email') ? (
+                <p className="text-red-600">{err.message}</p>
+              ) : null
+            )}
           </div>
         </div>
         <div className="mb-3">
@@ -77,6 +94,14 @@ export default function AuthForm() {
               className="auth-form-input"
               {...register('password')}
             />
+            {validationErrors.map(
+              (err: ValidationError) => (
+                <p>{err.field}</p>
+              )
+              // err.field.includes('password') ? (
+              //   <p className="text-red-600">{err.message}</p>
+              // ) : null
+            )}
           </div>
         </div>
         {isRegistering && (
