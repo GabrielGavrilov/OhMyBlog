@@ -5,6 +5,7 @@ using Domain;
 using Domain.Users.Assemblers;
 using Domain.Users.DTOs;
 using Domain.Users.Entities;
+using Domain.Users.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Persistence;
@@ -21,7 +22,8 @@ public class CreateUser
     public class Handler(
         UserManager<User> userManager,
         UserAssembler userAssembler,
-        RegisterUserAssembler registerUserAssembler
+        RegisterUserAssembler registerUserAssembler,
+        UserValidator userValidator
     ) : IRequestHandler<Command, Result<UserDto>>
     {
         public async Task<Result<UserDto>> Handle(Command request, CancellationToken cancellationToken)
@@ -31,7 +33,8 @@ public class CreateUser
 
             if (!result.Succeeded)
             {
-                throw new Exception("Error creating user.");
+                Dictionary<string, string> errors = userValidator.ValidateIdentityResult(result);
+                return Result<UserDto>.Failure(errors, 400);
             }
 
             return Result<UserDto>.Success(userAssembler.Assemble(user));

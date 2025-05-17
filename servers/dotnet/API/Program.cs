@@ -5,6 +5,7 @@ using Domain.Blogs.Assemblers;
 using Domain.Blogs.Validators;
 using Domain.Users.Assemblers;
 using Domain.Users.Entities;
+using Domain.Users.Validators;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -51,6 +52,7 @@ builder.Services.AddSingleton<UserAssembler>();
 builder.Services.AddSingleton<RegisterUserAssembler>();
 builder.Services.AddSingleton<BlogAssembler>();
 builder.Services.AddSingleton<BlogValidator>();
+builder.Services.AddSingleton<UserValidator>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
