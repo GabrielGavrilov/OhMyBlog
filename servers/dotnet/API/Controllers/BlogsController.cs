@@ -31,14 +31,14 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = "BlogAuthor")]
+        [Authorize(Policy = "BlogAuthorPolicy")]
         public async Task<ActionResult<BlogDto>> UpdateBlog(string id, BlogDto blogDto)
         {
             return HandleResult(await Mediator.Send(new UpdateBlog.Command{Id = id, BlogDto = blogDto}));
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = "BlogAuthor")]
+        [Authorize(Policy = "BlogAuthorPolicy")]
         public async Task<ActionResult<Unit>> DeleteBlog(string id)
         {
             return HandleResult(await Mediator.Send(new DeleteBlog.Command{Id = id}));

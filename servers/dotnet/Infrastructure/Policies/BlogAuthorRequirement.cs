@@ -7,16 +7,16 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Blogs.Entities;
 using Persistence;
 
-namespace Infrastructure.Security;
+namespace Infrastructure.Policies;
 
-public class BlogAuthorRequirement : IAuthorizationRequirement
+public class BlogAuthorPolicy : IAuthorizationRequirement
 {
 
 }
 
-public class BlogAuthorRequirementHandler(AppDbContext dbContext, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<BlogAuthorRequirement>
+public class BlogAuthorPolicyHandler(AppDbContext dbContext, IHttpContextAccessor httpContextAccessor) : AuthorizationHandler<BlogAuthorPolicy>
 {
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, BlogAuthorRequirement requirement)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, BlogAuthorPolicy requirement)
     {
         var httpContext = httpContextAccessor.HttpContext;
         var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -67,6 +67,11 @@ export default function AuthForm() {
             </div>
             <div>
               <input className="auth-form-input" {...register('displayName')} />
+              {validationErrors.map((err: ValidationError) =>
+                err.field.includes('displayName') ? (
+                  <p className="text-red-600">{err.message}</p>
+                ) : null
+              )}
             </div>
           </div>
         )}

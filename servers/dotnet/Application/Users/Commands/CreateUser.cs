@@ -33,7 +33,7 @@ public class CreateUser
 
             if (!result.Succeeded)
             {
-                List<ValidationError> errors = userValidator.ValidateIdentityResult(result);
+                List<ValidationError> errors = userValidator.ValidateIdentityResult(result, request.RegisterUserDto);
                 return Result<UserDto>.Failure(errors, 400);
             }
 

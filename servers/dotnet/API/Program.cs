@@ -6,7 +6,8 @@ using Domain.Blogs.Validators;
 using Domain.Users.Assemblers;
 using Domain.Users.Entities;
 using Domain.Users.Validators;
-using Infrastructure.Security;
+using Infrastructure.Accessor;
+using Infrastructure.Policies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,12 +42,12 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 // authorization
 builder.Services.AddAuthorization(opt =>
 {
-    opt.AddPolicy("BlogAuthor", policy =>
+    opt.AddPolicy("BlogAuthorPolicy", policy =>
     {
-        policy.Requirements.Add(new BlogAuthorRequirement());
+        policy.Requirements.Add(new BlogAuthorPolicy());
     });
 });
-builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorRequirementHandler>();
+builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorPolicyHandler>();
 
 builder.Services.AddSingleton<UserAssembler>();
 builder.Services.AddSingleton<RegisterUserAssembler>();
