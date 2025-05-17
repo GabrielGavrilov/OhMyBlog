@@ -15,9 +15,9 @@ public class GetBlogList
 
     public class Handler(AppDbContext context, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<List<BlogDto>>>
     {
-        public async Task<Result<List<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
+        public Task<Result<List<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return Result<List<BlogDto>>.Success(
+            return Task.FromResult(Result<List<BlogDto>>.Success(
                 blogAssembler.Assemble(
                     context.Blogs
                         .Include(blog => blog.User)
@@ -25,7 +25,7 @@ public class GetBlogList
                         .OrderByDescending(x => x.CreatedAt)
                         .ToList()
                 )
-            );
+            ));
         }
     }
 
