@@ -1,4 +1,5 @@
 using System;
+using Domain;
 
 namespace Application.Core;
 
@@ -7,7 +8,7 @@ public class Result<T>
 
     public bool IsSuccess { get; set; }
     public T? Value { get; set; }
-    public Dictionary<string, string>? Errors { get; set; }
+    public List<ValidationError>? Errors { get; set; }
     // could be an enum
     public int Code { get; set; }
 
@@ -23,7 +24,7 @@ public class Result<T>
         Code = code
     };
 
-    public static Result<T> Failure(Dictionary<string, string> errors, int code) => new ()
+    public static Result<T> Failure(List<ValidationError> errors, int code) => new ()
     {
         IsSuccess = false,
         Errors = errors,

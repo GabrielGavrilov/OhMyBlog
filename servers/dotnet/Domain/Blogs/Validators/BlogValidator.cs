@@ -5,17 +5,17 @@ namespace Domain.Blogs.Validators;
 
 public class BlogValidator
 {
-    public Dictionary<string, string> Validate(BlogDto blogDto)
+    public List<ValidationError> Validate(BlogDto blogDto)
     {
-        Dictionary<string, string> errors = new Dictionary<string, string>();
+        List<ValidationError> errors = new List<ValidationError>();
 
         if (string.IsNullOrWhiteSpace(blogDto.Title))
         {
-            errors.Add("title", "Blog must contain a title");
+            errors.Add(new ValidationError { Field = "title", Message = "Blog must contain a title" });
         }
         if (string.IsNullOrWhiteSpace(blogDto.Body))
         {
-            errors.Add("body", "Blog must contain a body");
+            errors.Add(new ValidationError { Field = "body", Message = "Blog must contain a body" });
         }
 
         return errors;

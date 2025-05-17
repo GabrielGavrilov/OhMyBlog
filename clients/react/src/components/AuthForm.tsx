@@ -32,7 +32,6 @@ export default function AuthForm() {
             navigate('/login');
           },
           onError: function (error) {
-            console.log(error);
             if (Array.isArray(error)) {
               setValidationErrors(error);
             } else {
@@ -94,13 +93,10 @@ export default function AuthForm() {
               className="auth-form-input"
               {...register('password')}
             />
-            {validationErrors.map(
-              (err: ValidationError) => (
-                <p>{err.field}</p>
-              )
-              // err.field.includes('password') ? (
-              //   <p className="text-red-600">{err.message}</p>
-              // ) : null
+            {validationErrors.map((err: ValidationError) =>
+              err.field.includes('password') ? (
+                <p className="text-red-600">{err.message}</p>
+              ) : null
             )}
           </div>
         </div>

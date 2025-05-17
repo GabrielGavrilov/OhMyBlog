@@ -5,28 +5,28 @@ namespace Domain.Users.Validators;
 
 public class UserValidator
 {
-    public Dictionary<string, string> ValidateIdentityResult(IdentityResult identityResult)
+    public List<ValidationError> ValidateIdentityResult(IdentityResult identityResult)
     {
-        Dictionary<string, string> errors = new Dictionary<string, string>();
+        List<ValidationError> errors = new List<ValidationError>();
         ICollection<string> errorCodes = identityResult.Errors
             .Select(e => e.Code)
             .ToList();
 
         if (errorCodes.Contains("DuplicateUserName"))
         {
-            errors.Add("email", "Email is already taken");
+            errors.Add(new ValidationError{Field = "email", Message ="Email is already taken" });
         }
 
         if (errorCodes.Contains("InvalidEmail"))
         {
-            errors.Add("email", "Email must be valid");
+            errors.Add(new ValidationError{Field = "email", Message = "Email must be valid"});
         }
 
         if (errorCodes.Contains("PasswordRequiresNonAlphanumeric") ||
             errorCodes.Contains("PasswordRequiresDigit") ||
             errorCodes.Contains("PasswordRequiresUpper"))
         {
-            errors.Add("password", "Password must include at least one uppercase letter, one number, and one special character");
+            errors.Add(new ValidationError {Field = "password", Message = "Password must include at least one uppercase letter, one number, and one special character" });
         }
 
         return errors;

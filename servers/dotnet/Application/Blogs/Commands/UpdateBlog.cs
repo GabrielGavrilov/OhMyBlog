@@ -23,7 +23,7 @@ public class UpdateBlog
     {
         public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            Dictionary<string, string> errors = blogValidator.Validate(request.BlogDto);
+            List<ValidationError> errors = blogValidator.Validate(request.BlogDto);
 
             if (errors.Count > 0) 
             {
