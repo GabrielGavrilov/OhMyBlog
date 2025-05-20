@@ -1,14 +1,16 @@
 import { Register, useLocation, useNavigate } from 'react-router';
-import useAuth from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import User from '../models/User';
 import ValidationError from '../models/ValidationError';
+import { useLogin, useRegister } from '../hooks/AccountHooks';
 
 export default function AuthForm() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { loginUser, registerUser } = useAuth();
+  // const { loginUser, registerUser } = useAuth();
+  const loginUser = useLogin();
+  const registerUser = useRegister();
   const [isRegistering, setRegistering] = useState<boolean>(true);
   const { register, handleSubmit } = useForm();
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(

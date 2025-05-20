@@ -17,8 +17,6 @@ agent.interceptors.response.use(
         throw data;
         break;
       case 401: {
-        const controller = new AbortController();
-        controller.abort();
         // toast.error('Unauthorized');
         break;
       }

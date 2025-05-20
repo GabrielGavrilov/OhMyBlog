@@ -1,8 +1,9 @@
 import { Link } from 'react-router';
-import useAuth from '../hooks/useAuth';
+import { useAuthorized, useLogout, useProfile } from '../hooks/AccountHooks';
 
 export default function Navbar() {
-  const { isAuthorized, logoutUser } = useAuth();
+  const { data: authorized } = useAuthorized();
+  const logout = useLogout();
 
   return (
     <>
@@ -14,9 +15,9 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="flex justify-end w-1/2 h-full items-center">
-            {isAuthorized ? (
+            {authorized ? (
               <>
-                <button className="btn" onClick={() => logoutUser.mutate()}>
+                <button className="btn" onClick={() => logout.mutate()}>
                   Log out
                 </button>
                 <Link to={'/blog/new'}>
