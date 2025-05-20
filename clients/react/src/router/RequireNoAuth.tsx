@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from 'react-router';
-import useAuth from '../hooks/useAuth';
+import { useAuthorized } from '../hooks/AccountHooks';
 
 export default function RequireNoAuth() {
-  const { isAuthorized } = useAuth();
+  const { data: authorized } = useAuthorized();
 
-  if (!isAuthorized) {
+  if (!authorized) {
     return <Outlet />;
   }
 

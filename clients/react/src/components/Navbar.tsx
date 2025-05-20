@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { useAuthorized, useLogout, useProfile } from '../hooks/AccountHooks';
+import { useAuthorized, useLogout } from '../hooks/AccountHooks';
 
 export default function Navbar() {
   const { data: authorized } = useAuthorized();

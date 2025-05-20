@@ -5,7 +5,7 @@ import { useProfile } from '../hooks/AccountHooks';
 export default function BlogPage() {
   const { id } = useParams();
   const { blog, deleteBlog, isLoadingBlog } = useBlogs(id);
-  const { data: userInfo, isLoading: loadingUserInfo } = useProfile();
+  const { data: userInfo } = useProfile();
   const isAuthor = userInfo?.id === blog?.user.id;
 
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function BlogPage() {
     navigate('/');
   }
 
-  if (isLoadingBlog || loadingUserInfo) {
+  if (isLoadingBlog) {
     return <p>Loading...</p>;
   }
 

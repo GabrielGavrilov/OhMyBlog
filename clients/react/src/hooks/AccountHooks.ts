@@ -20,13 +20,10 @@ export function useAuthorized() {
       return response.status ? true : false;
     },
     retry: false,
-    enabled:
-      location.pathname !== '/login' && location.pathname !== '/register',
   });
 }
 
 export function useProfile() {
-  const location = useLocation();
   return useQuery({
     queryKey: ['profile'],
     queryFn: async () => {
@@ -39,12 +36,11 @@ export function useProfile() {
       }
       return true;
     },
-    enabled:
-      location.pathname !== '/login' && location.pathname !== '/register',
   });
 }
 
 export function useLogin() {
+  const client = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
     mutationFn: async (user: User) => {
@@ -55,7 +51,10 @@ export function useLogin() {
       });
       return response.data;
     },
-    onSuccess: () => navigate('/'),
+    onSuccess: () => {
+      client.resetQueries();
+      navigate('/');
+    },
   });
 }
 
@@ -76,11 +75,12 @@ export function useLogout() {
   return useMutation({
     mutationFn: async () => {
       const response = await agent.post(endpoints.logout);
-      client.invalidateQueries();
+      client.resetQueries();
       return response.data();
     },
     onSuccess: () => {
-      navigate('/');
+      console.log('logging out');
+      navigate('/login');
     },
   });
 }

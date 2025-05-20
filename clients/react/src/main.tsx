@@ -4,7 +4,7 @@ import './index.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from 'react-router';
 import { ToastContainer } from 'react-toastify';
-import { router } from './router/router';
+import { router } from './router/Router';
 
 const queryClient = new QueryClient();
 

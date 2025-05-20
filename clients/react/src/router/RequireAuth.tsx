@@ -1,11 +1,11 @@
 import { Navigate, Outlet, useLocation } from 'react-router';
-import useAuth from '../hooks/useAuth';
+import { useAuthorized } from '../hooks/AccountHooks';
 
 export default function RequireAuth() {
-  const { isAuthorized } = useAuth();
+  const { data: authorized } = useAuthorized();
   const location = useLocation();
 
-  if (!isAuthorized) {
+  if (!authorized) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
