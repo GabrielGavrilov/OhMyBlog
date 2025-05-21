@@ -11,20 +11,31 @@ namespace Application.Blogs.Queries;
 
 public class GetBlogList
 {
-    public class Query : IRequest<Result<List<BlogDto>>> {}
-
-    public class Handler(AppDbContext context, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<List<BlogDto>>>
+    public class Query : IRequest<Result<PageResponseDto<BlogDto>>>
     {
-        public Task<Result<List<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
+        public required PageRequestDto PageRequestDto { get;  set; }
+    }
+
+    public class Handler(AppDbContext context, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<PageResponseDto<BlogDto>>>
+    {
+        public Task<Result<PageResponseDto<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(Result<List<BlogDto>>.Success(
-                blogAssembler.Assemble(
-                    context.Blogs
-                        .Include(blog => blog.User)
-                        .AsEnumerable()
-                        .OrderByDescending(x => x.CreatedAt)
-                        .ToList()
-                )
+            List<BlogDto> blogDtoList = blogAssembler.Assemble(context.Blogs
+                .Include(blog => blog.User)
+                .AsEnumerable()
+                .OrderByDescending(x => x.CreatedAt)
+                .Skip((request.PageRequestDto.Page - 1) * request.PageRequestDto.Size)
+                .Take(request.PageRequestDto.Size)
+                .ToList()
+            );
+
+            return Task.FromResult(Result<PageResponseDto<BlogDto>>.Success(
+                new PageResponseDto<BlogDto>
+                {
+                    Content = blogDtoList,
+                    PageIndex = request.PageRequestDto.Page,
+                    TotalPages = blogDtoList.Count
+                }
             ));
         }
     }

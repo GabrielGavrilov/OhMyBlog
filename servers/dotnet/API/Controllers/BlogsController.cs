@@ -1,5 +1,6 @@
 using Application.Blogs.Commands;
 using Application.Blogs.Queries;
+using Application.Core;
 using Domain;
 using Domain.Blogs.DTOs;
 using MediatR;
@@ -12,9 +13,9 @@ namespace API.Controllers
     public class BlogsController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<BlogDto>>> GetBlogs()
+        public async Task<ActionResult<List<BlogDto>>> GetBlogs(int page, int size)
         {
-            return HandleResult(await Mediator.Send(new GetBlogList.Query()));
+            return HandleResult(await Mediator.Send(new GetBlogList.Query{PageRequestDto = new PageRequestDto{Page = page, Size = size}}));
         }
 
         [HttpGet("{id}")]
