@@ -1,9 +1,9 @@
 import BlogCard from './BlogCard';
 import Blog from '../models/Blog';
-import { useGetAllBlogs } from '../hooks/BlogHooks';
+import { useBlogs } from '../hooks/BlogHooks';
 
 export default function BlogList() {
-  const { data: blogs, isLoading: isLoadingBlogs } = useGetAllBlogs();
+  const { data: blogs, isLoading: isLoadingBlogs } = useBlogs();
 
   if (!blogs || isLoadingBlogs) return <p>Loading...</p>;
 

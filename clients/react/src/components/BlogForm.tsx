@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import useBlogs from '../hooks/useBlogs';
 import Blog from '../models/Blog';
 import { useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import ValidationError from '../models/ValidationError';
+import { useBlog, useCreateBlog, useUpdateBlog } from '../hooks/BlogHooks';
 
 export default function BlogForm() {
   const { id } = useParams();
-  const { blog, createBlog, updateBlog, isLoadingBlog } = useBlogs(id);
+  const { data: blog, isLoading: isLoadingBlog } = useBlog(id);
+  const createBlog = useCreateBlog();
+  const updateBlog = useUpdateBlog(id);
+
   const { register, handleSubmit, reset } = useForm();
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
     []
