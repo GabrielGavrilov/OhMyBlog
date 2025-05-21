@@ -64,7 +64,7 @@ export function useUpdateBlog(id?: string) {
   });
 }
 
-export function udeDeleteBlog(id: string) {
+export function useDeleteBlog(id?: string) {
   const client = useQueryClient();
   return useMutation({
     mutationFn: async () => {

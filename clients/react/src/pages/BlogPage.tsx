@@ -1,10 +1,11 @@
 import { Link, useNavigate, useParams } from 'react-router';
-import useBlogs from '../hooks/useBlogs';
 import { useProfile } from '../hooks/AccountHooks';
+import { useBlog, useDeleteBlog } from '../hooks/BlogHooks';
 
 export default function BlogPage() {
   const { id } = useParams();
-  const { blog, deleteBlog, isLoadingBlog } = useBlogs(id);
+  const { data: blog, isLoading: isLoadingBlog } = useBlog(id);
+  const deleteBlog = useDeleteBlog(id);
   const { data: userInfo } = useProfile();
   const isAuthor = userInfo?.id === blog?.user.id;
 
