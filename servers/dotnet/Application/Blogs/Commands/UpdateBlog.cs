@@ -30,7 +30,9 @@ public class UpdateBlog
                 return Result<BlogDto>.Failure(errors, 400);
             }
 
-            Blog? foundBlog = await context.Blogs.FindAsync([request.Id], cancellationToken);
+            Blog? foundBlog = await context.Blogs
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken);
 
             if (foundBlog == null)
             {
