@@ -6,10 +6,12 @@ using Domain;
 using Domain.Blogs.Assemblers;
 using Domain.Blogs.DTOs;
 using Domain.Blogs.Entities;
+using Domain.Blogs.Interfaces;
 using Domain.Blogs.Validators;
 using Domain.Users.Entities;
 using MediatR;
 using Persistence;
+using Persistence.Blogs;
 
 namespace Application.Blogs.Commands;
 
@@ -20,9 +22,9 @@ public class CreateBlog
         public required BlogDto BlogDto  { get; set; }
     }
 
-    public class Handler(
-        AppDbContext context, 
+    public class Handler( 
         IUserAccessor userAccessor,
+        IBlogRepository blogRepository,
         BlogAssembler blogAssembler,
         BlogValidator blogValidator
     ) : IRequestHandler<Command, Result<BlogDto>>
@@ -39,10 +41,7 @@ public class CreateBlog
             User user = await userAccessor.GetUserAsync();
             request.BlogDto.UserId = user.Id;
             
-            Blog blog = blogAssembler.Disassemble(request.BlogDto);
-
-            context.Blogs.Add(blog);
-            await context.SaveChangesAsync();
+            Blog blog = await blogRepository.AddAsync(blogAssembler.Disassemble(request.BlogDto));
 
             return Result<BlogDto>.Success(blogAssembler.Assemble(blog));
         }
