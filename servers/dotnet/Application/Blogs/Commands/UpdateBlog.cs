@@ -33,10 +33,10 @@ public class UpdateBlog
 
             Blog? foundBlog = await blogRepository.GetById(request.Id, cancellationToken);
 
-            // if (foundBlog == null)
-            // {
-            //     return Result<BlogDto>.Failure(404);
-            // }
+            if (foundBlog == null)
+            {
+                return Result<BlogDto>.Failure(404);
+            }
             
             Blog updatedBlog = await blogRepository.UpdateAsync( blogAssembler.DisassembleInto(request.BlogDto, foundBlog));
             return Result<BlogDto>.Success(blogAssembler.Assemble(updatedBlog)) ?? Result<BlogDto>.Failure(404);
