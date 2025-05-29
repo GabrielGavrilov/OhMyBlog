@@ -2,6 +2,7 @@ using Application.Blogs.Queries;
 using Application.Interfaces;
 using Domain;
 using Domain.Blogs.Assemblers;
+using Domain.Blogs.Interfaces;
 using Domain.Blogs.Validators;
 using Domain.Users.Assemblers;
 using Domain.Users.Entities;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Blogs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,7 @@ builder.Services.AddMediatR(x =>
 });
 
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 
 // Identity for authentication
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
