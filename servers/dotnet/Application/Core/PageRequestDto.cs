@@ -4,6 +4,6 @@ namespace Application.Core;
 
 public class PageRequestDto
 {
-    public required int Size { get; set; }
-    public required int Page { get; set; }
+    public int Size { get; set; } = 25;
+    public int Page { get; set; } = 1;
 }

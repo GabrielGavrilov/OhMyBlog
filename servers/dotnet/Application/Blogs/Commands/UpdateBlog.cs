@@ -4,6 +4,7 @@ using Domain;
 using Domain.Blogs.Assemblers;
 using Domain.Blogs.DTOs;
 using Domain.Blogs.Entities;
+using Domain.Blogs.Interfaces;
 using Domain.Blogs.Validators;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ public class UpdateBlog
         public required BlogDto BlogDto { get; set; }
     }
 
-    public class Handler(AppDbContext context, BlogAssembler blogAssembler, BlogValidator blogValidator) : IRequestHandler<Command, Result<BlogDto>>
+    public class Handler(IBlogRepository blogRepository, BlogAssembler blogAssembler, BlogValidator blogValidator) : IRequestHandler<Command, Result<BlogDto>>
     {
         public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
@@ -30,19 +31,15 @@ public class UpdateBlog
                 return Result<BlogDto>.Failure(errors, 400);
             }
 
-            Blog? foundBlog = await context.Blogs
-                .Include(x => x.User)
-                .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken);
+            Blog? foundBlog = await blogRepository.GetById(request.Id, cancellationToken);
 
-            if (foundBlog == null)
-            {
-                return Result<BlogDto>.Failure(404);
-            }
+            // if (foundBlog == null)
+            // {
+            //     return Result<BlogDto>.Failure(404);
+            // }
             
-            Blog updatedBlog = blogAssembler.DisassembleInto(request.BlogDto, foundBlog);
-            await context.SaveChangesAsync(cancellationToken);
-
-            return Result<BlogDto>.Success(blogAssembler.Assemble(updatedBlog));
+            Blog updatedBlog = await blogRepository.UpdateAsync( blogAssembler.DisassembleInto(request.BlogDto, foundBlog));
+            return Result<BlogDto>.Success(blogAssembler.Assemble(updatedBlog)) ?? Result<BlogDto>.Failure(404);
         }
     }
 

@@ -4,6 +4,7 @@ using Domain;
 using Domain.Blogs.Assemblers;
 using Domain.Blogs.DTOs;
 using Domain.Blogs.Entities;
+using Domain.Blogs.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -17,14 +18,12 @@ public class GetBlogDetails
         public required string Id { get; set; }
     }
 
-    public class Handler(AppDbContext context, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<BlogDto>>
+    public class Handler(IBlogRepository blogRepository, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<BlogDto>>
     {
         public async Task<Result<BlogDto>> Handle(Query request, CancellationToken cancellationToken)
         {
-            Blog? blog = await context.Blogs
-                    .Include(x => x.User)
-                    .FirstOrDefaultAsync(x => request.Id == x.Id, cancellationToken);
-            return (blog != null) ? Result<BlogDto>.Success(blogAssembler.Assemble(blog)) : Result<BlogDto>.Failure(404); 
+            Blog? blog = await blogRepository.GetById(request.Id, cancellationToken);
+            return Result<BlogDto>.Success(blogAssembler.Assemble(blog!)) ?? Result<BlogDto>.Failure(404);
         }
     }
 }

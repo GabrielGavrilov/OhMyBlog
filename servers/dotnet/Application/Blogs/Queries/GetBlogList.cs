@@ -3,6 +3,9 @@ using Application.Core;
 using Domain;
 using Domain.Blogs.Assemblers;
 using Domain.Blogs.DTOs;
+using Domain.Blogs.Entities;
+using Domain.Blogs.Interfaces;
+using Domain.Blogs.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -16,28 +19,21 @@ public class GetBlogList
         public required PageRequestDto PageRequestDto { get;  set; }
     }
 
-    public class Handler(AppDbContext context, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<PageResponseDto<BlogDto>>>
+    public class Handler(IBlogRepository blogRepository, BlogAssembler blogAssembler) : IRequestHandler<Query, Result<PageResponseDto<BlogDto>>>
     {
-        public Task<Result<PageResponseDto<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<PageResponseDto<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            List<BlogDto> blogDtoList = blogAssembler.Assemble(context.Blogs
-                .Include(blog => blog.User)
-                .AsEnumerable()
-                .OrderByDescending(x => x.CreatedAt)
-                .Skip((request.PageRequestDto.Page - 1) * request.PageRequestDto.Size)
-                .Take(request.PageRequestDto.Size)
-                .ToList()
-            );
+            List<Blog> blogs = blogRepository.Find(new BlogFilter { Page = request.PageRequestDto.Page, PerPage = request.PageRequestDto.Size });
+            int totalElements = await blogRepository.Count();
 
-            return Task.FromResult(Result<PageResponseDto<BlogDto>>.Success(
-                new PageResponseDto<BlogDto>
-                {
-                    Content = blogDtoList,
-                    PageIndex = request.PageRequestDto.Page,
-                    TotalPages = blogDtoList.Count
-                }
-            ));
+            return Result<PageResponseDto<BlogDto>>.Success(new PageResponseDto<BlogDto>
+            {
+                Content = blogAssembler.Assemble(blogs),
+                PageIndex = request.PageRequestDto.Page,
+                Size = request.PageRequestDto.Size,
+                TotalElements = totalElements,
+                TotalPages = (int)Math.Ceiling((double)totalElements / request.PageRequestDto.Size)
+            });
         }
     }
-
 }

@@ -2,6 +2,7 @@ using System;
 using Application.Core;
 using Domain;
 using Domain.Blogs.Entities;
+using Domain.Blogs.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -15,16 +16,15 @@ public class DeleteBlog
         public required string Id { get; set; }
     }
 
-    public class Handler(AppDbContext context) : IRequestHandler<Command, Result<Unit>>
+    public class Handler(IBlogRepository blogRepository) : IRequestHandler<Command, Result<Unit>>
     {
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            Blog? blog = await context.Blogs.FindAsync([request.Id], cancellationToken);
+            Blog? blog = await blogRepository.GetById(request.Id, cancellationToken);
             
             if (blog != null)
             {
-                context.Remove(blog);
-                await context.SaveChangesAsync(cancellationToken);
+                await blogRepository.DeleteAsync(blog);
             }
 
             return Result<Unit>.Success(Unit.Value);

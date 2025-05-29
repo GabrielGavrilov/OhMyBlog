@@ -1,11 +1,26 @@
 using System;
+using AutoFilterer.Extensions;
 using Domain.Blogs.Entities;
 using Domain.Blogs.Interfaces;
+using Domain.Blogs.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Blogs;
 
 public class BlogRepository(AppDbContext appDbContext) : IBlogRepository
 {
+    public List<Blog> Find(BlogFilter blogFilter)
+    {
+        return [.. appDbContext.Blogs.Include(x => x.User).ApplyFilter(blogFilter)];
+    }
+
+    public async Task<Blog?> GetById(string id, CancellationToken cancellationToken)
+    {
+        return await appDbContext.Blogs
+            .Include(x => x.User)
+            .FirstOrDefaultAsync(x => id == x.Id, cancellationToken);
+    }
+
     public async Task<Blog> AddAsync(Blog blog)
     {
         await appDbContext.AddAsync(blog);
@@ -13,23 +28,21 @@ public class BlogRepository(AppDbContext appDbContext) : IBlogRepository
         return blog;
     }
 
-    public Task DeleteAsync(Blog blog)
+    public async Task<Blog> UpdateAsync(Blog blog)
     {
-        throw new NotImplementedException();
+        appDbContext.Update(blog);
+        await appDbContext.SaveChangesAsync();
+        return blog;
     }
 
-    public Task<Blog> Find()
+    public async Task DeleteAsync(Blog blog)
     {
-        throw new NotImplementedException();
+        appDbContext.Blogs.Remove(blog);
+        await appDbContext.SaveChangesAsync();
     }
 
-    public Task<Blog?> GetById(string id)
+    public async Task<int> Count()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Blog> UpdateAsync(Blog blog)
-    {
-        throw new NotImplementedException();
+        return await appDbContext.Blogs.CountAsync();
     }
 }
