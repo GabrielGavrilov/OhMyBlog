@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: 'ohmyblog-nextjs-db'
+    environment:
+      POSTGRES_DB: 'ohmyblog'
+      POSTGRES_USER: 'ohmyblog'
+      POSTGRES_PASSWORD: 'Ohmyblog123'
+      POSTGRES_RANDOM_ROOT_PASSWORD: 'yes' 
+      TZ: 'UTC-6'
+    ports:
+      - 5432:5432
