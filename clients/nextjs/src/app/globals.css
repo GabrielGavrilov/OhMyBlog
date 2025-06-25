@@ -33,3 +33,17 @@ body {
     }
   }
 }
+
+.title-input {
+  @apply w-full h-14 text-3xl font-bold;
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+.auth-form-input {
+  @apply w-full pt-2 pb-2 pl-4 pr-4 border rounded;
+  &:focus {
+    @apply outline-none;
+  }
+}
