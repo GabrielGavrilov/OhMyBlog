@@ -1,7 +1,5 @@
 'use client';
 
-import { useCreateUser } from '@/lib/hooks/auth';
-import { User } from '@/lib/types/auth';
 import { useForm } from 'react-hook-form';
 
 type Props = {
@@ -9,10 +7,9 @@ type Props = {
 };
 
 export default function UserForm({ isRegistering }: Readonly<Props>) {
-  const { mutateAsync: createUser } = useCreateUser();
   const { register, handleSubmit } = useForm();
 
-  async function handleOnSubmit(data: User) {
+  async function handleOnSubmit(data: any) {
     console.log(data);
   }
 

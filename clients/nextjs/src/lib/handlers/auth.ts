@@ -1,15 +1,9 @@
-'server only';
-
 import postgres from 'postgres';
-import { NextRequest } from 'next/server';
-import { User } from '../types/auth';
+import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export async function createUser(req: NextRequest) {
-  console.log(req);
-  // try {
-  //     const data = await sql<User>`
-  //         INSERT INTO users (id, email, display_name, password)
-  //         VALUES (${})
-  //     `
-  // }
+  const { title } = await req.json();
+  console.log(title);
+  return NextResponse.json({ msg: 'ok' });
 }
