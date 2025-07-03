@@ -40,8 +40,13 @@ export async function createBlog(FormData: FormData) {
 export async function fetchAllBlogs() {
   try {
     return await sql<Blog[]>`
-            SELECT * FROM blogs
-        `;
+      SELECT 
+        id,
+        title,
+        body,
+        created_at as "createdAt"
+      FROM blogs
+    `;
   } catch (error) {
     console.log(error);
     throw new Error('Failed to fetch all blogs');

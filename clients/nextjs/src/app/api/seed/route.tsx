@@ -15,9 +15,22 @@ async function seedBlogs() {
   `;
 }
 
+async function seedUsers() {
+  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+  await sql`
+    CREATE TABLE IF NOT EXISTS users (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      email TEXT NOT NULL,
+      display_name TEXT NOT NULL,
+      password TEXT NOT NULL
+    )
+  `;
+}
+
 export async function GET() {
   try {
     await seedBlogs();
+    await seedUsers();
     return NextResponse.json({ message: 'successfully seeded the database' });
   } catch (error) {
     console.log(error);
