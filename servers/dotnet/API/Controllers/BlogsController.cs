@@ -13,13 +13,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BlogDto>>> GetBlogs([FromQuery] PageRequestDto pageRequestDto)
         {
-            return HandleResult(await Mediator.Send(new GetBlogList.Query { PageRequestDto = pageRequestDto }));
+            return HandleResult(await Mediator.Send(new FindBlogs.Query { PageRequestDto = pageRequestDto }));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<BlogDto>> GetBlogDetails(string id)
         {
-            return HandleResult(await Mediator.Send(new GetBlogDetails.Query { Id = id }));
+            return HandleResult(await Mediator.Send(new GetBlogById.Query { Id = id }));
         }
 
         [HttpPost]

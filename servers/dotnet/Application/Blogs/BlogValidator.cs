@@ -1,9 +1,10 @@
 using Application.Blogs.DTOs;
 using Application.Core;
+using Application.Interfaces;
 
 namespace Application.Blogs;
 
-public class BlogValidator
+public class BlogValidator : IBlogValidator
 {
     public List<ValidationError> Validate(BlogDto blogDto)
     {
@@ -11,11 +12,11 @@ public class BlogValidator
 
         if (string.IsNullOrWhiteSpace(blogDto.Title))
         {
-            errors.Add(new ValidationError { Field = "title", Message = "Blog must contain a title" });
+            errors.Add(new() { Field = "title", Message = "Blog must contain a title" });
         }
         if (string.IsNullOrWhiteSpace(blogDto.Body))
         {
-            errors.Add(new ValidationError { Field = "body", Message = "Blog must contain a body" });
+            errors.Add(new() { Field = "body", Message = "Blog must contain a body" });
         }
 
         return errors;

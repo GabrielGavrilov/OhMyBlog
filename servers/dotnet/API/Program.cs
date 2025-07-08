@@ -1,5 +1,6 @@
 using Application.Blogs;
 using Application.Blogs.Queries;
+using Application.Core;
 using Application.Interfaces;
 using Application.Users.Assemblers;
 using Domain.Blogs;
@@ -26,11 +27,17 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddCors();
 builder.Services.AddMediatR(x =>
 {
-    x.RegisterServicesFromAssemblyContaining<GetBlogList.Handler>();
+    x.RegisterServicesFromAssemblyContaining<FindBlogs.Handler>();
 });
 
+// core scopes
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+builder.Services.AddScoped<IPageAssembler, PageAssembler>();
+
+// blog scopes
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<IBlogValidator, BlogValidator>();
+builder.Services.AddScoped<IBlogAssembler, BlogAssembler>();
 
 // Identity for authentication
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
@@ -52,8 +59,6 @@ builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorPolicyHandler>();
 
 builder.Services.AddSingleton<UserAssembler>();
 builder.Services.AddSingleton<RegisterUserAssembler>();
-builder.Services.AddSingleton<BlogAssembler>();
-builder.Services.AddSingleton<BlogValidator>();
 builder.Services.AddSingleton<UserValidator>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

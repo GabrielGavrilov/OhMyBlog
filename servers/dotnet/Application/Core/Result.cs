@@ -9,7 +9,6 @@ public class Result<T>
     public bool IsSuccess { get; set; }
     public T? Value { get; set; }
     public List<ValidationError>? Errors { get; set; }
-    // could be an enum
     public int Code { get; set; }
 
     public static Result<T> Success(T value) => new ()

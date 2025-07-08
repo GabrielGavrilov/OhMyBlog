@@ -1,3 +1,4 @@
+using System.Net;
 using Application.Blogs.DTOs;
 using Application.Core;
 using Domain.Blogs;
@@ -5,7 +6,7 @@ using MediatR;
 
 namespace Application.Blogs.Queries;
 
-public class GetBlogDetails
+public class GetBlogById
 {
     public class Query : IRequest<Result<BlogDto>> 
     {
@@ -16,8 +17,10 @@ public class GetBlogDetails
     {
         public async Task<Result<BlogDto>> Handle(Query request, CancellationToken cancellationToken)
         {
-            Blog? blog = await blogRepository.GetById(request.Id, cancellationToken);
-            return Result<BlogDto>.Success(blogAssembler.Assemble(blog!)) ?? Result<BlogDto>.Failure(404);
+            var blog = await blogRepository.GetById(request.Id);
+            return blog == null
+                ? Result<BlogDto>.Failure((int)HttpStatusCode.BadRequest)
+                : Result<BlogDto>.Success(blogAssembler.Assemble(blog));
         }
     }
 }

@@ -1,5 +1,7 @@
+using System.Net;
 using Application.Blogs.DTOs;
 using Application.Core;
+using Application.Interfaces;
 using Domain.Blogs;
 using MediatR;
 
@@ -13,26 +15,26 @@ public class UpdateBlog
         public required BlogDto BlogDto { get; set; }
     }
 
-    public class Handler(IBlogRepository blogRepository, BlogAssembler blogAssembler, BlogValidator blogValidator) : IRequestHandler<Command, Result<BlogDto>>
+    public class Handler(IBlogRepository repository, IBlogAssembler assembler, IBlogValidator validator) : IRequestHandler<Command, Result<BlogDto>>
     {
         public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            List<ValidationError> errors = blogValidator.Validate(request.BlogDto);
+            List<ValidationError> errors = validator.Validate(request.BlogDto);
 
-            if (errors.Count > 0) 
+            if (errors.Count != 0) 
             {
-                return Result<BlogDto>.Failure(errors, 400);
+                return Result<BlogDto>.Failure(errors, (int)HttpStatusCode.BadRequest);
             }
 
-            Blog? foundBlog = await blogRepository.GetById(request.Id, cancellationToken);
+            var existingBlog = await repository.GetById(request.Id);
 
-            if (foundBlog == null)
+            if (existingBlog == null)
             {
-                return Result<BlogDto>.Failure(404);
+                return Result<BlogDto>.Failure((int)HttpStatusCode.NotFound);
             }
             
-            Blog updatedBlog = await blogRepository.UpdateAsync( blogAssembler.DisassembleInto(request.BlogDto, foundBlog));
-            return Result<BlogDto>.Success(blogAssembler.Assemble(updatedBlog)) ?? Result<BlogDto>.Failure(404);
+            await repository.UpdateAsync(assembler.DisassembleInto(request.BlogDto, existingBlog));
+            return Result<BlogDto>.Success(assembler.Assemble(existingBlog));
         }
     }
 

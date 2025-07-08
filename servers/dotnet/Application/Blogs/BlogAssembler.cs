@@ -1,10 +1,11 @@
 using Application.Blogs.DTOs;
+using Application.Interfaces;
 using Application.Users.Assemblers;
 using Domain.Blogs;
 
 namespace Application.Blogs;
 
-public class BlogAssembler
+public class BlogAssembler : IBlogAssembler
 {
     private readonly BlogUserInformationAssembler _blogUserInformationAssembler = new BlogUserInformationAssembler();
 

@@ -12,11 +12,11 @@ public class BlogRepository(AppDbContext appDbContext) : IBlogRepository
         return [.. appDbContext.Blogs.Include(x => x.User).ApplyFilter(blogFilter)];
     }
 
-    public async Task<Blog?> GetById(string id, CancellationToken cancellationToken)
+    public async Task<Blog?> GetById(string id)
     {
-        return await appDbContext.Blogs
-            .Include(x => x.User)
-            .FirstOrDefaultAsync(x => id == x.Id, cancellationToken);
+        return await appDbContext.Set<Blog>()
+            .Include(b => b.User)
+            .FirstOrDefaultAsync(b => id == b.Id);
     }
 
     public async Task<Blog> AddAsync(Blog blog)
@@ -39,8 +39,8 @@ public class BlogRepository(AppDbContext appDbContext) : IBlogRepository
         await appDbContext.SaveChangesAsync();
     }
 
-    public async Task<int> Count()
+    public async Task<int> Count(BlogFilter blogFiler)
     {
-        return await appDbContext.Blogs.CountAsync();
+        return await appDbContext.Set<Blog>().ApplyFilterWithoutPagination(blogFiler).CountAsync();
     }
 }

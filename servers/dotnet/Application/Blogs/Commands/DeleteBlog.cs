@@ -1,3 +1,4 @@
+using System.Net;
 using Application.Core;
 using Domain.Blogs;
 using MediatR;
@@ -11,17 +12,18 @@ public class DeleteBlog
         public required string Id { get; set; }
     }
 
-    public class Handler(IBlogRepository blogRepository) : IRequestHandler<Command, Result<Unit>>
+    public class Handler(IBlogRepository repository) : IRequestHandler<Command, Result<Unit>>
     {
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            Blog? blog = await blogRepository.GetById(request.Id, cancellationToken);
+            var blog = await repository.GetById(request.Id);
             
-            if (blog != null)
+            if (blog == null)
             {
-                await blogRepository.DeleteAsync(blog);
+                return Result<Unit>.Failure((int)HttpStatusCode.BadRequest);
             }
 
+            await repository.DeleteAsync(blog);
             return Result<Unit>.Success(Unit.Value);
         }
     }
