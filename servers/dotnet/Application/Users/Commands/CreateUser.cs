@@ -1,8 +1,8 @@
+using System.Net;
 using Application.Common;
-using Application.Users.Assemblers;
+using Application.Interfaces;
 using Application.Users.DTOs;
 using Domain.Users;
-using Domain.Users.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -17,9 +17,9 @@ public class CreateUser
 
     public class Handler(
         UserManager<User> userManager,
-        UserAssembler userAssembler,
-        RegisterUserAssembler registerUserAssembler,
-        UserValidator userValidator
+        IUserAssembler userAssembler,
+        IRegisterUserAssembler registerUserAssembler,
+        IUserValidator userValidator
     ) : IRequestHandler<Command, Result<UserDto>>
     {
         public async Task<Result<UserDto>> Handle(Command request, CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ public class CreateUser
             if (!result.Succeeded)
             {
                 List<ValidationError> errors = userValidator.ValidateIdentityResult(result, request.RegisterUserDto);
-                return Result<UserDto>.Failure(errors, 400);
+                return Result<UserDto>.Failure(errors, (int)HttpStatusCode.BadRequest);
             }
 
             return Result<UserDto>.Success(userAssembler.Assemble(user));

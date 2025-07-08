@@ -12,18 +12,18 @@ public class DeleteBlog
         public required string Id { get; set; }
     }
 
-    public class Handler(IBlogRepository repository) : IRequestHandler<Command, Result<Unit>>
+    public class Handler(IBlogRepository blogRepository) : IRequestHandler<Command, Result<Unit>>
     {
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var blog = await repository.GetById(request.Id);
+            var blog = await blogRepository.GetByIdAsync(request.Id);
             
             if (blog == null)
             {
                 return Result<Unit>.Failure((int)HttpStatusCode.BadRequest);
             }
 
-            await repository.DeleteAsync(blog);
+            await blogRepository.DeleteAsync(blog);
             return Result<Unit>.Success(Unit.Value);
         }
     }

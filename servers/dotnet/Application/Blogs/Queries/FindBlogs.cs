@@ -14,7 +14,7 @@ public class FindBlogs
         public required PageRequestDto PageRequestDto { get;  set; }
     }
 
-    public class Handler(IBlogRepository repository, IBlogAssembler assembler, IPageAssembler pageAssembler) : IRequestHandler<Query, Result<PageResponseDto<BlogDto>>>
+    public class Handler(IBlogRepository blogRepository, IBlogAssembler blogAssembler, IPageAssembler pageAssembler) : IRequestHandler<Query, Result<PageResponseDto<BlogDto>>>
     {
         public async Task<Result<PageResponseDto<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
@@ -24,8 +24,8 @@ public class FindBlogs
                 PerPage = request.PageRequestDto.Size
             };
 
-            List<Blog> blogs = repository.Find(blogFilter);
-            return Result<PageResponseDto<BlogDto>>.Success(pageAssembler.Assemble(assembler.Assemble(blogs), request.PageRequestDto, await repository.Count(blogFilter)));
+            List<Blog> blogs = blogRepository.Find(blogFilter);
+            return Result<PageResponseDto<BlogDto>>.Success(pageAssembler.Assemble(blogAssembler.Assemble(blogs), request.PageRequestDto, await blogRepository.CountAsync(blogFilter)));
         }
     }
 }

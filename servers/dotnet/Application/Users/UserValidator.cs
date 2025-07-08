@@ -1,11 +1,12 @@
 using System;
 using Application.Common;
+using Application.Interfaces;
 using Application.Users.DTOs;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Users.Validators;
 
-public class UserValidator
+public class UserValidator : IUserValidator
 {
     public List<ValidationError> ValidateIdentityResult(IdentityResult identityResult, RegisterUserDto registerUserDto)
     {

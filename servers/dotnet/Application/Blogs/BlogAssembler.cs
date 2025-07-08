@@ -5,9 +5,8 @@ using Domain.Blogs;
 
 namespace Application.Blogs;
 
-public class BlogAssembler : IBlogAssembler
+public class BlogAssembler(IBlogUserAssembler blogUserAssembler) : IBlogAssembler
 {
-    private readonly BlogUserInformationAssembler _blogUserInformationAssembler = new BlogUserInformationAssembler();
 
     public BlogDto Assemble(Blog entity) 
     {
@@ -17,7 +16,7 @@ public class BlogAssembler : IBlogAssembler
             Title = entity.Title,
             Body = entity.Body,
             CreatedAt = entity.CreatedAt,
-            User = _blogUserInformationAssembler.Assemble(entity.User)
+            User = blogUserAssembler.Assemble(entity.User)
         };
     }
 

@@ -15,13 +15,13 @@ namespace API.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> GetCurrentUserDetails()
         {
-            return HandleResult(await Mediator.Send(new GetCurrentUserDetails.Query{}));
+            return HandleResult(await Mediator.Send(new GetCurrentUser.Query{}));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUserInfo(string id)
         {
-            return HandleResult(await Mediator.Send(new GetUserDetails.Query{Id = id}));
+            return HandleResult(await Mediator.Send(new GetUserById.Query{Id = id}));
         }
 
         [HttpPost]

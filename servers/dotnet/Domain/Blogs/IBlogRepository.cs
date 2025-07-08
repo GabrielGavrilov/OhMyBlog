@@ -6,9 +6,9 @@ namespace Domain.Blogs;
 public interface IBlogRepository
 {
     List<Blog> Find(BlogFilter blogFilter);
-    Task<Blog?> GetById(string id);
+    Task<Blog?> GetByIdAsync(string id);
     Task<Blog> AddAsync(Blog blog);
     Task<Blog> UpdateAsync(Blog blog);
     Task DeleteAsync(Blog blog);
-    Task<int> Count(BlogFilter blogFilter);
+    Task<int> CountAsync(BlogFilter blogFilter);
 }

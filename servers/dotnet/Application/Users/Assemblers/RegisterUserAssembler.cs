@@ -1,12 +1,17 @@
+using Application.Interfaces;
 using Application.Users.DTOs;
 using Domain.Users;
 
 namespace Application.Users.Assemblers;
 
-public class RegisterUserAssembler
+public class RegisterUserAssembler : IRegisterUserAssembler
 {
     public User Disassemble(RegisterUserDto registerUserDto)
     {
-        return User.NewInstance(registerUserDto.Email, registerUserDto.DisplayName);
+        return new User
+        {
+            UserName = registerUserDto.Email,
+            DisplayName = registerUserDto.DisplayName
+        };
     }
 }

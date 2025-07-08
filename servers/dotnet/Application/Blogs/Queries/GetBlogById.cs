@@ -14,14 +14,14 @@ public class GetBlogById
         public required string Id { get; set; }
     }
 
-    public class Handler(IBlogRepository blogRepository, IBlogAssembler assembler) : IRequestHandler<Query, Result<BlogDto>>
+    public class Handler(IBlogRepository blogRepository, IBlogAssembler blogAssembler) : IRequestHandler<Query, Result<BlogDto>>
     {
         public async Task<Result<BlogDto>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var blog = await blogRepository.GetById(request.Id);
+            var blog = await blogRepository.GetByIdAsync(request.Id);
             return blog == null
                 ? Result<BlogDto>.Failure((int)HttpStatusCode.BadRequest)
-                : Result<BlogDto>.Success(assembler.Assemble(blog));
+                : Result<BlogDto>.Success(blogAssembler.Assemble(blog));
         }
     }
 }

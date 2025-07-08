@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Blogs;
+using Persistence.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,13 @@ builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogValidator, BlogValidator>();
 builder.Services.AddScoped<IBlogAssembler, BlogAssembler>();
 
+// user scopes
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserAssembler, UserAssembler>();
+builder.Services.AddScoped<IBlogUserAssembler, BlogUserAssembler>();
+builder.Services.AddScoped<IRegisterUserAssembler, RegisterUserAssembler>();
+builder.Services.AddScoped<IUserValidator, UserValidator>();
+
 // Identity for authentication
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
@@ -56,10 +64,6 @@ builder.Services.AddAuthorization(opt =>
     });
 });
 builder.Services.AddTransient<IAuthorizationHandler, BlogAuthorPolicyHandler>();
-
-builder.Services.AddSingleton<UserAssembler>();
-builder.Services.AddSingleton<RegisterUserAssembler>();
-builder.Services.AddSingleton<UserValidator>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
