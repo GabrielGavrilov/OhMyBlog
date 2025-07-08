@@ -1,7 +1,7 @@
 using System;
+using Application.Common;
 using Application.Users.DTOs;
 using Microsoft.AspNetCore.Identity;
-using Application.Core;
 
 namespace Domain.Users.Validators;
 

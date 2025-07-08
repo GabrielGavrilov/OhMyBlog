@@ -1,6 +1,6 @@
 using System;
 using Application.Blogs.DTOs;
-using Application.Core;
+using Application.Common;
 using Application.Interfaces;
 using Domain.Blogs;
 using MediatR;
@@ -25,8 +25,6 @@ public class FindBlogs
             };
 
             List<Blog> blogs = repository.Find(blogFilter);
-            int totalElements = await repository.Count(blogFilter);
-
             return Result<PageResponseDto<BlogDto>>.Success(pageAssembler.Assemble(assembler.Assemble(blogs), request.PageRequestDto, await repository.Count(blogFilter)));
         }
     }

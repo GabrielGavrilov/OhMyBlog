@@ -1,5 +1,5 @@
 using System;
-using Application.Core;
+using Application.Common;
 
 namespace Application.Interfaces;
 

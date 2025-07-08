@@ -1,6 +1,6 @@
 using Application.Blogs;
 using Application.Blogs.Queries;
-using Application.Core;
+using Application.Common;
 using Application.Interfaces;
 using Application.Users.Assemblers;
 using Domain.Blogs;

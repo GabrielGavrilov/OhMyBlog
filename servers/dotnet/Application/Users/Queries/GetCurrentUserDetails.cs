@@ -1,4 +1,4 @@
-using Application.Core;
+using Application.Common;
 using Application.Interfaces;
 using Application.Users.Assemblers;
 using Application.Users.DTOs;

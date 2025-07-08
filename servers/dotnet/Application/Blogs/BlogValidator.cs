@@ -1,5 +1,5 @@
 using Application.Blogs.DTOs;
-using Application.Core;
+using Application.Common;
 using Application.Interfaces;
 
 namespace Application.Blogs;

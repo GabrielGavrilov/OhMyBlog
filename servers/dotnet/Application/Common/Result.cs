@@ -1,7 +1,7 @@
 using System;
 using Domain;
 
-namespace Application.Core;
+namespace Application.Common;
 
 public class Result<T>
 {

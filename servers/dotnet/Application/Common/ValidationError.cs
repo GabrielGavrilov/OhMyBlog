@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.Core;
+namespace Application.Common;
 
 public class ValidationError
 {

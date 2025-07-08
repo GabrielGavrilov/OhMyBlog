@@ -1,5 +1,5 @@
 using System.Net;
-using Application.Core;
+using Application.Common;
 using Domain.Blogs;
 using MediatR;
 

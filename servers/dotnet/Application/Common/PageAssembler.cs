@@ -1,7 +1,7 @@
 using System;
 using Application.Interfaces;
 
-namespace Application.Core;
+namespace Application.Common;
 
 public class PageAssembler : IPageAssembler
 {
