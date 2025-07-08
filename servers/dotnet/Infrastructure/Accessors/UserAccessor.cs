@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Application.Interfaces;
-using Domain.Users.Entities;
+using Domain.Users;
 using Microsoft.AspNetCore.Http;
 using Persistence;
 
@@ -18,5 +18,10 @@ public class UserAccessor(IHttpContextAccessor httpContextAccessor, AppDbContext
     {
         return httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier)
             ?? throw new Exception("No user found.");
+    }
+
+    Task<User> IUserAccessor.GetUserAsync()
+    {
+        throw new NotImplementedException();
     }
 }

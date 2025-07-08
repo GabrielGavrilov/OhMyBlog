@@ -1,6 +1,6 @@
 using System;
 
-namespace Domain.Users.DTOs;
+namespace Application.Users.DTOs;
 
 public class BlogUserInformationDto
 {

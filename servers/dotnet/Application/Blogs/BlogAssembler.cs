@@ -1,8 +1,8 @@
-using Domain.Blogs.DTOs;
-using Domain.Blogs.Entities;
-using Domain.Users.Assemblers;
+using Application.Blogs.DTOs;
+using Application.Users.Assemblers;
+using Domain.Blogs;
 
-namespace Domain.Blogs.Assemblers;
+namespace Application.Blogs;
 
 public class BlogAssembler
 {
@@ -27,9 +27,14 @@ public class BlogAssembler
             .ToList();
     }
 
-    public Blog Disassemble(BlogDto blogDto) 
+    public Blog Disassemble(BlogDto blogDto, string userId)
     {
-        return Blog.NewInstance(blogDto.Title, blogDto.Body, blogDto.UserId!);
+        return new Blog
+        {
+            Title = blogDto.Title,
+            Body = blogDto.Body,
+            UserId = userId
+        };
     }
 
     public Blog DisassembleInto(BlogDto blogDto, Blog entity)

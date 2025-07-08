@@ -1,6 +1,6 @@
-using Domain.Users.DTOs;
+using Application.Users.DTOs;
 
-namespace Domain.Blogs.DTOs;
+namespace Application.Blogs.DTOs;
 
 public class BlogDto
 {

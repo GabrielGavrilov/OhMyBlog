@@ -1,8 +1,7 @@
 using System;
-using Domain.Blogs.Entities;
-using Domain.Blogs.Repository;
+using Domain.Blogs;
 
-namespace Domain.Blogs.Interfaces;
+namespace Domain.Blogs;
 
 public interface IBlogRepository
 {

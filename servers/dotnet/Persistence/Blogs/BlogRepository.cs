@@ -1,8 +1,6 @@
 using System;
 using AutoFilterer.Extensions;
-using Domain.Blogs.Entities;
-using Domain.Blogs.Interfaces;
-using Domain.Blogs.Repository;
+using Domain.Blogs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Blogs;

@@ -1,8 +1,6 @@
-using System;
-using Domain;
-using Domain.Users.Assemblers;
-using Domain.Users.DTOs;
-using Domain.Users.Entities;
+using Application.Users.Assemblers;
+using Application.Users.DTOs;
+using Domain.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;

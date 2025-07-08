@@ -1,5 +1,4 @@
-using System;
-using Domain.Users.Entities;
+using Domain.Users;
 
 namespace Application.Interfaces;
 

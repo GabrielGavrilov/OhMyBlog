@@ -1,17 +1,9 @@
-using System;
-using System.Runtime.CompilerServices;
+using Application.Blogs.DTOs;
 using Application.Core;
 using Application.Interfaces;
-using Domain;
-using Domain.Blogs.Assemblers;
-using Domain.Blogs.DTOs;
-using Domain.Blogs.Entities;
-using Domain.Blogs.Interfaces;
-using Domain.Blogs.Validators;
-using Domain.Users.Entities;
+using Domain.Blogs;
+using Domain.Users;
 using MediatR;
-using Persistence;
-using Persistence.Blogs;
 
 namespace Application.Blogs.Commands;
 
@@ -33,15 +25,13 @@ public class CreateBlog
         {
             List<ValidationError> errors = blogValidator.Validate(request.BlogDto);
 
-            if (errors.Count > 0)
+            if (errors.Count != 0)
             {
                 return Result<BlogDto>.Failure(errors, 400);
             }
 
             User user = await userAccessor.GetUserAsync();
-            request.BlogDto.UserId = user.Id;
-            
-            Blog blog = await blogRepository.AddAsync(blogAssembler.Disassemble(request.BlogDto));
+            Blog blog = await blogRepository.AddAsync(blogAssembler.Disassemble(request.BlogDto, user.Id));
 
             return Result<BlogDto>.Success(blogAssembler.Assemble(blog));
         }

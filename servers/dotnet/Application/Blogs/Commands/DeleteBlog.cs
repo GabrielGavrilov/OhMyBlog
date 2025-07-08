@@ -1,11 +1,6 @@
-using System;
 using Application.Core;
-using Domain;
-using Domain.Blogs.Entities;
-using Domain.Blogs.Interfaces;
+using Domain.Blogs;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 
 namespace Application.Blogs.Commands;
 

@@ -1,7 +1,7 @@
 using System;
-using Domain.Blogs.DTOs;
+using Application.Blogs.DTOs;
 
-namespace Domain.Users.DTOs;
+namespace Application.Users.DTOs;
 
 public class UserDto
 {

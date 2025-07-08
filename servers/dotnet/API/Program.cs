@@ -1,11 +1,9 @@
+using Application.Blogs;
 using Application.Blogs.Queries;
 using Application.Interfaces;
-using Domain;
-using Domain.Blogs.Assemblers;
-using Domain.Blogs.Interfaces;
-using Domain.Blogs.Validators;
-using Domain.Users.Assemblers;
-using Domain.Users.Entities;
+using Application.Users.Assemblers;
+using Domain.Blogs;
+using Domain.Users;
 using Domain.Users.Validators;
 using Infrastructure.Accessor;
 using Infrastructure.Policies;

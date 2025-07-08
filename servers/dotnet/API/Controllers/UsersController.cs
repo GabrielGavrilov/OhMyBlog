@@ -1,12 +1,9 @@
 using Application.Core.Users.Queries;
 using Application.Users.Commands;
+using Application.Users.DTOs;
 using Application.Users.Queries;
-using Domain;
-using Domain.Users.DTOs;
-using Domain.Users.Entities;
-using MediatR;
+using Domain.Users;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

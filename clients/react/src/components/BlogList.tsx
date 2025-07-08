@@ -5,6 +5,8 @@ import { useBlogs } from '../hooks/BlogHooks';
 export default function BlogList() {
   const { data: blogs, isLoading: isLoadingBlogs } = useBlogs();
 
+  console.log(blogs);
+
   if (!blogs || isLoadingBlogs) return <p>Loading...</p>;
 
   return (

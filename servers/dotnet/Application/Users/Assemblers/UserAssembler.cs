@@ -1,8 +1,8 @@
-using Domain.Blogs.Assemblers;
-using Domain.Users.DTOs;
-using Domain.Users.Entities;
+using Application.Blogs;
+using Application.Users.DTOs;
+using Domain.Users;
 
-namespace Domain.Users.Assemblers;
+namespace Application.Users.Assemblers;
 
 public class UserAssembler
 {
