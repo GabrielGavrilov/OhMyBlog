@@ -8,7 +8,7 @@ namespace Domain.Blogs;
 [PossibleSortings("CreatedAt")]
 public class BlogFilter : PaginationFilterBase
 {
+    [ArraySearchFilter]
     [CompareTo("UserId")]
-    [StringFilterOptions(StringFilterOption.Contains)]
-    public string? UserId { get; set; }
+    public ICollection<string>? UserIds { get; set; }
 }
