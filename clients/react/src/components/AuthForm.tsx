@@ -8,7 +8,6 @@ import { useLogin, useRegister } from '../hooks/AccountHooks';
 export default function AuthForm() {
   const navigate = useNavigate();
   const location = useLocation();
-  // const { loginUser, registerUser } = useAuth();
   const loginUser = useLogin();
   const registerUser = useRegister();
   const [isRegistering, setRegistering] = useState<boolean>(true);

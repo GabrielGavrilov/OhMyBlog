@@ -20,9 +20,7 @@ export default function BlogForm() {
   useEffect(
     function () {
       if (blog) {
-        reset({
-          ...blog,
-        });
+        reset(blog);
       }
     },
     [blog, reset]
@@ -77,11 +75,11 @@ export default function BlogForm() {
               className={`title-input`}
               {...register('title')}
             />
-            {validationErrors.map((err) =>
-              err.field.includes('title') ? (
+            {validationErrors
+              .filter((err) => err.field.includes('title'))
+              .map((err) => (
                 <p className="text-red-600">{err.message}</p>
-              ) : null
-            )}
+              ))}
           </div>
           <div className="pt-6 pb-6 pr-8 pl-8 mt-1 border bg-white rounded">
             <textarea
@@ -89,17 +87,17 @@ export default function BlogForm() {
               className="w-full h-96 focus:outline-none text-xl"
               {...register('body')}
             ></textarea>
-            {validationErrors.map((err) =>
-              err.field.includes('body') ? (
+            {validationErrors
+              .filter((err) => err.field.includes('body'))
+              .map((err) => (
                 <p className="text-red-600">{err.message}</p>
-              ) : null
-            )}
+              ))}
           </div>
           <div className="w-full flex justify-end mt-4">
             <button
               type="button"
               className="btn btn-warning mr-2"
-              onClick={() => reset({ ...blog })}
+              onClick={() => reset(blog)}
             >
               Reset
             </button>

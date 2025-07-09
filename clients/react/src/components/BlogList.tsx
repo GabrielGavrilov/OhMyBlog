@@ -5,13 +5,13 @@ import { useSearchParams } from 'react-router';
 import Pagination from './Pagination';
 
 export default function BlogList() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page')
     ? Number(searchParams.get('page'))
     : 1;
   const pageSize = searchParams.get('size')
     ? Number(searchParams.get('size'))
-    : 4;
+    : 10;
   const { data: blogs, isLoading: isLoadingBlogs } = useBlogs({
     page: currentPage,
     size: pageSize,
@@ -20,15 +20,19 @@ export default function BlogList() {
   if (!blogs || isLoadingBlogs) return <p>Loading...</p>;
 
   return (
-    <>
-      <div className="w-10/12 lg:w-2/3 md:10/12 sm:10/12">
-        {blogs.content.map((blog: Blog) => (
-          <div className="mb-2">
-            <BlogCard blog={blog} />
-          </div>
-        ))}
-        <Pagination totalPages={blogs.totalPages} />
-      </div>
-    </>
+    <div className="w-10/12 lg:w-2/3 md:10/12 sm:10/12 mb-8">
+      {blogs.content.map((blog: Blog) => (
+        <div className="mb-2">
+          <BlogCard blog={blog} />
+        </div>
+      ))}
+      <Pagination
+        totalPages={blogs.totalPages}
+        currentPage={currentPage}
+        onPageChange={(page) =>
+          setSearchParams({ page: String(page), size: String(pageSize) })
+        }
+      />
+    </div>
   );
 }
