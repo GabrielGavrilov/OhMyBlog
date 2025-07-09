@@ -2,6 +2,7 @@ using Application.Blogs.Commands;
 using Application.Blogs.DTOs;
 using Application.Blogs.Queries;
 using Application.Common;
+using Domain.Blogs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,13 @@ namespace API.Controllers
     public class BlogsController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<BlogDto>>> GetBlogs([FromQuery] PageRequestDto pageRequestDto)
+        public async Task<ActionResult<List<BlogDto>>> GetBlogs([FromQuery] BlogSearchCriteriaDto blogSearchCriteriaDto, [FromQuery] PageRequestDto pageRequestDto)
         {
-            return HandleResult(await Mediator.Send(new FindBlogs.Query { PageRequestDto = pageRequestDto }));
+            return HandleResult(await Mediator.Send(new FindBlogs.Query
+            {
+                BlogSearchCriteriaDto = blogSearchCriteriaDto,
+                PageRequestDto = pageRequestDto
+            }));
         }
 
         [HttpGet("{id}")]

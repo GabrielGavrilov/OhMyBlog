@@ -11,15 +11,19 @@ public class FindBlogs
 {
     public class Query : IRequest<Result<PageResponseDto<BlogDto>>>
     {
-        public required PageRequestDto PageRequestDto { get;  set; }
+        public required BlogSearchCriteriaDto BlogSearchCriteriaDto { get; set; }
+        public required PageRequestDto PageRequestDto { get; set; }
     }
 
     public class Handler(IBlogRepository blogRepository, IBlogAssembler blogAssembler, IPageAssembler pageAssembler) : IRequestHandler<Query, Result<PageResponseDto<BlogDto>>>
     {
         public async Task<Result<PageResponseDto<BlogDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            BlogFilter blogFilter = new BlogFilter
+            BlogFilter blogFilter = new()
             {
+                UserId = request.BlogSearchCriteriaDto.UserId,
+                Sort = request.BlogSearchCriteriaDto.Sort,
+                SortBy = request.BlogSearchCriteriaDto.SortBy,
                 Page = request.PageRequestDto.Page,
                 PerPage = request.PageRequestDto.Size
             };
