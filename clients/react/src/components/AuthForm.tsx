@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import User from '../models/User';
 import ValidationError from '../models/ValidationError';
 import { useLogin, useRegister } from '../hooks/AccountHooks';
+import Input from './Input';
 
 export default function AuthForm() {
   const navigate = useNavigate();
@@ -66,12 +67,12 @@ export default function AuthForm() {
             <p className="font-semibold mb-1.5">Username</p>
           </div>
           <div>
-            <input className="auth-form-input" {...register('displayName')} />
-            {validationErrors.map((err: ValidationError) =>
-              err.field.includes('displayName') ? (
-                <p className="text-red-600">{err.message}</p>
-              ) : null
-            )}
+            <Input
+              field="displayName"
+              register={register}
+              validationErrors={validationErrors}
+              className="w-full pt-2 pb-2 pl-4 pr-4 border rounded focus:outline-none"
+            />
           </div>
         </div>
       )}
@@ -80,12 +81,12 @@ export default function AuthForm() {
           <p className="font-semibold mb-1.5">Email</p>
         </div>
         <div>
-          <input className="auth-form-input" {...register('email')} />
-          {validationErrors.map((err: ValidationError) =>
-            err.field.includes('email') ? (
-              <p className="text-red-600">{err.message}</p>
-            ) : null
-          )}
+          <Input
+            field="email"
+            register={register}
+            validationErrors={validationErrors}
+            className="w-full pt-2 pb-2 pl-4 pr-4 border rounded focus:outline-none"
+          />
         </div>
       </div>
       <div className="mb-3">
@@ -93,16 +94,12 @@ export default function AuthForm() {
           <p className="font-semibold mb-1.5">Password</p>
         </div>
         <div>
-          <input
-            type="password"
-            className="auth-form-input"
-            {...register('password')}
+          <Input
+            field="password"
+            register={register}
+            validationErrors={validationErrors}
+            className="w-full pt-2 pb-2 pl-4 pr-4 border rounded focus:outline-none"
           />
-          {validationErrors.map((err: ValidationError) =>
-            err.field.includes('password') ? (
-              <p className="text-red-600">{err.message}</p>
-            ) : null
-          )}
         </div>
       </div>
       {isRegistering && (
