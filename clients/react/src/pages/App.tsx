@@ -1,6 +1,6 @@
-import { Outlet, useLocation } from "react-router";
-import Navbar from "../components/Navbar";
-import BlogList from "../components/BlogList";
+import { Outlet, useLocation } from 'react-router';
+import Navbar from '../components/Navbar';
+import BlogList from '../components/BlogList';
 
 export default function App() {
   const location = useLocation();
@@ -8,7 +8,7 @@ export default function App() {
   return (
     <>
       <Navbar />
-      {location.pathname === "/" ? (
+      {location.pathname === '/' ? (
         <div className="flex justify-center">
           <BlogList />
         </div>

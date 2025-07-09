@@ -10,6 +10,7 @@ public class RegisterUserAssembler : IRegisterUserAssembler
     {
         return new User
         {
+            Email = registerUserDto.Email,
             UserName = registerUserDto.Email,
             DisplayName = registerUserDto.DisplayName
         };

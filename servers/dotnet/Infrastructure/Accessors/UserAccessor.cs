@@ -19,9 +19,4 @@ public class UserAccessor(IHttpContextAccessor httpContextAccessor, AppDbContext
         return httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier)
             ?? throw new Exception("No user found.");
     }
-
-    Task<User> IUserAccessor.GetUserAsync()
-    {
-        throw new NotImplementedException();
-    }
 }
