@@ -6,12 +6,8 @@ import Pagination from './Pagination';
 
 export default function BlogList() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = searchParams.get('page')
-    ? Number(searchParams.get('page'))
-    : 1;
-  const pageSize = searchParams.get('size')
-    ? Number(searchParams.get('size'))
-    : 10;
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const pageSize = Number(searchParams.get('size')) || 10;
   const { data: blogs, isLoading: isLoadingBlogs } = useBlogs({
     page: currentPage,
     size: pageSize,

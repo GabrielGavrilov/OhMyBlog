@@ -71,7 +71,6 @@ export default function AuthForm() {
               field="displayName"
               register={register}
               validationErrors={validationErrors}
-              className="w-full pt-2 pb-2 pl-4 pr-4 border rounded focus:outline-none"
             />
           </div>
         </div>
@@ -85,7 +84,6 @@ export default function AuthForm() {
             field="email"
             register={register}
             validationErrors={validationErrors}
-            className="w-full pt-2 pb-2 pl-4 pr-4 border rounded focus:outline-none"
           />
         </div>
       </div>
@@ -96,9 +94,9 @@ export default function AuthForm() {
         <div>
           <Input
             field="password"
+            type="password"
             register={register}
             validationErrors={validationErrors}
-            className="w-full pt-2 pb-2 pl-4 pr-4 border rounded focus:outline-none"
           />
         </div>
       </div>
@@ -108,10 +106,11 @@ export default function AuthForm() {
             <p className="font-semibold mb-1.5">Password Confirmation</p>
           </div>
           <div>
-            <input
+            <Input
+              field="passwordConfirmation"
               type="password"
-              className="auth-form-input"
-              {...register('passwordConfirmation')}
+              register={register}
+              validationErrors={validationErrors}
             />
           </div>
         </div>

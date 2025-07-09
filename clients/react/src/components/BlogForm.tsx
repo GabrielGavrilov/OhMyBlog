@@ -85,6 +85,7 @@ export default function BlogForm() {
               register={register}
               placeholder="Blog title"
               validationErrors={validationErrors}
+              className="blog-form-title"
             />
           </div>
           <div className="pt-6 pb-6 pr-8 pl-8 mt-1 border bg-white rounded">

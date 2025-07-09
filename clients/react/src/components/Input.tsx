@@ -18,7 +18,7 @@ export default function Input({
     <>
       <input
         {...register(field)}
-        className="w-full h-14 text-3xl font-bold focus:outline-none"
+        className="w-full pt-2 pb-2 pl-4 pr-4 border rounded focus:outline-none"
         {...children}
       />
       {validationErrors

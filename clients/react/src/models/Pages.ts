@@ -1,5 +1,5 @@
 export interface PageRequestDto {
-  size: number;
+  size?: number;
   page: number;
 }
 
