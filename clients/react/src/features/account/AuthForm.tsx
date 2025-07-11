@@ -31,26 +31,25 @@ export default function AuthForm({ mode }: Props) {
   async function handleRegister(data: User) {
     if (data.password === data.passwordConfirmation) {
       await registerUser.mutate(data, {
-        onSuccess: function () {
-          navigate('/login');
-        },
-        onError: function (error) {
-          if (Array.isArray(error)) {
-            setValidationErrors(error);
-          } else {
-            setValidationErrors([]);
-          }
-        },
+        onSuccess: () => navigate('/login'),
+        onError: handleError,
       });
     }
   }
 
   async function handleLogin(data: User) {
     await loginUser.mutate(data, {
-      onSuccess: function () {
-        navigate('/');
-      },
+      onSuccess: () => navigate('/'),
+      onError: handleError,
     });
+  }
+
+  function handleError(error: unknown) {
+    if (Array.isArray(error)) {
+      setValidationErrors(error);
+    } else {
+      setValidationErrors([]);
+    }
   }
 
   return (

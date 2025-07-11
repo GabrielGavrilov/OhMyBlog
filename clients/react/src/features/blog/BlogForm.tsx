@@ -42,32 +42,24 @@ export default function BlogForm() {
 
   async function handleUpdateBlog(data: Blog) {
     await updateBlog.mutateAsync(data, {
-      onSuccess: function () {
-        navigate(`/blog/${id}`);
-      },
-      onError: function (error) {
-        if (Array.isArray(error)) {
-          setValidationErrors(error);
-        } else {
-          setValidationErrors([]);
-        }
-      },
+      onSuccess: () => navigate(`/blog/${id}`),
+      onError: handleError,
     });
   }
 
   async function handleCreateBlog(data: Blog) {
     await createBlog.mutate(data, {
-      onSuccess: function (createdBlog) {
-        navigate(`/blog/${createdBlog.id}`);
-      },
-      onError: function (error) {
-        if (Array.isArray(error)) {
-          setValidationErrors(error);
-        } else {
-          setValidationErrors([]);
-        }
-      },
+      onSuccess: (createdBlog) => navigate(`/blog/${createdBlog.id}`),
+      onError: handleError,
     });
+  }
+
+  function handleError(error: unknown) {
+    if (Array.isArray(error)) {
+      setValidationErrors(error);
+    } else {
+      setValidationErrors([]);
+    }
   }
 
   return (
