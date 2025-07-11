@@ -1,54 +1,56 @@
-import { useLocation, useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import User from '../models/User';
-import ValidationError from '../models/ValidationError';
-import { useLogin, useRegister } from '../hooks/AccountHooks';
-import Input from './Input';
+import { useLogin, useRegister } from '../../hooks/AccountHooks';
+import ValidationError from '../../lib/models/ValidationError';
+import User from '../../lib/models/User';
+import Input from '../../components/Input';
 
-export default function AuthForm() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const loginUser = useLogin();
-  const registerUser = useRegister();
-  const [isRegistering, setRegistering] = useState<boolean>(true);
-  const { register, handleSubmit } = useForm();
+type Props = {
+  mode: 'login' | 'register';
+};
+
+export default function AuthForm({ mode }: Props) {
+  const isRegistering = mode === 'register';
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
     []
   );
-
-  useEffect(
-    function () {
-      if (location.pathname === '/login') {
-        setRegistering(false);
-      }
-    },
-    [location]
-  );
+  const navigate = useNavigate();
+  const loginUser = useLogin();
+  const registerUser = useRegister();
+  const { register, handleSubmit } = useForm();
 
   async function onSubmit(data: User) {
     if (isRegistering) {
-      if (data.password === data.passwordConfirmation) {
-        await registerUser.mutate(data, {
-          onSuccess: function () {
-            navigate('/login');
-          },
-          onError: function (error) {
-            if (Array.isArray(error)) {
-              setValidationErrors(error);
-            } else {
-              setValidationErrors([]);
-            }
-          },
-        });
-      }
+      handleRegister(data);
     } else {
-      await loginUser.mutate(data, {
+      handleLogin(data);
+    }
+  }
+
+  async function handleRegister(data: User) {
+    if (data.password === data.passwordConfirmation) {
+      await registerUser.mutate(data, {
         onSuccess: function () {
-          navigate('/');
+          navigate('/login');
+        },
+        onError: function (error) {
+          if (Array.isArray(error)) {
+            setValidationErrors(error);
+          } else {
+            setValidationErrors([]);
+          }
         },
       });
     }
+  }
+
+  async function handleLogin(data: User) {
+    await loginUser.mutate(data, {
+      onSuccess: function () {
+        navigate('/');
+      },
+    });
   }
 
   return (

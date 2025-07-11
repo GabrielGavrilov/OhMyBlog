@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router';
-import { useAuthorized } from '../hooks/AccountHooks';
+import { useAuthorized } from '../../hooks/AccountHooks';
 
 export default function RequireAuth() {
   const { data: authorized } = useAuthorized();

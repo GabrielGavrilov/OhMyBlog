@@ -1,8 +1,8 @@
 import BlogCard from './BlogCard';
-import Blog from '../models/Blog';
-import { useBlogs } from '../hooks/BlogHooks';
+import Blog from '../../lib/models/Blog';
+import { useBlogs } from '../../hooks/BlogHooks';
 import { useSearchParams } from 'react-router';
-import Pagination from './Pagination';
+import Pagination from '../../components/Pagination';
 
 export default function BlogList() {
   const [searchParams, setSearchParams] = useSearchParams();

@@ -1,13 +1,11 @@
 import { createBrowserRouter } from 'react-router';
 
 import App from '../pages/App';
-import NewBlogPage from '../pages/NewBlogPage';
 import BlogPage from '../pages/BlogPage';
-import UpdateBlogPage from '../pages/UpdateBlogPage';
-import RegisterPage from '../pages/RegisterPage';
-import LoginPage from '../pages/LoginPage';
 import RequireAuth from './RequireAuth';
 import RequireNoAuth from './RequireNoAuth';
+import AuthForm from '../../features/account/AuthForm';
+import BlogForm from '../../features/blog/BlogForm';
 
 export const router = createBrowserRouter([
   {
@@ -23,11 +21,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/blog/new',
-            element: <NewBlogPage />,
+            element: <BlogForm />,
           },
           {
             path: '/blog/update/:id',
-            element: <UpdateBlogPage />,
+            element: <BlogForm />,
           },
         ],
       },
@@ -36,11 +34,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/register',
-            element: <RegisterPage />,
+            element: <AuthForm mode="register" />,
           },
           {
             path: '/login',
-            element: <LoginPage />,
+            element: <AuthForm mode="login" />,
           },
         ],
       },

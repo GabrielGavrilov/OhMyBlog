@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router';
-import { useProfile } from '../hooks/AccountHooks';
-import { useBlog, useDeleteBlog } from '../hooks/BlogHooks';
+import { useBlog, useDeleteBlog } from '../../hooks/BlogHooks';
+import { useProfile } from '../../hooks/AccountHooks';
 
 export default function BlogPage() {
   const { id } = useParams();

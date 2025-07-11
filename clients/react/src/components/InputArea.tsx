@@ -1,6 +1,6 @@
 import { TextareaHTMLAttributes } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import ValidationError from '../models/ValidationError';
+import ValidationError from '../lib/models/ValidationError';
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   field: string;

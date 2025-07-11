@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Blog from '../models/Blog';
 import { useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
-import ValidationError from '../models/ValidationError';
-import { useBlog, useCreateBlog, useUpdateBlog } from '../hooks/BlogHooks';
-import Input from './Input';
-import InputArea from './InputArea';
+import { useBlog, useCreateBlog, useUpdateBlog } from '../../hooks/BlogHooks';
+import Blog from '../../lib/models/Blog';
+import ValidationError from '../../lib/models/ValidationError';
+import Input from '../../components/Input';
+import InputArea from '../../components/InputArea';
 
 export default function BlogForm() {
   const { id } = useParams();

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import agent from '../api/agent';
-import User from '../models/User';
+import agent from '../lib/api/agent';
+import User from '../lib/models/User';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router';
 
