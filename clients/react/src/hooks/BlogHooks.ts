@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import agent from '../lib/api/agent';
-import Blog from '../lib/models/Blog';
+import Blog from '../lib/types/Blog';
 import { useLocation } from 'react-router';
-import { PageRequestDto, PageResponseDto } from '../lib/models/Pages';
+import { PageRequestDto, PageResponseDto } from '../lib/types/Pages';
 
 export const endpoints = {
   getAll: '/blogs',

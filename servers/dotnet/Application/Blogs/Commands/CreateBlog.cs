@@ -12,19 +12,19 @@ public class CreateBlog
 {
     public class Command : IRequest<Result<BlogDto>>
     {
-        public required BlogDto BlogDto  { get; set; }
+        public required CreateBlogDto CreateBlogDto  { get; set; }
     }
 
     public class Handler( 
         IUserAccessor userAccessor,
         IBlogRepository blogRepository,
-        IBlogAssembler blogAssembler,
+        ICreateBlogAssembler blogAssembler,
         IBlogValidator blogValidator
     ) : IRequestHandler<Command, Result<BlogDto>>
     {
         public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            List<ValidationError> errors = blogValidator.Validate(request.BlogDto);
+            List<ValidationError> errors = blogValidator.Validate(request.CreateBlogDto);
 
             if (errors.Count != 0)
             {
@@ -32,7 +32,7 @@ public class CreateBlog
             }
 
             User user = await userAccessor.GetUserAsync();
-            Blog blog = await blogRepository.AddAsync(blogAssembler.Disassemble(request.BlogDto, user.Id));
+            Blog blog = await blogRepository.AddAsync(blogAssembler.Disassemble(request.CreateBlogDto, user.Id));
 
             return Result<BlogDto>.Success(blogAssembler.Assemble(blog));
         }

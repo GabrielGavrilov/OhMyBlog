@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import Blog from '../../lib/models/Blog';
+import Blog from '../../lib/types/Blog';
 
 interface Props {
   blog: Blog;

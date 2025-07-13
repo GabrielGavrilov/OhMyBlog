@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import ValidationError from '../lib/models/ValidationError';
+import ValidationError from '../lib/types/ValidationError';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   field: string;

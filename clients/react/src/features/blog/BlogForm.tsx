@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useBlog, useCreateBlog, useUpdateBlog } from '../../hooks/BlogHooks';
-import Blog from '../../lib/models/Blog';
-import ValidationError from '../../lib/models/ValidationError';
+import Blog from '../../lib/types/Blog';
+import ValidationError from '../../lib/types/ValidationError';
 import Input from '../../components/Input';
 import InputArea from '../../components/InputArea';
 
@@ -64,7 +64,7 @@ export default function BlogForm() {
 
   return (
     <>
-      <div className="w-10/12 lg:w-2/3 md:w-10/12 sm:w-10/12">
+      <div>
         <div className="mb-4">
           <p className="font-mono text-2xl">
             {isEditMode ? 'Update blog' : 'New blog'}

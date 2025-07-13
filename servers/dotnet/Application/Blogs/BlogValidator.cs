@@ -6,7 +6,7 @@ namespace Application.Blogs;
 
 public class BlogValidator : IBlogValidator
 {
-    public List<ValidationError> Validate(BlogDto blogDto)
+    public List<ValidationError> Validate(CreateBlogDto blogDto)
     {
         List<ValidationError> errors = new List<ValidationError>();
 

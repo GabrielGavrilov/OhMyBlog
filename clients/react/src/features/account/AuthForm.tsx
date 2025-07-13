@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLogin, useRegister } from '../../hooks/AccountHooks';
-import ValidationError from '../../lib/models/ValidationError';
-import User from '../../lib/models/User';
+import { ValidationError } from '../../lib/types/ValidationError';
+import { AuthUserDto } from '../../lib/types/User';
 import Input from '../../components/Input';
 
 type Props = {
@@ -20,7 +20,7 @@ export default function AuthForm({ mode }: Props) {
   const registerUser = useRegister();
   const { register, handleSubmit } = useForm();
 
-  async function onSubmit(data: User) {
+  async function onSubmit(data: AuthUserDto) {
     if (isRegistering) {
       handleRegister(data);
     } else {
@@ -28,8 +28,8 @@ export default function AuthForm({ mode }: Props) {
     }
   }
 
-  async function handleRegister(data: User) {
-    if (data.password === data.passwordConfirmation) {
+  async function handleRegister(data: AuthUserDto) {
+    if (data.password === data.confirmPassword) {
       await registerUser.mutate(data, {
         onSuccess: () => navigate('/login'),
         onError: handleError,
@@ -37,7 +37,7 @@ export default function AuthForm({ mode }: Props) {
     }
   }
 
-  async function handleLogin(data: User) {
+  async function handleLogin(data: AuthUserDto) {
     await loginUser.mutate(data, {
       onSuccess: () => navigate('/'),
       onError: handleError,

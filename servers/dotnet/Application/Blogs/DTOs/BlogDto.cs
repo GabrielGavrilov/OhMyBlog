@@ -4,9 +4,9 @@ namespace Application.Blogs.DTOs;
 
 public class BlogDto
 {
-    public string? Id { get; set; } 
+    public required string Id { get; set; } 
     public required string Title { get; set; }   
     public required string Body { get; set; }
-    public DateTime? CreatedAt { get; set; }
-    public BlogUserDto? User { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public required BlogUserDto User { get; set; }
 }

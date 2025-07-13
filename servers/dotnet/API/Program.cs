@@ -1,4 +1,5 @@
 using Application.Blogs;
+using Application.Blogs.Assemblers;
 using Application.Blogs.Queries;
 using Application.Common;
 using Application.Interfaces;
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IPageAssembler, PageAssembler>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<IBlogValidator, BlogValidator>();
 builder.Services.AddScoped<IBlogAssembler, BlogAssembler>();
+builder.Services.AddScoped<ICreateBlogAssembler, CreateBlogAssembler>();
 
 // user scopes
 builder.Services.AddScoped<IUserRepository, UserRepository>();

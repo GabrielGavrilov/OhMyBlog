@@ -7,5 +7,5 @@ namespace Application.Interfaces;
 
 public interface IBlogValidator
 {
-    public List<ValidationError> Validate(BlogDto blogDto);
+    public List<ValidationError> Validate(CreateBlogDto blogDto);
 }

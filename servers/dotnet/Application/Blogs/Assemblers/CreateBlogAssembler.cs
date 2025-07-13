@@ -1,16 +1,16 @@
+using System;
 using Application.Blogs.DTOs;
 using Application.Interfaces;
 using Application.Users.Assemblers;
 using Domain.Blogs;
 
-namespace Application.Blogs;
+namespace Application.Blogs.Assemblers;
 
-public class BlogAssembler(IBlogUserAssembler blogUserAssembler) : IBlogAssembler
+public class CreateBlogAssembler(IBlogUserAssembler blogUserAssembler) : ICreateBlogAssembler
 {
-
-    public BlogDto Assemble(Blog entity) 
+    public BlogDto Assemble(Blog entity)
     {
-        return new BlogDto 
+        return new BlogDto
         {
             Id = entity.Id,
             Title = entity.Title,
@@ -19,15 +19,8 @@ public class BlogAssembler(IBlogUserAssembler blogUserAssembler) : IBlogAssemble
             User = blogUserAssembler.Assemble(entity.User)
         };
     }
-
-    public List<BlogDto> Assemble(List<Blog> entities)
-    {
-        return entities
-            .Select(entity => Assemble(entity))
-            .ToList();
-    }
-
-    public Blog Disassemble(BlogDto blogDto, string userId)
+    
+    public Blog Disassemble(CreateBlogDto blogDto, string userId)
     {
         return new Blog
         {
@@ -37,7 +30,7 @@ public class BlogAssembler(IBlogUserAssembler blogUserAssembler) : IBlogAssemble
         };
     }
 
-    public Blog DisassembleInto(BlogDto blogDto, Blog entity)
+    public Blog DisassembleInto(CreateBlogDto blogDto, Blog entity)
     {
         entity.Title = blogDto.Title;
         entity.Body = blogDto.Body;

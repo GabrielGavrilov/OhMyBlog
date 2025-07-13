@@ -29,16 +29,16 @@ namespace API.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<BlogDto>> CreateBlog(BlogDto blogDto)
+        public async Task<ActionResult<BlogDto>> CreateBlog(CreateBlogDto createBlogDto)
         {
-            return HandleResult(await Mediator.Send(new CreateBlog.Command { BlogDto = blogDto }));
+            return HandleResult(await Mediator.Send(new CreateBlog.Command { CreateBlogDto = createBlogDto }));
         }
 
         [HttpPut("{id}")]
         [Authorize(Policy = "BlogAuthorPolicy")]
-        public async Task<ActionResult<BlogDto>> UpdateBlog(string id, BlogDto blogDto)
+        public async Task<ActionResult<BlogDto>> UpdateBlog(string id, CreateBlogDto createBlogDto)
         {
-            return HandleResult(await Mediator.Send(new UpdateBlog.Command { Id = id, BlogDto = blogDto }));
+            return HandleResult(await Mediator.Send(new UpdateBlog.Command { Id = id, CreateBlogDto = createBlogDto }));
         }
 
         [HttpDelete("{id}")]

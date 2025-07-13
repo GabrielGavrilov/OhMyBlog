@@ -1,5 +1,5 @@
 import BlogCard from './BlogCard';
-import Blog from '../../lib/models/Blog';
+import Blog from '../../lib/types/Blog';
 import { useBlogs } from '../../hooks/BlogHooks';
 import { useSearchParams } from 'react-router';
 import Pagination from '../../components/Pagination';
@@ -16,7 +16,7 @@ export default function BlogList() {
   if (!blogs || isLoadingBlogs) return <p>Loading...</p>;
 
   return (
-    <div className="w-10/12 lg:w-2/3 md:10/12 sm:10/12 mb-8">
+    <div className="w-full">
       {blogs.content.map((blog: Blog) => (
         <div className="mb-2">
           <BlogCard blog={blog} />

@@ -12,14 +12,14 @@ public class UpdateBlog
     public class Command : IRequest<Result<BlogDto>>
     {
         public required string Id { get; set; }
-        public required BlogDto BlogDto { get; set; }
+        public required CreateBlogDto CreateBlogDto { get; set; }
     }
 
-    public class Handler(IBlogRepository blogRepository, IBlogAssembler blogAssembler, IBlogValidator blogValidator) : IRequestHandler<Command, Result<BlogDto>>
+    public class Handler(IBlogRepository blogRepository, ICreateBlogAssembler blogAssembler, IBlogValidator blogValidator) : IRequestHandler<Command, Result<BlogDto>>
     {
         public async Task<Result<BlogDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            List<ValidationError> errors = blogValidator.Validate(request.BlogDto);
+            List<ValidationError> errors = blogValidator.Validate(request.CreateBlogDto);
 
             if (errors.Count != 0) 
             {
@@ -33,7 +33,7 @@ public class UpdateBlog
                 return Result<BlogDto>.Failure((int)HttpStatusCode.NotFound);
             }
             
-            await blogRepository.UpdateAsync(blogAssembler.DisassembleInto(request.BlogDto, existingBlog));
+            await blogRepository.UpdateAsync(blogAssembler.DisassembleInto(request.CreateBlogDto, existingBlog));
             return Result<BlogDto>.Success(blogAssembler.Assemble(existingBlog));
         }
     }
