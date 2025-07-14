@@ -1,11 +1,12 @@
 import { createBrowserRouter } from 'react-router';
 
-import App from '../pages/App';
-import BlogPage from '../pages/BlogPage';
+import App from '../layout/App';
+import Blog from '../../features/blog/Blog';
 import RequireAuth from './RequireAuth';
 import RequireNoAuth from './RequireNoAuth';
-import AuthForm from '../../features/account/AuthForm';
+import AuthForm from '../../features/account/form/AuthForm';
 import BlogForm from '../../features/blog/BlogForm';
+import Profile from '../../features/account/profile/Profile';
 
 export const router = createBrowserRouter([
   {
@@ -13,8 +14,12 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        path: '/user/:id',
+        element: <Profile />,
+      },
+      {
         path: '/blog/:id',
-        element: <BlogPage />,
+        element: <Blog />,
       },
       {
         element: <RequireAuth />,

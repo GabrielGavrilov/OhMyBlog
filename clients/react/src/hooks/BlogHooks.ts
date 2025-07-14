@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import agent from '../lib/api/agent';
-import Blog from '../lib/types/Blog';
+import { BlogDto, CreateBlogDto } from '../lib/types/Blog';
 import { useLocation } from 'react-router';
 import { PageRequestDto, PageResponseDto } from '../lib/types/Pages';
 
@@ -17,7 +17,7 @@ export function useBlogs(pageRequest: PageRequestDto) {
   return useQuery({
     queryKey: ['blogs', pageRequest.page, pageRequest.size],
     queryFn: async () => {
-      const response = await agent.get<PageResponseDto<Blog>>(
+      const response = await agent.get<PageResponseDto<BlogDto>>(
         endpoints.getAll,
         {
           params: {
@@ -36,7 +36,7 @@ export function useBlog(id?: string) {
   return useQuery({
     queryKey: ['blogs', id],
     queryFn: async () => {
-      const response = await agent.get<Blog>(endpoints.getBlog + id);
+      const response = await agent.get<BlogDto>(endpoints.getBlog + id);
       return response.data;
     },
     enabled: !!id,
@@ -46,7 +46,7 @@ export function useBlog(id?: string) {
 export function useCreateBlog() {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async (blog: Blog) => {
+    mutationFn: async (blog: CreateBlogDto) => {
       const response = await agent.post(endpoints.create, blog);
       return response.data;
     },
@@ -61,7 +61,7 @@ export function useCreateBlog() {
 export function useUpdateBlog(id?: string) {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: async (blog: Blog) => {
+    mutationFn: async (blog: CreateBlogDto) => {
       const response = await agent.put(endpoints.update + id, blog);
       return response.data;
     },

@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { useBlog, useDeleteBlog } from '../../hooks/BlogHooks';
 import { useProfile } from '../../hooks/AccountHooks';
 
-export default function BlogPage() {
+export default function Blog() {
   const { id } = useParams();
   const { data: blog, isLoading: isLoadingBlog } = useBlog(id);
   const deleteBlog = useDeleteBlog(id);
@@ -24,7 +24,9 @@ export default function BlogPage() {
     <div>
       <div className="pt-8 pb-8 pl-12 pr-12 w-full bg-white rounded border">
         <div>
-          <p className="font-semibold">{blog?.user.displayName}</p>
+          <Link to={`/user/${blog?.user.id}`}>
+            <p className="font-semibold">{blog?.user.displayName}</p>
+          </Link>
         </div>
         <div className="font-light text-sm mb-4">
           {'Posted on ' + blog?.createdAt?.toString().split('T')[0]}

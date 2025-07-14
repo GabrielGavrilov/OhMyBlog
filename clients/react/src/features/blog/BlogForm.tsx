@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useBlog, useCreateBlog, useUpdateBlog } from '../../hooks/BlogHooks';
-import Blog from '../../lib/types/Blog';
-import ValidationError from '../../lib/types/ValidationError';
+import { CreateBlogDto } from '../../lib/types/Blog';
+import { ValidationError } from '../../lib/types/ValidationError';
 import Input from '../../components/Input';
 import InputArea from '../../components/InputArea';
 
@@ -13,7 +13,7 @@ export default function BlogForm() {
   const { data: blog, isLoading: isLoadingBlog } = useBlog(id);
   const createBlog = useCreateBlog();
   const updateBlog = useUpdateBlog(id);
-  const { register, handleSubmit, reset } = useForm<Blog>();
+  const { register, handleSubmit, reset } = useForm<CreateBlogDto>();
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
     []
   );
@@ -32,7 +32,7 @@ export default function BlogForm() {
     return <p>Loading...</p>;
   }
 
-  async function onSubmit(data: Blog) {
+  async function onSubmit(data: CreateBlogDto) {
     if (isEditMode) {
       await handleUpdateBlog(data);
     } else {
@@ -40,14 +40,14 @@ export default function BlogForm() {
     }
   }
 
-  async function handleUpdateBlog(data: Blog) {
-    await updateBlog.mutateAsync(data, {
+  async function handleUpdateBlog(data: CreateBlogDto) {
+    await updateBlog.mutateAsync(data as CreateBlogDto, {
       onSuccess: () => navigate(`/blog/${id}`),
       onError: handleError,
     });
   }
 
-  async function handleCreateBlog(data: Blog) {
+  async function handleCreateBlog(data: CreateBlogDto) {
     await createBlog.mutate(data, {
       onSuccess: (createdBlog) => navigate(`/blog/${createdBlog.id}`),
       onError: handleError,

@@ -1,9 +1,14 @@
 import { BlogUserDto } from './User';
 
-export type Blog = {
-  id?: string;
+export type BlogDto = {
+  id: string;
   title: string;
   body: string;
-  createdAt?: Date;
+  createdAt: Date;
   user: BlogUserDto;
+};
+
+export type CreateBlogDto = {
+  title: string;
+  body: string;
 };

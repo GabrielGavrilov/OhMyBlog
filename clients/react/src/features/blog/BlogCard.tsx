@@ -1,15 +1,17 @@
 import { Link } from 'react-router';
-import Blog from '../../lib/types/Blog';
+import { BlogDto } from '../../lib/types/Blog';
 
 interface Props {
-  blog: Blog;
+  blog: BlogDto;
 }
 
 export default function BlogCard({ blog }: Props) {
   return (
     <>
       <div className="bg-white rounded border pt-6 pb-6 pl-8 pr-8 ">
-        <p className="font-semibold">{blog.user.displayName}</p>
+        <Link to={`/user/${blog.user.id}`}>
+          <p className="font-semibold">{blog.user.displayName}</p>
+        </Link>
         <p className="text-sm font-light mb-4">
           {'Posted on ' + String(blog.createdAt).split('T')[0]}
         </p>

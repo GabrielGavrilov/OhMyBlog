@@ -1,5 +1,5 @@
 import BlogCard from './BlogCard';
-import Blog from '../../lib/types/Blog';
+import { BlogDto } from '../../lib/types/Blog';
 import { useBlogs } from '../../hooks/BlogHooks';
 import { useSearchParams } from 'react-router';
 import Pagination from '../../components/Pagination';
@@ -17,7 +17,7 @@ export default function BlogList() {
 
   return (
     <div className="w-full">
-      {blogs.content.map((blog: Blog) => (
+      {blogs.content.map((blog: BlogDto) => (
         <div className="mb-2">
           <BlogCard blog={blog} />
         </div>
