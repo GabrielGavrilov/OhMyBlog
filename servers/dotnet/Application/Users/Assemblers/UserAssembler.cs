@@ -12,8 +12,9 @@ public class UserAssembler(IBlogAssembler blogAssembler) : IUserAssembler
         return new UserDto
         {
             Id = entity.Id,
-            DisplayName = entity.DisplayName!,
             Email = entity.Email!,
+            DisplayName = entity.DisplayName!,
+            Description = entity.Description,
             Blogs = entity.Blogs
                 .Select(blog => blogAssembler.Assemble(blog))
                 .ToList()

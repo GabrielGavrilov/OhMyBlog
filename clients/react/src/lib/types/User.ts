@@ -1,7 +1,8 @@
 export type UserDto = {
   id: string;
-  displayName: string;
   email: string;
+  displayName: string;
+  description: string;
 };
 
 export type AuthUserDto = {
