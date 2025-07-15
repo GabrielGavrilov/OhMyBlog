@@ -1,33 +1,31 @@
 import BlogCard from './BlogCard';
 import { BlogDto } from '../../lib/types/Blog';
-import { useBlogs } from '../../hooks/BlogHooks';
-import { useSearchParams } from 'react-router';
 import Pagination from '../../components/Pagination';
 
-export default function BlogList() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
-  const pageSize = Number(searchParams.get('size')) || 10;
-  const { data: blogs, isLoading: isLoadingBlogs } = useBlogs({
-    page: currentPage,
-    size: pageSize,
-  });
+interface Props {
+  blogs: BlogDto[];
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
 
-  if (!blogs || isLoadingBlogs) return <p>Loading...</p>;
-
+export default function BlogList({
+  blogs,
+  currentPage,
+  totalPages,
+  onPageChange,
+}: Props) {
   return (
     <div className="w-full">
-      {blogs.content.map((blog: BlogDto) => (
+      {blogs.map((blog: BlogDto) => (
         <div className="mb-2">
           <BlogCard blog={blog} />
         </div>
       ))}
       <Pagination
-        totalPages={blogs.totalPages}
+        totalPages={totalPages}
         currentPage={currentPage}
-        onPageChange={(page) =>
-          setSearchParams({ page: String(page), size: String(pageSize) })
-        }
+        onPageChange={onPageChange}
       />
     </div>
   );
