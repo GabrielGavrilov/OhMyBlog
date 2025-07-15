@@ -29,6 +29,7 @@ export default function AuthForm({ mode }: Props) {
   }
 
   async function handleRegister(data: AuthUserDto) {
+    console.log(data);
     if (data.password === data.confirmPassword) {
       await registerUser.mutate(data, {
         onSuccess: () => navigate('/login'),
@@ -108,7 +109,7 @@ export default function AuthForm({ mode }: Props) {
           </div>
           <div>
             <Input
-              field="passwordConfirmation"
+              field="confirmPassword"
               type="password"
               register={register}
               validationErrors={validationErrors}

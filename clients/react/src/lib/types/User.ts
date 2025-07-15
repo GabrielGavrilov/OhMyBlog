@@ -2,7 +2,7 @@ export type UserDto = {
   id: string;
   email: string;
   displayName: string;
-  description: string;
+  description?: string;
 };
 
 export type AuthUserDto = {

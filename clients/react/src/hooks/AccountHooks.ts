@@ -44,7 +44,7 @@ export function useProfileById(id: string) {
   return useQuery({
     queryKey: ['profile', id],
     queryFn: async () => {
-      const response = await agent.get<UserDto>(endpoints.profileById);
+      const response = await agent.get<UserDto>(endpoints.profileById + id);
       return response.data;
     },
     retry: false,
@@ -91,7 +91,6 @@ export function useLogout() {
       return response.data();
     },
     onSuccess: () => {
-      console.log('logging out');
       navigate('/login');
     },
   });
