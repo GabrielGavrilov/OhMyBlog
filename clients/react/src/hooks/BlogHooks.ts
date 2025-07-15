@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import agent from '../lib/api/agent';
-import { BlogDto, CreateBlogDto } from '../lib/types/Blog';
-import { useLocation } from 'react-router';
+import { BlogDto, BlogSearchCriteria, CreateBlogDto } from '../lib/types/Blog';
 import { PageRequestDto, PageResponseDto } from '../lib/types/Pages';
 
 export const endpoints = {
@@ -12,23 +11,16 @@ export const endpoints = {
   delete: '/blogs/',
 };
 
-export function useBlogs(pageRequest: PageRequestDto) {
-  const location = useLocation();
+export function useBlogs(pageRequest: PageRequestDto & BlogSearchCriteria) {
   return useQuery({
     queryKey: ['blogs', pageRequest.page, pageRequest.size],
     queryFn: async () => {
       const response = await agent.get<PageResponseDto<BlogDto>>(
         endpoints.getAll,
-        {
-          params: {
-            page: pageRequest.page,
-            size: pageRequest.size,
-          },
-        }
+        { params: pageRequest, paramsSerializer: { indexes: null } }
       );
       return response.data;
     },
-    enabled: location.pathname === '/',
   });
 }
 

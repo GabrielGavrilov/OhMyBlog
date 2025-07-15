@@ -12,3 +12,7 @@ export type CreateBlogDto = {
   title: string;
   body: string;
 };
+
+export type BlogSearchCriteria = {
+  userId?: Array<string>;
+};
