@@ -11,4 +11,8 @@ public class BlogFilter : PaginationFilterBase
     [ArraySearchFilter]
     [CompareTo("UserId")]
     public ICollection<string>? UserIds { get; set; }
+
+    [CompareTo("Title")]
+    [StringFilterOptions(StringFilterOption.Contains)]
+    public string? Title { get; set; }
 }

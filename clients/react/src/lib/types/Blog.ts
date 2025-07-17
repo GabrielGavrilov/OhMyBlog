@@ -14,5 +14,6 @@ export type CreateBlogDto = {
 };
 
 export type BlogSearchCriteria = {
+  search: string | null;
   userId?: Array<string>;
 };

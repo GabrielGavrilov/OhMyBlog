@@ -11,6 +11,7 @@ export default function Profile() {
   const currentPage = Number(searchParams.get('page')) || 1;
   const pageSize = Number(searchParams.get('size')) || 10;
   const { data: blogs, isLoading: isLoadingBlogs } = useBlogs({
+    search: searchParams.get('search'),
     page: currentPage,
     size: pageSize,
     userId: [id!],

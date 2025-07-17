@@ -8,7 +8,7 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <div className="w-full flex justify-center mt-8">
+      <div className="w-full flex justify-center mt-8 mb-8">
         <div className="w-10/12 flex justify-center lg:w-2/3 md:w-10/12 sm:w-10/12">
           {location.pathname === '/' ? (
             <ListAllBlogs />

@@ -21,6 +21,7 @@ public class FindBlogs
         {
             BlogFilter blogFilter = new()
             {
+                Title = request.BlogSearchCriteriaDto.Search,
                 UserIds = request.BlogSearchCriteriaDto.UserId.Any()
                     ? request.BlogSearchCriteriaDto.UserId
                     : null,

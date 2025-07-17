@@ -13,7 +13,7 @@ export const endpoints = {
 
 export function useBlogs(pageRequest: PageRequestDto & BlogSearchCriteria) {
   return useQuery({
-    queryKey: ['blogs', pageRequest.page, pageRequest.size],
+    queryKey: ['blogs', pageRequest.page, pageRequest.size, pageRequest.search],
     queryFn: async () => {
       const response = await agent.get<PageResponseDto<BlogDto>>(
         endpoints.getAll,
