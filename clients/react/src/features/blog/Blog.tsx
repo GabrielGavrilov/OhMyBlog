@@ -1,6 +1,8 @@
 import { Link, useNavigate, useParams } from 'react-router';
 import { useBlog, useDeleteBlog } from '../../hooks/BlogHooks';
 import { useProfile } from '../../hooks/AccountHooks';
+import { useState } from 'react';
+import Modal from '../../components/Modal';
 
 export default function Blog() {
   const { id } = useParams();
@@ -8,6 +10,7 @@ export default function Blog() {
   const deleteBlog = useDeleteBlog(id);
   const { data: userInfo } = useProfile();
   const isAuthor = userInfo?.id === blog?.user.id;
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -22,6 +25,17 @@ export default function Blog() {
 
   return (
     <div>
+      {showDeleteModal && (
+        <Modal
+          header="Delete blog"
+          confirmationText="Delete"
+          confirmationStyle="danger"
+          onSubmit={handleDelete}
+          onCancel={() => setShowDeleteModal(!showDeleteModal)}
+        >
+          <p>Are you sure you want to delete this blog?</p>
+        </Modal>
+      )}
       <div className="pt-8 pb-8 pl-12 pr-12 w-full bg-white rounded border">
         <div>
           <Link to={`/user/${blog?.user.id}`}>
@@ -41,7 +55,10 @@ export default function Blog() {
       {isAuthor && (
         <div className="flex justify-end mt-4">
           <div className="mr-2">
-            <button className="btn btn-warning" onClick={handleDelete}>
+            <button
+              className="btn btn-warning"
+              onClick={() => setShowDeleteModal(true)}
+            >
               Delete
             </button>
           </div>

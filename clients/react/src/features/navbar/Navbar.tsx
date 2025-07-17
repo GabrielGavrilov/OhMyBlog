@@ -1,9 +1,8 @@
 import { Link, useSearchParams } from 'react-router';
-import { useAuthorized, useLogout } from '../../hooks/AccountHooks';
+import { useAuthorized } from '../../hooks/AccountHooks';
 
 export default function Navbar() {
   const { data: authorized } = useAuthorized();
-  const logout = useLogout();
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
@@ -30,14 +29,9 @@ export default function Navbar() {
           </div>
           <div className="flex justify-end w-1/4 h-full items-center">
             {authorized ? (
-              <>
-                <button className="btn" onClick={() => logout.mutate()}>
-                  Log out
-                </button>
-                <Link to={'/blog/new'}>
-                  <button className="btn btn-primary">New Blog</button>
-                </Link>
-              </>
+              <Link to={'/blog/new'}>
+                <button className="btn btn-primary">New Blog</button>
+              </Link>
             ) : (
               <>
                 <Link to={'/login'}>
