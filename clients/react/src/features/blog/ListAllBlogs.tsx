@@ -11,6 +11,8 @@ export default function ListAllBlogs() {
     size: pageSize,
   });
 
+  console.log(searchParams);
+
   if (!blogs || isLoadingBlogs) return <p>Loading...</p>;
 
   return (
@@ -19,7 +21,11 @@ export default function ListAllBlogs() {
       currentPage={currentPage}
       totalPages={blogs.totalPages}
       onPageChange={(page) =>
-        setSearchParams({ page: String(page), size: String(pageSize) })
+        setSearchParams({
+          page: String(page),
+          size: String(pageSize),
+          ...Object.fromEntries(searchParams.entries()),
+        })
       }
     />
   );

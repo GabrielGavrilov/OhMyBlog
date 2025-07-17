@@ -21,16 +21,20 @@ export default function Profile() {
   }
 
   return (
-    <div>
-      <ProfileInformation user={user!} />
-      <BlogList
-        blogs={blogs.content}
-        currentPage={currentPage}
-        totalPages={blogs.totalPages}
-        onPageChange={(page) =>
-          setSearchParams({ page: String(page), size: String(pageSize) })
-        }
-      />
+    <div className="w-full lg:flex md:block">
+      <div className="lg:w-1/3 lg:mr-2 md:w-full">
+        <ProfileInformation user={user!} />
+      </div>
+      <div className="lg:w-2/3 lg:mr-2 md:w-full">
+        <BlogList
+          blogs={blogs.content}
+          currentPage={currentPage}
+          totalPages={blogs.totalPages}
+          onPageChange={(page) =>
+            setSearchParams({ page: String(page), size: String(pageSize) })
+          }
+        />
+      </div>
     </div>
   );
 }
