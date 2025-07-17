@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router';
-import { useBlog, useDeleteBlog } from '../../hooks/BlogHooks';
-import { useProfile } from '../../hooks/AccountHooks';
+import { useBlog, useDeleteBlog } from '../../hooks/useBlogActions';
+import { useProfile } from '../../hooks/useAccountActions';
 import { useState } from 'react';
 import Modal from '../../components/Modal';
 

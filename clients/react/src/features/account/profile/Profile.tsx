@@ -1,8 +1,8 @@
 import { useParams, useSearchParams } from 'react-router';
-import { useProfileById } from '../../../hooks/AccountHooks';
+import { useProfileById } from '../../../hooks/useAccountActions';
 import ProfileInformation from './ProfileInformation';
 import BlogList from '../../blog/BlogList';
-import { useBlogs } from '../../../hooks/BlogHooks';
+import { useBlogs } from '../../../hooks/useBlogActions';
 
 export default function Profile() {
   const { id } = useParams();

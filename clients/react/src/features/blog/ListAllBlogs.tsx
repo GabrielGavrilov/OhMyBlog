@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router';
-import { useBlogs } from '../../hooks/BlogHooks';
+import { useBlogs } from '../../hooks/useBlogActions';
 import BlogList from './BlogList';
 
 export default function ListAllBlogs() {

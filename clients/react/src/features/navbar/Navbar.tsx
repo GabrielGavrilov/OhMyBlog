@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router';
-import { useAuthorized } from '../../hooks/AccountHooks';
+import { useAuthorized } from '../../hooks/useAccountActions';
 
 export default function Navbar() {
   const { data: authorized } = useAuthorized();

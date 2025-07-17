@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLogin, useRegister } from '../../../hooks/AccountHooks';
+import { useLogin, useRegister } from '../../../hooks/useAccountActions';
 import { ValidationError } from '../../../lib/types/ValidationError';
 import { AuthUserDto } from '../../../lib/types/User';
 import Input from '../../../components/Input';

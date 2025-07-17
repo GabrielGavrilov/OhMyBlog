@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { useBlog, useCreateBlog, useUpdateBlog } from '../../hooks/BlogHooks';
+import {
+  useBlog,
+  useCreateBlog,
+  useUpdateBlog,
+} from '../../hooks/useBlogActions';
 import { CreateBlogDto } from '../../lib/types/Blog';
 import { ValidationError } from '../../lib/types/ValidationError';
 import Input from '../../components/Input';

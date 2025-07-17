@@ -3,7 +3,7 @@ import {
   useLogout,
   useProfile,
   useUpdateUser,
-} from '../../../hooks/AccountHooks';
+} from '../../../hooks/useAccountActions';
 import { UserDto } from '../../../lib/types/User';
 import defaultProfilePicture from '/default.png';
 import { useState } from 'react';
