@@ -7,4 +7,5 @@ namespace Application.Interfaces;
 public interface IUserAssembler
 {
     public UserDto Assemble(User entity);
+    public User DisassembleInto(UserDto userDto, User entity);
 }

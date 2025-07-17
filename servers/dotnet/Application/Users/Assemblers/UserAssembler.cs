@@ -15,9 +15,12 @@ public class UserAssembler(IBlogAssembler blogAssembler) : IUserAssembler
             Email = entity.Email!,
             DisplayName = entity.DisplayName!,
             Description = entity.Description,
-            Blogs = entity.Blogs
-                .Select(blog => blogAssembler.Assemble(blog))
-                .ToList()
         };
+    }
+
+    public User DisassembleInto(UserDto userDto, User entity)
+    {
+        entity.Description = userDto.Description;
+        return entity;
     }
 }
