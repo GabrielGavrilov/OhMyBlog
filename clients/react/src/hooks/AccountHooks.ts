@@ -11,6 +11,7 @@ export const endpoints = {
   login: '/login',
   register: '/users',
   logout: '/users/logout',
+  update: '/users',
 };
 
 export function useAuthorized() {
@@ -92,6 +93,17 @@ export function useLogout() {
     },
     onSuccess: () => {
       navigate('/login');
+    },
+  });
+}
+
+export function useUpdateUser() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: async (user: UserDto) => {
+      const response = await agent.put(endpoints.update, user);
+      client.resetQueries();
+      return response.data;
     },
   });
 }

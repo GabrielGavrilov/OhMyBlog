@@ -1,5 +1,9 @@
-import { useParams } from 'react-router';
-import { useLogout, useProfile } from '../../../hooks/AccountHooks';
+import { useNavigate, useParams } from 'react-router';
+import {
+  useLogout,
+  useProfile,
+  useUpdateUser,
+} from '../../../hooks/AccountHooks';
 import { UserDto } from '../../../lib/types/User';
 import defaultProfilePicture from '/default.png';
 import { useState } from 'react';
@@ -16,19 +20,31 @@ export default function ProfileInformation({ user }: Props) {
   const { data: userInfo } = useProfile();
   const logout = useLogout();
   const isUser = userInfo?.id === id;
-  const [editDescriptionModal, setEditDescriptionModal] =
+  const [viewEditDescriptionModal, setViewEditDescriptionModal] =
     useState<boolean>(false);
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+  const updateUser = useUpdateUser();
+  const navigate = useNavigate();
+
+  async function onSubmit(data: UserDto) {
+    await updateUser.mutate(
+      { ...userInfo, ...data },
+      {
+        onSuccess: (user: UserDto) => navigate(`/user/${user.id}`),
+      }
+    );
+  }
 
   return (
     <>
-      {editDescriptionModal && (
+      {viewEditDescriptionModal && (
         <Modal
           header="Edit description"
           confirmationText="Edit"
-          confirmationStyle="danger"
-          onSubmit={() => console.log('submitted')}
-          onCancel={() => setEditDescriptionModal(!editDescriptionModal)}
+          onSubmit={handleSubmit(onSubmit)}
+          onCancel={() =>
+            setViewEditDescriptionModal(!viewEditDescriptionModal)
+          }
         >
           <Input
             field="description"
@@ -59,7 +75,9 @@ export default function ProfileInformation({ user }: Props) {
               <div>
                 <button
                   className="btn"
-                  onClick={() => setEditDescriptionModal(!editDescriptionModal)}
+                  onClick={() =>
+                    setViewEditDescriptionModal(!viewEditDescriptionModal)
+                  }
                 >
                   Edit bio
                 </button>

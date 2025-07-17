@@ -9,5 +9,4 @@ public class UserDto
     public required string Email { get; set; }
     public required string DisplayName { get; set; }
     public string? Description { get; set; }
-    public ICollection<BlogDto> Blogs { get; set; } = [];
 }

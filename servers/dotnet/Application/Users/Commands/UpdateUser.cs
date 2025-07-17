@@ -14,7 +14,7 @@ public class UpdateUser
         public required UserDto UserDto { get; set; }
     }
 
-    public class Handler(IUserAccessor userAccessor, IUserAssembler userAssembler, IUserRepository userRepository)
+    public class Handler(IUserAccessor userAccessor, IUserAssembler userAssembler, IUserRepository userRepository) : IRequestHandler<Command, Result<UserDto>>
     {
         public async Task<Result<UserDto>> Handle(Command request, CancellationToken cancellationToken)
         {

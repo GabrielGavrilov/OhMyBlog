@@ -29,7 +29,6 @@ export default function AuthForm({ mode }: Props) {
   }
 
   async function handleRegister(data: AuthUserDto) {
-    console.log(data);
     if (data.password === data.confirmPassword) {
       await registerUser.mutate(data, {
         onSuccess: () => navigate('/login'),

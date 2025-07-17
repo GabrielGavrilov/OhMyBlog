@@ -15,19 +15,19 @@ namespace API.Controllers
         [Authorize]
         public async Task<ActionResult<UserDto>> GetCurrentUserDetails()
         {
-            return HandleResult(await Mediator.Send(new GetCurrentUser.Query{}));
+            return HandleResult(await Mediator.Send(new GetCurrentUser.Query { }));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUserInfo(string id)
         {
-            return HandleResult(await Mediator.Send(new GetUserById.Query{Id = id}));
+            return HandleResult(await Mediator.Send(new GetUserById.Query { Id = id }));
         }
 
         [HttpPost]
         public async Task<ActionResult<UserDto>> RegisterUser(RegisterUserDto registerUserDto)
         {
-            return HandleResult(await Mediator.Send(new CreateUser.Command{RegisterUserDto = registerUserDto}));
+            return HandleResult(await Mediator.Send(new CreateUser.Command { RegisterUserDto = registerUserDto }));
         }
 
         [HttpPost("logout")]
@@ -36,6 +36,13 @@ namespace API.Controllers
         {
             await signInManager.SignOutAsync();
             return NoContent();
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> UpdateUser(UserDto userDto)
+        {
+            return HandleResult(await Mediator.Send(new UpdateUser.Command { UserDto = userDto }));
         }
     }
 }
