@@ -4,11 +4,11 @@ import { BlogDto, BlogSearchCriteria, CreateBlogDto } from '../lib/types/Blog';
 import { PageRequestDto, PageResponseDto } from '../lib/types/Pages';
 
 export const endpoints = {
-  getAll: '/blogs',
-  getBlog: '/blogs/',
-  create: '/blogs',
-  update: '/blogs/',
-  delete: '/blogs/',
+  getAll: '/v1/blogs',
+  getBlog: '/v1/blogs/',
+  create: '/v1/blogs',
+  update: '/v1/blogs/',
+  delete: '/v1/blogs/',
 };
 
 export function useBlogs(pageRequest: PageRequestDto & BlogSearchCriteria) {

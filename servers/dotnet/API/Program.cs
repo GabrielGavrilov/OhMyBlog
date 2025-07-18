@@ -73,7 +73,7 @@ builder.Services.AddOpenApi();
 var app = builder.Build();
 
 // CORS
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:5173"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:8080"));
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

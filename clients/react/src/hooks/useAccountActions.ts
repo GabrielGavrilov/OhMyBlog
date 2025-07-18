@@ -5,13 +5,13 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router';
 
 export const endpoints = {
-  authorized: '/users',
-  profile: '/users',
-  profileById: '/users/',
-  login: '/login',
-  register: '/users',
-  logout: '/users/logout',
-  update: '/users',
+  authorized: '/v1/users',
+  profile: '/v1/users',
+  profileById: '/v1/users/',
+  login: '/login', // dotnet's login uses /api/login?useCookies instead of /api/v1/
+  register: '/v1/users',
+  logout: '/v1/users/logout',
+  update: '/v1/users',
 };
 
 export function useAuthorized() {
