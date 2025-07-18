@@ -18,7 +18,7 @@ export default function AuthForm({ mode }: Props) {
   const navigate = useNavigate();
   const loginUser = useLogin();
   const registerUser = useRegister();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<AuthUserDto>();
 
   async function onSubmit(data: AuthUserDto) {
     if (isRegistering) {

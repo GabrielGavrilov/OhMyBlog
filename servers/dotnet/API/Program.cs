@@ -72,6 +72,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+// CORS
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:5173"));
 
 // Configure the HTTP request pipeline.
@@ -85,7 +86,11 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
+app.MapFallbackToController("Index", "Fallback");
 app.MapGroup("api").MapIdentityApi<User>();
 
 using var scope = app.Services.CreateScope();

@@ -2,7 +2,7 @@ services:
   db:
     image: postgres
     restart: always
-    container_name: 'ohmyblog-dotnet-db'
+    container_name: 'ohmyblog-postgres'
     environment:
       POSTGRES_DB: 'ohmyblog'
       POSTGRES_USER: 'ohmyblog'
@@ -11,3 +11,10 @@ services:
       TZ: 'UTC-6'
     ports:
       - 5432:5432
+  app:
+    image: ohmyblog-dotnet
+    container_name: "server"
+    depends_on:
+      - db
+    ports:
+      - 8080:8080

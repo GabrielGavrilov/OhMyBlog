@@ -22,7 +22,7 @@ export default function ProfileInformation({ user }: Props) {
   const isUser = userInfo?.id === id;
   const [viewEditDescriptionModal, setViewEditDescriptionModal] =
     useState<boolean>(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<UserDto>();
   const updateUser = useUpdateUser();
   const navigate = useNavigate();
 
