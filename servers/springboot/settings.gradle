@@ -1,1 +1,5 @@
 rootProject.name = 'ohmyblog'
+
+include(':api')
+include(':client')
+include(':server')

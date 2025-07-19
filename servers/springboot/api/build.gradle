@@ -1,0 +1,6 @@
+plugins {
+    id 'java'
+}
+dependencies {
+    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson'
+}
