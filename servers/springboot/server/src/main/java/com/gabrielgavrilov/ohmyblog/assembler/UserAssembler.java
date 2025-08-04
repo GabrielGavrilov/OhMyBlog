@@ -3,10 +3,14 @@ package com.gabrielgavrilov.ohmyblog.assembler;
 import com.gabrielgavrilov.ohmyblog.api.AuthUserDto;
 import com.gabrielgavrilov.ohmyblog.api.UserDto;
 import com.gabrielgavrilov.ohmyblog.core.user.entity.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserAssembler {
+    private final PasswordEncoder passwordEncoder;
 
     public UserDto assemble(User entity) {
         return new UserDto()
@@ -20,7 +24,7 @@ public class UserAssembler {
         return User.newInstance(
                 authUserDto.getEmail(),
                 authUserDto.getDisplayName(),
-                authUserDto.getPassword()
+                passwordEncoder.encode(authUserDto.getPassword())
         );
     }
 

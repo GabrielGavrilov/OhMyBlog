@@ -8,7 +8,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +20,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Column(name = "user_id")
@@ -44,4 +48,13 @@ public class User {
         return user;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }
