@@ -1,6 +1,7 @@
 package com.gabrielgavrilov.ohmyblog.controller;
 
-import com.gabrielgavrilov.ohmyblog.api.AuthUserDto;
+import com.gabrielgavrilov.ohmyblog.api.LoginUserDto;
+import com.gabrielgavrilov.ohmyblog.api.RegisterUserDto;
 import com.gabrielgavrilov.ohmyblog.api.UserDto;
 import com.gabrielgavrilov.ohmyblog.core.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -8,16 +9,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
+    @GetMapping
+    public UserDto getCurrentUser(@RequestHeader("Authorization") String jwt) {
+        return userService.getCurrentUser(jwt);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createUser(@RequestBody AuthUserDto authUserDto) {
-        return userService.createUser(authUserDto);
+    public UserDto createUser(@RequestBody RegisterUserDto registerUserDto) {
+        return userService.createUser(registerUserDto);
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody LoginUserDto loginUserDto) {
+        return userService.loginUser(loginUserDto);
     }
 
 }

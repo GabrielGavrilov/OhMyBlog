@@ -1,9 +1,12 @@
 package com.gabrielgavrilov.ohmyblog.core.jwt.service;
 
+import com.gabrielgavrilov.ohmyblog.api.UserDto;
+import com.gabrielgavrilov.ohmyblog.assembler.UserAssembler;
 import com.gabrielgavrilov.ohmyblog.core.user.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.Jwts;
@@ -12,12 +15,20 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
+    private String SECRET_KEY = "a8ff9a8fe9392816988ff3af37dd1321a8e61ad9ee091f150262add7a101f4ab";
 
-    private static final String SECRET_KEY = "a8ff9a8fe9392816988ff3af37dd1321a8e61ad9ee091f150262add7a101f4ab";
+    public UserDto extractUserDto(String token) {
+        return new UserDto()
+                .setId(UUID.fromString(extractClaim(token, claims -> claims.get("userId", String.class))))
+                .setEmail(extractClaim(token, claims -> claims.get("email", String.class)))
+                .setDisplayName(extractClaim(token, claims -> claims.get("displayName", String.class)))
+                .setDescription(extractClaim(token, claims -> claims.get("description", String.class)));
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -30,6 +41,12 @@ public class JwtService {
 
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
+
+        claims.put("userId", user.getUserId());
+        claims.put("email", user.getEmail());
+        claims.put("displayName", user.getDisplayName());
+        claims.put("description", user.getDescription());
+
         return generateToken(claims, user);
     }
 

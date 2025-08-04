@@ -1,12 +1,12 @@
 package com.gabrielgavrilov.ohmyblog.api;
 
+import com.sun.net.httpserver.Filter;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class AuthUserDto {
+public class LoginUserDto {
     private String email;
-    private String displayName;
     private String password;
 }

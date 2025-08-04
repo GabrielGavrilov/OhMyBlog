@@ -1,6 +1,6 @@
 package com.gabrielgavrilov.ohmyblog.assembler;
 
-import com.gabrielgavrilov.ohmyblog.api.AuthUserDto;
+import com.gabrielgavrilov.ohmyblog.api.RegisterUserDto;
 import com.gabrielgavrilov.ohmyblog.api.UserDto;
 import com.gabrielgavrilov.ohmyblog.core.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class UserAssembler {
                 .setDescription(entity.getDescription());
     }
 
-    public User disassemble(AuthUserDto authUserDto) {
+    public User disassemble(RegisterUserDto registerUserDto) {
         return User.newInstance(
-                authUserDto.getEmail(),
-                authUserDto.getDisplayName(),
-                passwordEncoder.encode(authUserDto.getPassword())
+                registerUserDto.getEmail(),
+                registerUserDto.getDisplayName(),
+                passwordEncoder.encode(registerUserDto.getPassword())
         );
     }
 
