@@ -24,7 +24,7 @@ public class JwtService {
 
     public UserDto extractUserDto(String token) {
         return new UserDto()
-                .setId(UUID.fromString(extractClaim(token, claims -> claims.get("userId", String.class))))
+                .setUserId(UUID.fromString(extractClaim(token, claims -> claims.get("userId", String.class))))
                 .setEmail(extractClaim(token, claims -> claims.get("email", String.class)))
                 .setDisplayName(extractClaim(token, claims -> claims.get("displayName", String.class)))
                 .setDescription(extractClaim(token, claims -> claims.get("description", String.class)));

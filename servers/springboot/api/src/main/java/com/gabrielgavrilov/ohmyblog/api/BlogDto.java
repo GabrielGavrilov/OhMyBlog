@@ -9,8 +9,9 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true)
 public class BlogDto {
-    private UUID id;
+    private UUID blogId;
     private String title;
     private String body;
     private Instant createdAt;
+    private UserDto userDto;
 }

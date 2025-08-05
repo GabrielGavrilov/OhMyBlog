@@ -30,8 +30,8 @@ public class BlogController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BlogDto createBlog(@RequestBody BlogDto blogDto) {
-        return blogService.createBlog(blogDto);
+    public BlogDto createBlog(@RequestHeader("Authorization") String jwt, @RequestBody BlogDto blogDto) {
+        return blogService.createBlog(jwt, blogDto);
     }
 
     @PutMapping("/{blogId}")

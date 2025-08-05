@@ -1,9 +1,7 @@
 package com.gabrielgavrilov.ohmyblog.core.blog.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.gabrielgavrilov.ohmyblog.core.user.entity.User;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +22,10 @@ public class Blog {
     @Setter(AccessLevel.NONE)
     private UUID blogId;
 
+    @Column(name = "user_id")
+    @Setter(AccessLevel.NONE)
+    private UUID userId;
+
     @Column(name = "title")
     private String title;
 
@@ -33,9 +35,15 @@ public class Blog {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    public static Blog newInstance(String title, String body) {
+    @ManyToOne()
+    @Setter(AccessLevel.NONE)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
+    public static Blog newInstance(UUID userId, String title, String body) {
         Blog blog = new Blog();
         blog.blogId = UUID.randomUUID();
+        blog.userId = userId;
         blog.title = title;
         blog.body = body;
         blog.createdAt = Instant.now();

@@ -6,6 +6,7 @@ import com.gabrielgavrilov.ohmyblog.assembler.BlogAssembler;
 import com.gabrielgavrilov.ohmyblog.core.blog.entity.Blog;
 import com.gabrielgavrilov.ohmyblog.core.blog.repository.BlogRepository;
 import com.gabrielgavrilov.ohmyblog.core.blog.repository.BlogSearchSpecification;
+import com.gabrielgavrilov.ohmyblog.core.user.service.UserService;
 import com.gabrielgavrilov.ohmyblog.exception.NotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class BlogService {
     private final BlogAssembler blogAssembler;
     private final BlogRepository blogRepository;
+    private final UserService userService;
 
     public Page<BlogDto> findBlogs(BlogSearchCriteriaDto searchCriteria, Pageable pageable) {
         return blogRepository.findAll(new BlogSearchSpecification(searchCriteria), pageable)
@@ -31,8 +33,8 @@ public class BlogService {
         return blogAssembler.assemble(findBlogById(blogId));
     }
 
-    public BlogDto createBlog(BlogDto blogDto) {
-        return saveBlog(blogAssembler.disassemble(blogDto));
+    public BlogDto createBlog(String jwt, BlogDto blogDto) {
+        return saveBlog(blogAssembler.disassemble(blogDto, userService.getCurrentUser(jwt).getUserId()));
     }
 
     public BlogDto updateBlog(UUID blogId, BlogDto blogDto) {

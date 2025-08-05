@@ -14,7 +14,7 @@ public class UserAssembler {
 
     public UserDto assemble(User entity) {
         return new UserDto()
-                .setId(entity.getUserId())
+                .setUserId(entity.getUserId())
                 .setEmail(entity.getEmail())
                 .setDisplayName(entity.getDisplayName())
                 .setDescription(entity.getDescription());
