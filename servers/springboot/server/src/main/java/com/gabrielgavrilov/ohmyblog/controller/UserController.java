@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -18,6 +20,11 @@ public class UserController {
     @GetMapping
     public UserDto getCurrentUser(@RequestHeader("Authorization") String jwt) {
         return userService.getCurrentUser(jwt);
+    }
+
+    @GetMapping
+    public UserDto getUserById(UUID userId) {
+        return userService.getUserById(userId);
     }
 
     @PostMapping

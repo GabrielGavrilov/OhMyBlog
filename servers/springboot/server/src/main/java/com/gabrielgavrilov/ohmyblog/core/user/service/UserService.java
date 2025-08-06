@@ -7,13 +7,14 @@ import com.gabrielgavrilov.ohmyblog.assembler.UserAssembler;
 import com.gabrielgavrilov.ohmyblog.core.jwt.service.JwtService;
 import com.gabrielgavrilov.ohmyblog.core.user.entity.User;
 import com.gabrielgavrilov.ohmyblog.core.user.repository.UserRepository;
+import com.gabrielgavrilov.ohmyblog.exception.NotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
+
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -21,12 +22,15 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class UserService {
     private final UserAssembler userAssembler;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public UserDto getCurrentUser(String jwt) {
         return jwtService.extractUserDto(jwt.split(" ")[1]);
+    }
+
+    public UserDto getUserById(UUID userId) {
+        return userAssembler.assemble(findUserById(userId));
     }
 
     public UserDto createUser(RegisterUserDto registerUserDto) {
@@ -44,6 +48,10 @@ public class UserService {
 
     private UserDto saveUser(User user) {
         return userAssembler.assemble(userRepository.save(user));
+    }
+
+    private User findUserById(UUID userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new NotFoundException(String.format("No user exists with the UUID of '%s'", userId)));
     }
 
 }
