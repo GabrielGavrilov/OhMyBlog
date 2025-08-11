@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --paper: 247 247 246;
-  }
-  body {
-    @apply bg-paper;
-  }
+@theme {
+  --color-paper: rgb(247, 247, 246);
+}
+
+body,
+html {
+  @apply bg-paper;
 }
 
 @layer components {
   .btn {
-    @apply pt-2.5 pb-2.5 pr-5 pl-5 rounded;
+    @apply pt-2.5 pb-2.5 pr-5 pl-5 rounded cursor-pointer;
     @apply transition duration-200;
     &:hover {
       @apply bg-blue-50 text-blue-700;
@@ -38,7 +38,7 @@
 }
 
 .blog-form-title {
-  @apply w-full h-14 text-3xl font-bold focus:outline-none;
+  @apply w-full h-14 text-3xl font-bold focus:outline-none cursor-pointer;
   &:focus {
     @apply outline-none;
   }
