@@ -1,7 +1,11 @@
 <app-navbar />
 <div class="w-full flex justify-center mt-8 mb-8">
   <div class="w-10/12 flex justify-center lg:w-2/3 md:w-10/12 sm:w-10/12">
+    <p>{{ route }}</p>
+    @if (route === '/') {
     <app-blog-list class="w-full" [blogs]="blogs()" />
+    } @else {
+    <router-outlet></router-outlet>
+    }
   </div>
 </div>
-<!-- <router-outlet /> -->

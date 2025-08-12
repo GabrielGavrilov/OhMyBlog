@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
 import { BlogList } from './components/blog-list/blog-list';
 import { Blog } from './models/Blog';
@@ -15,8 +15,11 @@ export class App implements OnInit {
   protected readonly title = signal('angular');
 
   blogs = signal<Blog[]>([]);
+  route: string;
 
-  constructor(private blogService: BlogService) {}
+  constructor(private blogService: BlogService, private router: Router) {
+    this.route = router.url;
+  }
 
   ngOnInit(): void {
     this.blogService.getBlogs().subscribe((pagedBlogs) => {
