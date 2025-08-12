@@ -1,7 +1,5 @@
-<div class="w-full">
-  @for(blog of blogs; track blog) {
-  <div>
-    <app-blog-card [blog]="blog" />
-  </div>
-  }
+@for(blog of blogs; track blog.id) {
+<div>
+  <app-blog-card [blog]="blog" />
 </div>
+}

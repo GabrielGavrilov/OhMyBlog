@@ -14,16 +14,13 @@ import { BlogService } from './services/blog-service';
 export class App implements OnInit {
   protected readonly title = signal('angular');
 
-  blogs: Blog[];
+  blogs = signal<Blog[]>([]);
 
   constructor(private blogService: BlogService) {}
 
   ngOnInit(): void {
     this.blogService.getBlogs().subscribe((pagedBlogs) => {
-      console.log(pagedBlogs.content);
-      this.blogs = pagedBlogs.content;
+      this.blogs.set(pagedBlogs.content);
     });
-
-    console.log(this.blogs);
   }
 }
