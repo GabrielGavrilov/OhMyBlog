@@ -1,13 +1,29 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
+import { BlogList } from './components/blog-list/blog-list';
+import { Blog } from './models/Blog';
+import { BlogService } from './services/blog-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar],
+  imports: [RouterOutlet, Navbar, BlogList],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('angular');
+
+  blogs: Blog[];
+
+  constructor(private blogService: BlogService) {}
+
+  ngOnInit(): void {
+    this.blogService.getBlogs().subscribe((pagedBlogs) => {
+      console.log(pagedBlogs.content);
+      this.blogs = pagedBlogs.content;
+    });
+
+    console.log(this.blogs);
+  }
 }

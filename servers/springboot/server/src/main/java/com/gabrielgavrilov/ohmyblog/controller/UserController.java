@@ -22,8 +22,8 @@ public class UserController {
         return userService.getCurrentUser(jwt);
     }
 
-    @GetMapping
-    public UserDto getUserById(UUID userId) {
+    @GetMapping("/{userId}")
+    public UserDto getUserById(@PathVariable UUID userId) {
         return userService.getUserById(userId);
     }
 
