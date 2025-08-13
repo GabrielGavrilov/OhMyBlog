@@ -15,4 +15,10 @@ export class BlogService {
       'http://localhost:5263/api/v1/blogs'
     );
   }
+
+  getBlogById(id: string): Observable<Blog> {
+    return this.httpClient.get<Blog>(
+      `http://localhost:5263/api/v1/blogs/${id}`
+    );
+  }
 }

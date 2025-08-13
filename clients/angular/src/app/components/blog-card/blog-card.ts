@@ -17,5 +17,6 @@ export class BlogCard implements OnInit {
       const time: string = new Date(this.blog().createdAt * 1000).toISOString();
       this.blogTime = time.split('T')[0];
     }
+    console.log(this.blog());
   }
 }

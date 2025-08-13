@@ -4,3 +4,8 @@ export interface User {
   displayName: string;
   description: string;
 }
+
+export interface LoginUser {
+  email: string;
+  password: string;
+}

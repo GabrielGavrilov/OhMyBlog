@@ -7,23 +7,10 @@ import { BlogService } from './services/blog-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, BlogList],
+  imports: [RouterOutlet, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App implements OnInit {
+export class App {
   protected readonly title = signal('angular');
-
-  blogs = signal<Blog[]>([]);
-  route: string;
-
-  constructor(private blogService: BlogService, private router: Router) {
-    this.route = router.url;
-  }
-
-  ngOnInit(): void {
-    this.blogService.getBlogs().subscribe((pagedBlogs) => {
-      this.blogs.set(pagedBlogs.content);
-    });
-  }
 }

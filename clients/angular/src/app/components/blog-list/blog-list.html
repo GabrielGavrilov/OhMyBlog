@@ -1,4 +1,4 @@
-@for(blog of blogs; track blog.id) {
+@for(blog of blogs(); track blog.blogId) {
 <div>
   <app-blog-card [blog]="blog" />
 </div>
