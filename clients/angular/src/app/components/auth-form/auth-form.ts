@@ -31,7 +31,7 @@ export class AuthForm {
     const loginUser: LoginUser = this.formGroup.getRawValue() as LoginUser;
     this.identityService.login(loginUser).subscribe({
       next: (token) => {
-        localStorage.setItem('AUTH', token);
+        console.log(token);
         this.router.navigateByUrl('/');
       },
       error: (err) => {

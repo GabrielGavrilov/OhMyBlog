@@ -8,6 +8,7 @@ import com.gabrielgavrilov.ohmyblog.core.jwt.service.JwtService;
 import com.gabrielgavrilov.ohmyblog.core.user.entity.User;
 import com.gabrielgavrilov.ohmyblog.core.user.repository.UserRepository;
 import com.gabrielgavrilov.ohmyblog.exception.NotFoundException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,13 +38,15 @@ public class UserService {
         return saveUser(userAssembler.disassemble(registerUserDto));
     }
 
-    public String loginUser(LoginUserDto loginUserDto) {
+    public String loginUser(LoginUserDto loginUserDto, HttpServletResponse response) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginUserDto.getEmail(),
                 loginUserDto.getPassword()
         ));
         User user = userRepository.findByEmail(loginUserDto.getEmail()).orElseThrow();
-        return jwtService.generateToken(user);
+        String token = jwtService.generateToken(user);
+        response.addCookie(jwtService.createJwtCookie(token));
+        return token;
     }
 
     private UserDto saveUser(User user) {

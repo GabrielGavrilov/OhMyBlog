@@ -12,11 +12,5 @@ import { User } from '../../models/User';
 export class Navbar implements OnInit {
   constructor(private identityService: IdentityService) {}
 
-  authorizedUser = signal<User>(null);
-
-  ngOnInit(): void {
-    this.identityService.getUserInfo().subscribe((user) => {
-      this.authorizedUser.set(user);
-    });
-  }
+  ngOnInit(): void {}
 }

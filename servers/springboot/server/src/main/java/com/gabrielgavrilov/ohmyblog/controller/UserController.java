@@ -4,6 +4,7 @@ import com.gabrielgavrilov.ohmyblog.api.LoginUserDto;
 import com.gabrielgavrilov.ohmyblog.api.RegisterUserDto;
 import com.gabrielgavrilov.ohmyblog.api.UserDto;
 import com.gabrielgavrilov.ohmyblog.core.user.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody LoginUserDto loginUserDto) {
-        return userService.loginUser(loginUserDto);
+    public String loginUser(@RequestBody LoginUserDto loginUserDto, HttpServletResponse response) {
+        return userService.loginUser(loginUserDto, response);
     }
 
 }

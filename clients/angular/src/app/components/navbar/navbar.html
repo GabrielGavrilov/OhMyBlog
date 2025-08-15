@@ -3,15 +3,9 @@
     <div class="flex justify-start w-1/2 h-full items-center">
       <p class="font-mono text-2xl tracking-wider">OhMyBlog</p>
     </div>
-    @if(this.authorizedUser() === null) {
     <div class="flex justify-end w-1/2 h-full items-center">
       <button class="btn btn-primary" [routerLink]="'login'">Log in</button>
       <button class="btn">Create account</button>
     </div>
-    } @else {
-    <div class="flex justify-end w-1/2 h-full items-center">
-      <p>{{ this.authorizedUser().displayName }}</p>
-    </div>
-    }
   </div>
 </header>

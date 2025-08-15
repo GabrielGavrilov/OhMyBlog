@@ -6,6 +6,7 @@ import com.gabrielgavrilov.ohmyblog.core.user.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.io.Decoders;
@@ -21,6 +22,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     private String SECRET_KEY = "a8ff9a8fe9392816988ff3af37dd1321a8e61ad9ee091f150262add7a101f4ab";
+    public static final String COOKIE_NAME = "AUTHZ";
 
     public UserDto extractUserDto(String token) {
         return new UserDto()
@@ -59,6 +61,16 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public Cookie createJwtCookie(String jwt) {
+        Cookie c = new Cookie(JwtService.COOKIE_NAME, jwt);
+
+        c.setMaxAge(60 * 60 * 10);
+        c.setHttpOnly(false);
+        c.setPath("/");
+
+        return c;
     }
 
     public boolean isTokenValid(String token, User user) {
