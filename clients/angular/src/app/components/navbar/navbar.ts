@@ -12,5 +12,10 @@ import { User } from '../../models/User';
 export class Navbar implements OnInit {
   constructor(private identityService: IdentityService) {}
 
-  ngOnInit(): void {}
+  user: User;
+
+  ngOnInit(): void {
+    this.user = this.identityService.getCookieAuthObject();
+    console.log(this.user);
+  }
 }
