@@ -11,14 +11,10 @@ export class BlogService {
   constructor(private httpClient: HttpClient) {}
 
   getBlogs(): Observable<PageResponse<Blog>> {
-    return this.httpClient.get<PageResponse<Blog>>(
-      'http://localhost:5263/api/v1/blogs'
-    );
+    return this.httpClient.get<PageResponse<Blog>>('./api/v1/blogs');
   }
 
   getBlogById(id: string): Observable<Blog> {
-    return this.httpClient.get<Blog>(
-      `http://localhost:5263/api/v1/blogs/${id}`
-    );
+    return this.httpClient.get<Blog>(`./api/v1/blogs/${id}`);
   }
 }

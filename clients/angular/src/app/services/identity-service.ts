@@ -59,18 +59,14 @@ export class IdentityService {
   }
 
   getUserInfo(): Observable<User> {
-    return this.httpClient.get<User>('http://localhost:5263/api/v1/users');
+    return this.httpClient.get<User>('./api/v1/users');
   }
 
   login(user: LoginUser) {
-    return this.httpClient.post(
-      'http://localhost:5263/api/v1/users/login',
-      user,
-      {
-        withCredentials: true,
-        responseType: 'text',
-      }
-    );
+    return this.httpClient.post('./api/v1/users/login', user, {
+      withCredentials: true,
+      responseType: 'text',
+    });
   }
 
   getAuthHttpOptionsWithParams(searchCriteria?: any) {
